@@ -739,6 +739,11 @@ class MyController < ApplicationController
 		@system1 = Systeminformation1.find(:first, :conditions=>["id_1=?", @fund_information.id_1])
 		@system2 = Systeminformation2.find(:first, :conditions=>["id_1=?", @fund_information.id_1])
 		@system5 = Systeminformation5.find(:first, :conditions=>["id_1=?", @fund_information.id_1])
+		if @system2.nil?
+			@system2 = Systeminformation2.new
+			@system2.id_1=@fund_information.id_1
+			@system2.save
+		end
 		if @system5.nil?
 			@system5 = Systeminformation5.new
 			@system5.id_1=@fund_information.id_1
@@ -746,7 +751,6 @@ class MyController < ApplicationController
 		end
 		@sc1 = Systemcheck1.find(:first, :conditions=>["id_1=?", @fund_information.id_1])
 		@sc5 = Systemcheck5.find(:first, :conditions=>["id_1=?", @fund_information.id_1])
-		
 	end
 
 	def profile3_save

@@ -95,9 +95,11 @@ class FundsController < ApplicationController
     @system1 = @information.systeminformation1
     @system5 = @information.systeminformation5
     
-    if current_user.tip!="admin"
-      m_id = ManagerToProfiles.find(:first, :conditions=>["donor_id = ?",current_user.owner_id]).manager_id
-      params[:firm_id] = ManagerInformation.find(:first, :conditions=>["manager_id = ?", m_id]).id
+    if current_user.tip !="admin"
+      # m_id = ManagerToProfiles.find(:first, :conditions=>["donor_id = ?",current_user.owner_id]).manager_id
+      manager_to_profile = ManagerToProfiles.find(:first, :conditions=>["donor_id = ?",current_user.owner_id])
+      params[:firm_id] = ManagerInformation.find(:first, :conditions=>["manager_id = ?", manager_to_profile.manager_id]).id if  manager_to_profile
+      params[:firm_id] = nil
     end
     mtf = ManagerToFund.new
     mtf.manager_id = ManagerInformation.find(params[:firm_id]).manager_id
