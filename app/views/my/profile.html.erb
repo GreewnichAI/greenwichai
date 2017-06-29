@@ -1,0 +1,33 @@
+﻿<%= error_messages_for "user" %>
+<% form_for "profile", :url=>"/my/profile_save" do |f| %>
+		<table style="width:400px;">
+			<tr><th>First Name</th><td><%= text_field_tag "user[first_name]", @user.first_name %></td></tr>
+			<tr><th>Last Name</th><td><%= text_field_tag "user[last_name]", @user.last_name %></td></tr>
+			<tr><th>Password</th><td><%= password_field_tag "user[password]","" %></td></tr>
+			<tr><th>Confirmation</th><td><%= password_field_tag "user[password_confirmation]", "" %></td></tr>
+		
+			<tr><th>Salutation</th><td><%= text_field_tag "g_donor_profile[salutation]", @g_donor.salutation %></td></tr>
+			<tr><th>Company Name</th><td><%= @user.firm.general_partner %></td></tr>
+			<tr><th>Address 1</th><td><%= text_field_tag "g_address[line_1]", @g_address.line_1 %></td></tr>
+			<tr><th>Address 2</th><td><%= text_field_tag "g_address[line_2]", @g_address.line_2 %></td></tr>
+			<tr><th>Address 3</th><td><%= text_field_tag "g_address[line_3]", @g_address.line_3 %></td></tr>
+			<tr><th>City</th><td><%= text_field_tag "g_address[city]", @g_address.city %></td></tr>
+			<tr><th>State</th><td><%= text_field_tag "g_address[state]", @g_address.state %></td></tr>
+			<tr><th>Country</th><td><%= text_field_tag "g_address[country]", @g_address.country %></td></tr>
+			<tr><th>Zip</th><td><%= text_field_tag "g_address[zip]", @g_address.zip %></td></tr>
+			<tr><th>Phone</th><td><%= text_field_tag "g_address[phone]", @g_address.phone %></td></tr>
+			<tr><th>Mobile Phone</th><td><%= text_field_tag "g_address[mobile_phone]", @g_address.mobile_phone %></td></tr>
+			<tr><th>Fax</th><td><%= text_field_tag "g_address[fax]", @g_address.fax %></td></tr>
+			<tr><th>Email</th><td><%= text_field_tag "user[email]", @user.email %></td></tr>
+			<tr><th>Comments</th><td><%= text_field_tag "g_address[comments]", @g_address.comments %></td></tr>
+			
+			
+		</table>
+		<%= f.submit "Save" %><input type="button" value="Back to Site" onclick="document.location.href='/';">
+<% end %>
+
+<% if params[:sv].to_i==1 %>
+<script type="text/javascript">
+alert('Data has been saved.');
+</script>
+<% end %>

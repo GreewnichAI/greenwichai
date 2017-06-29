@@ -1,0 +1,79 @@
+﻿<%= render :partial=>"admin/menu" %>
+<br/><br/>
+
+<script type="text/javascript">
+var grid;
+Ext.onReady(function(){
+	 	store = new Ext.data.JsonStore(
+				{ autoDestroy: true, url: '/funds/index_json', remoteSort: true, sortInfo: { field: 'id', direction: 'ASC' },
+  				storeId: 'myStore', idProperty: 'id', root: 'data', totalProperty: 'total', 
+  				fields: [
+	  						{ name: 'id' },
+                            { name: 'id_1'},
+	  						{ name: 'f20' },
+	  						{ name: 'in_calc' }
+  				]
+    });
+
+		var filters = new Ext.ux.grid.GridFilters({ encode: false, local: false,
+        filters: [
+						{ type: 'string', dataIndex: 'id' },
+                        { type: 'string', dataIndex: 'id_1' },
+						{ type: 'string', dataIndex: 'f20' },
+						{ type: 'string', dataIndex: 'in_calc' }
+	  		]
+    });    
+
+
+		var createColModel = function (finish, start) {
+        var columns = [
+		        { dataIndex: 'id', header: 'Id', id: 'id', align: 'left', filter: { type: 'string' } },
+                { dataIndex: 'id_1', header: 'Id_1', id: 'id_1', align: 'left', filter: { type: 'string' } },
+         		{ dataIndex: 'f20', header: 'Name', id: 'f20', align: 'left', filter: { type: 'string' } },
+         		{ dataIndex: 'in_calc', header: 'Inc. Calc.', id: 'in_calc', align: 'left', filter: { type: 'string' } }
+        ];
+
+        return new Ext.grid.ColumnModel({
+            columns: columns.slice(start || 0, finish),
+            defaults: { sortable: true }
+        });
+    };
+
+    grid = new Ext.grid.GridPanel({
+        border: false,
+        closable: false,
+        store: store,
+        colModel: createColModel(<%= 6 %>),
+        loadMask: true,
+        plugins: [filters],
+        autoExpandColumn: 'f20',
+        listeners: { render: { fn: function(){ store.load({ params: { start: 0, limit: 17 } }); } } },
+        bbar: new Ext.PagingToolbar({ store: store, pageSize: 17, plugins: [filters] }),
+        tbar: [
+        		{ text: 'Edit', iconCls: 'silk-add', handler: function() { 
+        							if (grid.getSelectionModel().getSelections().length>0) {
+		       								r_id = grid.getSelectionModel().getSelections()[0].id
+				        					document.location.href="/my/fund_info?id="+r_id;
+		        					}}, scope: this }, '-',
+		        { text: 'Toggle Inc. Calc.', iconCls: 'silk-add', handler: function() {
+        							if (grid.getSelectionModel().getSelections().length>0) {
+		       								r_id = grid.getSelectionModel().getSelections()[0].id
+				        					document.location.href="/funds/toggle_inc_calc?id="+r_id;
+		        					}}, scope: this }, '-',
+		       	{ text: 'Change Firm', iconCls: 'silk-add', handler: function() {
+        							if (grid.getSelectionModel().getSelections().length>0) {
+		       								r_id = grid.getSelectionModel().getSelections()[0].id
+				        					document.location.href="/funds/edit?id="+r_id;
+		        					}}, scope: this }, '-',
+		       	{ text: 'Delete', iconCls: 'silk-add', handler: function() {
+        							if (grid.getSelectionModel().getSelections().length>0) {
+		       								r_id = grid.getSelectionModel().getSelections()[0].id
+				        					document.location.href="/funds/delete?id="+r_id;
+		        					}}, scope: this }, '-'			
+		        ]
+    });
+
+ 		 var win = new Ext.Window({ title: 'Funds', height: 600, width: 900, layout: 'fit', items: grid, closable: false, resizable: false}).show();
+    
+});
+</script>

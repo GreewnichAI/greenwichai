@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>GreenwichOnline - Hedge Fund Manager Reporting | Peer Review Tool</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<meta name="MSSmartTagsPreventParsing" content="true" />
+	<link rel="stylesheet" type="text/css" href="/stylesheets/reset-min.css" /> 
+	<link rel="stylesheet" type="text/css" href="/stylesheets/reset-fonts-grids.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/navbar.css"/>
+	
+	<%=javascript_include_tag "jquery-1.6.4.min.js"%>
+  <script type="text/javascript" src="/javascripts/activity.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  
+  <style type="text/css">
+		body { font-family:Verdana,Arial; }
+
+		#peerComparison {
+      position: relative;
+      margin: 20px 0;
+    }
+    #peerComparison span {
+      color: #0000ee;
+      padding: 5px;
+      font-size: 26px;
+      line-height: 25px;
+      font-style: italic;
+      text-decoration: underline;
+    }
+
+    .download {
+      top: 10px;
+      right: 0px;
+      color: #000;
+      height: 32px;
+      position: absolute;
+      overflow: hidden;
+      text-decoration: none;
+      background: url("../images/pdf_icon.gif") top left no-repeat;
+    }
+
+    .download label {
+      float: right;
+      margin-left: 40px;
+      margin-top: 3px;
+      width: 55px;
+      font-size: 11px;
+      font-weight: normal;
+    }
+
+    .form {
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    .form .field {
+      margin: 10px 0;
+      overflow: hidden;
+    }
+    .form .field label, .form .field select {
+      float: left;
+      width: 180px;
+      margin: 5px 0;
+      display: block;
+    }
+    .form .field select {
+      width: 300px;
+    }
+    .form .field.small select {
+      width: 70px;
+      margin-right: 5px;
+    }
+    .report {
+
+    }
+    .report h3 {
+      margin: 5px 0;
+      color: #fff;
+      padding: 5px;
+      font-size: 12px;
+      font-weight: bold;
+      text-align: center;
+      background-color: #344184;
+    }
+    .peerGroupAnalyzer {
+      margin: 20px 0;
+      font-size: 11px;
+      overflow: hidden;
+    }
+    .peerGroupAnalyzer .info {
+      padding: 2px 0;
+      float: left;
+      width: 400px;
+      overflow: hidden;
+    }
+    .peerGroupAnalyzer .info .label {
+      float: left;
+      width: 150px;
+      display: block;
+    }
+    .peerGroupAnalyzer .info .value {
+      float: left;
+      width: 250px;
+      display: block;
+    }
+    table {
+      width: 100%;
+      font-size: 11px;
+    }
+    table tr.colored {
+      color: #ffffff;
+      background-color: #344184;
+    }
+    table th {
+      min-width: 70px;
+      padding: 20px 2px 2px 2px;
+      font-weight: bold;
+      text-align: center;
+    }
+    table td {
+      min-width: 70px;
+      padding: 2px;
+      text-align: center;
+    }
+    table td.big {
+      text-align: left;
+    }
+
+    #q-graph {position: relative; width: 600px; min-height: 420px;
+      margin: 1.1em 10em 3.5em; padding: 0;
+      border-left: 1px solid gray; list-style: none;
+      font: 10px Helvetica, Geneva, sans-serif;}
+    #q-graph ul {margin: 0; padding: 0; list-style: none;}
+    #q-graph li {position: absolute; bottom: 0; width: 150px; z-index: 2;
+      margin: 0; padding: 0;
+      text-align: center; list-style: none;}
+    #q-graph li.qtr {height: 298px; padding-top: 2px; color: #AAA;}
+    #q-graph li.bar {width: 40px; border: 1px 0px solid; border-bottom: none; color: #000;}
+    #q-graph li.bar p {margin: 5px 0 0; padding: 0;}
+    #q-graph li.sent {left: 13px; background: #DCA url(fade-dark.png) repeat-x;
+      border-color: #EDC #BA9 #000 #EDC;}
+    #q-graph li.paid {left: 77px; background: #9D9 url(fade-dark.png) repeat-x;
+      border-color: #CDC #9B9 #000 #BFB;}
+    #q-graph li.green {background: #C8E1AA repeat-x;}
+    #q-graph li.blue {background: #CEE0F5 repeat-x;}
+    #q-graph li.purple {background: #C5AFD2 repeat-x;}
+    #q-graph li.pink {background: #F2C3C3 repeat-x;}
+    #q-graph .x-items {position:absolute;bottom:-50px;}
+    #q-graph #q0 {left: 0;}
+    #q-graph #q1 {left: 100px;}
+    #q-graph #q2 {left: 200px;}
+    #q-graph #q3 {left: 300px;}
+    #q-graph #q4 {left: 400px;}
+    #q-graph #q5 {left: 500px;}
+
+    #q-graph #item0 {left: 30px;}
+    #q-graph #item1 {left: 130px;}
+    #q-graph #item2 {left: 230px;}
+    #q-graph #item3 {left: 330px;}
+    #q-graph #item4 {left: 430px;}
+    #q-graph #item5 {left: 530px;}
+
+    #q-graph .qtr span {
+      bottom: -25px;
+      right: 100px;
+      position: absolute;
+    }
+
+    #q-graph .product, #q-graph .s_bm, #q-graph .p_bm {
+      z-index: 3;
+      height: 10px;
+      width: 10px;
+      position: absolute;
+      background: url(/images/green-square.png) no-repeat;
+    }
+
+    #q-graph .s_bm {
+      background: url(/images/red-triangle.png) no-repeat;
+    }
+
+    #q-graph .p_bm {
+      background: url(/images/blue-circle.png) no-repeat;
+    }
+
+    #q-graph #legend {
+      top: 100px;
+      right: -250px;
+    }
+
+    #q-graph li.bar span.tip {
+      z-index: 4;
+      color: #000000;
+      font-size: 10px;
+      font-weight: bold;
+      padding: 8px;
+      position: absolute;
+      right: -65px;
+      text-align: center;
+      bottom: 2px;
+      display: none;
+      background: #fff;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    
+    #q-graph span span.tip {
+      z-index: 4;
+      color: #000000;
+      font-size: 10px;
+      font-weight: bold;
+      padding: 8px;
+      position: absolute;
+      right: -72px;
+      text-align: center;
+      bottom: 2px;
+      display: none;
+      width: 55px;
+      background: #fff;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    #q-graph li.bar span.tip {
+      right: -50px;
+    }
+
+    #q-graph span:hover .tip {
+      display: block;
+    }
+
+    #q-graph #legend .legend {
+      margin: 7px 0;
+      font-size: 11px;
+      display: block;
+      text-align: left;
+      position: relative;
+    }
+
+    #q-graph #legend .legend span {
+      top: 0px;
+      left: -15px;
+      height: 10px;
+      width: 10px;
+      display: block;
+      position: absolute;
+      background: yellow;
+    }
+
+    #q-graph #legend .legend95 span {
+      background: #C8E1AA;
+    }
+
+    #q-graph #legend .legend75 span {
+      background: #CEE0F5;
+    }
+
+    #q-graph #legend .legend50 span {
+      background: #C5AFD2;
+    }
+
+    #q-graph #legend .legend25 span {
+      background: #F2C3C3;
+    }
+
+    #q-graph #legend .legendP {
+      margin-top: 20px;
+    }
+
+    #q-graph #legend .legendP span {
+      top: 1px;
+      width: 10px;
+      height: 10px;
+      background: url(/images/green-square.png) no-repeat;
+    }
+
+    #q-graph #legend .legendPm span {
+      top: 1px;
+      width: 10px;
+      height: 10px;
+      background: url(/images/blue-circle.png) no-repeat;
+    }
+
+    #q-graph #legend .legendSm span {
+      top: 1px;
+      width: 10px;
+      height: 10px;
+      background: url(/images/red-triangle.png) no-repeat;
+    }
+
+    #q-graph #legend .break {
+      margin-left: -15px;
+      border-bottom: 1px dashed #000;
+    }
+
+    #q-graph .returnLabel img {
+      height: 100px;
+      left: -50px;
+      position: absolute;
+      top: -250px;
+    }
+
+    #q-graph #ticks {width: 600px; min-height: 420px; z-index: 1;}
+    #q-graph #ticks .tick {position: relative; border-bottom: 1px dashed #bbb; width: 600px;height:41px !important;}
+    #q-graph #ticks .tick p {position: absolute; left: -2em; top: 3.7em; margin: 0 0 0 0.5em;}
+    #q-graph #ticks .tick.center {border-bottom: 1px solid #aaa;}
+    #q-graph #ticks .tick.negative p {left: -2.4em;};
+  </style>
+
+<%= render 'layouts/googleUanalytics' %>
+
+</head>
+<body style="">
+	<div style="width:960px;margin-left:auto; margin-right:auto;text-align:left;">
+		<div style="float:right;text-align:right;">
+				Logged in as <%= current_user.login %><br/>
+			
+				<% if current_user.tip=="admin" %>
+					<% msg_count = Message.count(:conditions=>["user_id = ? and archived_at is null", current_user.id]) %>
+					<a href='/messages'  style="color:<%= msg_count.zero? ? "#BBBBBB" : "#FF0000"  %>;">(<%= msg_count %>) new messages</a>
+          <a href="/activity">Activites</a>
+					<img src="/images/admin.jpg" alt='' onclick="document.location.href='/admin';" style="cursor:pointer;cursor:hand;" />
+					<img src="/images/site.jpg" alt='' onclick="document.location.href='/';" style="cursor:pointer;cursor:hand;" />
+				<% end %>
+				<img src="/images/backtofunds.jpg" alt='' onclick="document.location.href='/';" style="cursor:pointer;cursor:hand;" />
+				<% if current_user.owner_id.to_i>0 %>
+					<img src="/images/my_profile.png" alt='' onclick="document.location.href='/my/profile';" style="cursor:pointer;cursor:hand;" />
+				<% end %>
+				<img src="/images/logout.jpg" alt='' onclick="document.location.href='/logout';" style="cursor:pointer;cursor:hand;" />
+		</div>
+		<a href="http://www.greenwichai.com"><img src="/images/Greenwich.jpg" alt='' /></a><br/>
+		<hr />
+    <!-- navbar for signed in users -->
+    <!-- we will need to remove the "admin" limitation when we push to web site -->
+    <!-- admin limitation was added to give peer comparison tool acces back to managers(aka current_user.tip=="member") -->
+
+   <% if current_user.tip=="admin" %>
+      <%= render "layouts/navbar" %>
+    <% end %>
+
+		<%= yield %>
+		<br/>
+		<hr/>
+		<div style="text-align:center;">If you need any assistance, please contact us at +1.203.487.6180 or <a href='mailto:support@greenwichai.com'>support@greenwichai.com</a>. <br/>All information herein is subject to GreenwichOnline <a href="http://www.greenwichai.com/index.php/database/managers-2/terms-of-use">Terms of Use</a>.</div>
+	</div>
+	
+	<% k = flash[:alert] %>
+  <% if !k.nil? %>
+    <script type="text/javascript">
+      alert('<%= k %>');
+    </script>
+  <% end %>
+
+</body>
+</html>

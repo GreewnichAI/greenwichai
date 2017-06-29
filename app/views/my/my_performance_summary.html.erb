@@ -1,0 +1,31 @@
+<div id="portfolio">
+<div><span style="color: #0000ee; font-size: 26px; font-style: italic; text-decoration: underline;">My Performance Summary</span></div>
+  <div id="results">
+   <div style="font-size: 14px;"> To view the one page performance summary for one of your funds please click the name in the list below</div>
+    <BR>
+    <div id="portfolio_funds" class="section">
+      <h3>My Funds</h3>
+      <ul>
+        <%-if @informations%>
+          <%-if current_user.tip=="admin"%>
+            <% @informations.each do |i,fund| %>
+              <li class="fund_holder_<%=fund['id']%>">
+                <%= link_to fund['f20'], my_fund_path(fund['id']), :class => "fund", 'data-id'=> fund.id, :target => '_blank' %><br/>
+              </li>
+            <% end %>
+          <%else%>
+            <% -@informations.each do |fund|%>
+              <li class="fund_holder_<%=fund.id%>">
+                <%= link_to "#{fund.f20}", my_fund_path(fund.id), :class=>"fund", 'data-id'=>fund.id, :target => '_blank' %>
+              </li>          
+            <%end%>          
+          <%end%>        
+        <%end%>
+      </ul>
+
+      <div class="pagination">
+        <div class="count">Fund Count: <span id="portfolio_count"><%=@informations ? @informations.count : 0%></span></div>
+      </div>
+    </div>
+  </div>
+</div>

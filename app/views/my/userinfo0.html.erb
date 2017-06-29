@@ -1,0 +1,16 @@
+﻿<%= render (:partial=>"menu") %>
+<%= render (:partial=>"usermenu") %>
+
+
+<br/>
+Fund Name: <strong><%= @fund_information.f20 %></strong><br/>
+<br/>
+<h4>Select User</h4>
+<table>
+<% ManagerToProfiles.find(:all, :conditions=>["manager_id = ?", @manager_id]).each do |prf| %>
+		<% user = User.find(:first, :conditions=>["owner_id = ?",prf.donor_id]) %>
+		<% if !user.nil? %>
+				<%= link_to user.login,"/my/userinfo1?id="+params[:id]+"&user_id="+user.id.to_s %><br/>
+		<% end %>
+<% end %>
+</table>

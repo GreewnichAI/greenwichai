@@ -1,0 +1,117 @@
+﻿<%= render (:partial=>"menu") %>
+<style>
+.len200 { width:200px; }
+.lenauto { width:auto; }
+</style>
+<br/>
+<% form_for "fund_strategy", :url=>{:action=>"fund_strategy_save"}, :html=>{:id=>"fund_strategy"} do |f| %>
+	<%= hidden_field_tag "id", params[:id] %>
+
+<table><tr><td>
+			<table>
+			<tr><th style="width:100px;">Strategy Group</th>
+			<td>
+				<%= select_tag "information[f15]", options_for_select(@st_gr, @fund_information.f15), :onchange=>remote_function(:update=>"sel_f37", :url=>"/my/fs_sel1", :with=>"'id="+params[:id]+"&st_gr='+$('information_f15').value"), :style=>"width:200px;" %><br/>
+				<%= text_field_tag("over_information[f15]", @st_gr.index(@fund_information.f15).nil? ? @fund_information.f15 : "") %>
+			</td></tr>
+			<tr><th>Primary Strategy</th>
+					<td> <div id="sel_f37"></div></td></tr>
+			<tr><th>Secondary Strategy</th>
+					<td><div id="sel_f39"></div></td></tr>
+			
+			<tr><th>Firm Assets in Strategy</th><td><%= text_field_tag "systeminformation1[f31]", @system1.f31 %></td></tr>
+			<tr><th>Strategy Description</th><td><%= text_area_tag "information[userdescription]", @fund_information.userdescription, :style=>"width:300px;height:120px;" %></td></tr>
+			</table>
+			
+			
+</td><td>
+			<table>
+			<tr><th colspan="2">
+			Specialty Region - Fund (Complete only if asset
+			concentration is 70% or greater)</th></tr>
+			<tr><td>Region (≥ 70%)</td><td><%= select_tag3("information[f40]", ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","specialty_region"]).map{|c| c.name},@fund_information.f40,["len50","lenauto"]) %></td></tr>
+			<tr><th colspan="2" >
+			<hr/>
+			Specialty Country - Fund (Complete only if asset
+			concentration is 70% or greater)</th></tr>
+			<tr><td>Country (≥ 70%)</td><td><%= select_tag3("information[f38]", ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","specialty_country"]).map{|c| c.name},@fund_information.f38,["len50","lenauto"]) %></td></tr>
+			<tr><th colspan="2">
+			<hr/>Specialty Sector - Fund (Complete only if asset
+			concentration is 70% or greater)</th></tr>
+			<tr><td>Sector (≥ 70%)</td><td><%= select_tag3("information[f41]", ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","specialty_sector"]).map{|c| c.name},@fund_information.f41,["len50","lenauto"]) %></td></tr>
+
+</td></tr></table>
+<br/><br/>
+</td></tr></table>
+
+<br/>
+<table><tr>
+
+<td style="padding:5px;">
+<strong>Specialty Strategy Group</strong><br/>
+<%= check_box_tag "information[c5]","1", @fund_information.c5==1 %> Emerging Markets<br/>
+<%= check_box_tag "information[c6]","1", @fund_information.c6==1 %> Emerging Markets (Debt)<br/>
+<%= check_box_tag "information[c7]","1", @fund_information.c7==1 %> Emerging Markets (Equity)<br/>
+<%= check_box_tag "information[c8]","1", @fund_information.c8==1 %> Income<br/>
+<%= check_box_tag "information[c9]","1", @fund_information.c9==1 %> Multi-Strategy<br/>
+<strong>Directional Strategy Group</strong><br/>
+<%= check_box_tag "information[c22]","1", @fund_information.c22==1 %> Macro<br/>
+<%= check_box_tag "information[c23]","1", @fund_information.c23==1 %> Market Timing<br/>
+</td>
+
+<td style="padding:5px;">
+<strong>Long-Short Equity Group</strong><br/>
+<%= check_box_tag "information[c1]","1", @fund_information.c1==1 %> Growth<br/>
+<%= check_box_tag "information[c2]","1", @fund_information.c2==1 %> Opportunistic<br/>
+<%= check_box_tag "information[c3]","1", @fund_information.c3==1 %> Short Selling<br/>
+<%= check_box_tag "information[c4]","1", @fund_information.c4==1 %> Value<br/>
+<strong>Market Neutral Group</strong><br/>
+<%= check_box_tag "information[c10]","1", @fund_information.c10==1 %> Distressed Securities<br/>
+<%= check_box_tag "information[c11]","1", @fund_information.c11==1 %> Merger Arbitrage<br/>
+<%= check_box_tag "information[c12]","1", @fund_information.c12==1 %> Special Situations<br/>
+<%= check_box_tag "information[c13]","1", @fund_information.c13==1 %> Convertible Arbitrage<br/>
+<%= check_box_tag "information[c14]","1", @fund_information.c14==1 %> Equity Market Neutral<br/>
+<%= check_box_tag "information[c15]","1", @fund_information.c15==1 %> Fixed Income Arbitrage<br/>
+</td>
+
+<td style="padding:5px;">
+<strong>Market Neutral (Continued)</strong><br/>
+<%= check_box_tag "information[c16]","1", @fund_information.c16==1 %> Fixed Income Arb (Credit)<br/>
+<%= check_box_tag "information[c17]","1", @fund_information.c17==1 %> Fixed Income Arb (MBS)<br/>
+<%= check_box_tag "information[c18]","1", @fund_information.c18==1 %> Fixed Income Arb (ABS)<br/>
+<%= check_box_tag "information[c19]","1", @fund_information.c19==1 %> Fixed Income Arb (ABL)<br/>
+<%= check_box_tag "information[c20]","1", @fund_information.c20==1 %> Statistical Arbitrage<br/>
+<%= check_box_tag "information[c21]","1", @fund_information.c21==1 %> Other Arbitrage<br/>
+<hr/>
+<%= check_box_tag "information[c25]","1", @fund_information.c25==1 %> Onshore & Offshore Investors<br/>
+<%= check_box_tag "information[c24]","1", @fund_information.c24==1 %> High Water Mark<br/>
+<%= check_box_tag "information[c26]","1", @fund_information.c26==1 %> Off Shore Only<br/>
+<%= check_box_tag "information[c27]","1", @fund_information.c27==1 %> On Shore Only<br/>
+</td>
+
+<td style="padding:5px;">
+<strong>Additional Information</strong><br/>
+<%= check_box_tag "information[c28]","1", @fund_information.c28==1 %> Futures Fund<br/>
+<%= check_box_tag "information[c29]","1", @fund_information.c29==1 %> Index<br/>
+<%= check_box_tag "information[c30]","1", @fund_information.c30==1 %> User Allocation<br/>
+<%= check_box_tag "information[c31]","1", @fund_information.c31==1 %> Futures Manager (CTA)<br/>
+<%= check_box_tag "information[c32]","1", @fund_information.c32==1 %> Hedge Fund<br/>
+<%= check_box_tag "information[c33]","1", @fund_information.c33==1 %> Equity Manager<br/>
+<%= check_box_tag "information[c34]","1", @fund_information.c34==1 %> Security<br/>
+<%= check_box_tag "information[c35]","1", @fund_information.c35==1 %> Mutual Fund<br/>
+<%= check_box_tag "information[c36]","1", @fund_information.c36==1 %> Reports Quarterly<br/>
+</td>
+
+</tr></table>
+
+<img src="/images/btnConfirmInfo.jpg" onclick="$('fund_strategy').submit();" style="cursor:pointer;cursor:hand;" />
+<% end %>
+
+
+<script type="text/javascript"><%= remote_function(:update=>"sel_f37", :url=>"/my/fs_sel1", :with=>"'id="+params[:id]+"&st_gr='+$('information_f15').value") %></script>
+
+<% if flash[:sv].to_i==1 %>
+<script type="text/javascript">
+	alert('Data has been saved')
+</script>
+<% end %>

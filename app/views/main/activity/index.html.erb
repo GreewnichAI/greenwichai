@@ -1,0 +1,168 @@
+
+
+
+<p style="text-align: center; font-size: 24px; font-style: bold; font-color: red;"> Manager site user Metrics</p>
+  <div>
+    <p style="font-size: 16px;">To see the website use metrics from a specific month select the month and year in the dropdown and then click "Display".</p>
+  </div>
+  <div>
+  	<%= current_user.id %>
+  	<%= render :partial=>"activity/peer_portfolio_products_per_user" %>
+  </div>
+  <div>
+    <div class="metrics cols4">
+    	<h3>[My Funds]</h3>
+    	<h4>Click Throughs:  </h4>
+    	<p>  <%= @my_funds_clicks %>  </p>
+    	<div class="space"></div>
+
+    	<h3>[My Performance Summary]</h3>
+    	<h4>PDF's viewed: </h4>
+    	<p>  <%= @my_pdf_viewed %>  </p>
+    	<div class="space"></div>
+
+    	<h3>[Peer Report]</h3>
+    	<h4>Number of peer reports generated: </h4>
+    	<p>  <%= @my_reports_created %>  </p>
+    </div>
+
+    <div class="metrics cols4">
+    	<h3>[My Peer Portfolio]</h3>
+      	<h4>Size of user portfolios:  </h4>
+		<table id="metTable">
+		<tr>
+		  <th>Portfolio Size</th>
+		  <th>Number of users</th>
+		</tr>
+		<% @r.each do |i| %>
+		<tr>
+		  <td><%= i[0] %></td>
+		  <td><%= i[1] %></td>
+		</tr>
+		<% end %>
+		</table>
+    </div>
+
+    <div class="metrics cols4">
+      <h3>[Search the Database]</h3>
+      <h4>Total Number of searches this month:  </h4>
+      <p id="metVal">1000</p>
+    </div>
+    <div class="clear"></div>
+
+	<div class="metrics cols4">
+	  <p>Strategy Popularity:</p>
+	  <table id="metTable">
+	    <tr>
+	      <th>Strategy</th>
+	      <th>Number of Uses</th>
+	    </tr>
+	    <tr>
+	      <td>All Strategies</td>
+	      <td>100</td>
+	    </tr>
+	    <tr>
+	      <td>Arbitrage - Other</td>
+	      <td>100</td>
+	    </tr>
+	    <tr>
+	      <td>Convertible Arbitrage</td>
+	      <td>100</td>
+	    </tr>
+	    <tr>
+	      <td>Distressed Securities</td>
+	      <td>100</td>
+	    </tr>
+	    <tr>
+	      <td>Equity Market Neutral</td>
+	      <td>100</td>
+	    </tr>
+	  </table>
+	</div>
+	
+
+	<div class="metrics cols4">
+	  <p>Filter Popularity:</p>
+	  <table id="metTable">
+	    <tr>
+	      <th>Filter</th>
+	      <th>Number of Uses</th>
+	    </tr>
+	    <tr>
+	      <td>YTD</td>
+	      <td>100</td>
+	    </tr>
+	    <tr>
+	      <td>Last Month Return</td>
+	      <td>100</td>
+	    </tr>
+	    <tr>
+	      <td>Annualized Return</td>
+	      <td>100</td>
+	    </tr>
+	    <tr>
+	      <td>Cumulative Return</td>
+	      <td>100</td>
+	    </tr>
+	    <tr>
+	      <td>Standard Deviation</td>
+	      <td>100</td>
+	    </tr>
+	    <tr>
+	      <td>Max Drawdown</td>
+	      <td>100</td>
+	    </tr>
+	    <tr>
+	      <td>Sharpe Ratio</td>
+	      <td>100</td>
+	    </tr>
+	  </table>
+	</div>
+	<div class="metrics cols4">
+	  <p>Number of Filters Used:  </p>
+	  <table id="metTable">
+	    <tr>
+	      <th>Number of Filters</th>
+	      <th>Number of uses</th>
+	    </tr>
+	    <tr>
+	      <td>0</td>
+	      <td>100</td>
+	    </tr>
+	    <tr>
+	      <td>1</td>
+	      <td>100</td>
+	    </tr>
+	    <tr>
+	      <td>2</td>
+	      <td>100</td>
+	    </tr>
+	    <tr>
+	      <td>3</td>
+	      <td>100</td>
+	    </tr>
+	    <tr>
+	      <td>4</td>
+	      <td>100</td>
+	    </tr>
+	    <tr>
+	      <td>5</td>
+	      <td>100</td>
+	    </tr>
+	    <tr>
+	      <td>6</td>
+	      <td>100</td>
+	    </tr>
+	    <tr>
+	      <td>7</td>
+	      <td>100</td>
+	    </tr>
+	  </table>
+	</div>
+	</div>
+    </div>      
+  </div>
+<div>
+<br>
+</div>
+<div class="clear"></div>

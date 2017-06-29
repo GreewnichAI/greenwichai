@@ -1,0 +1,185 @@
+﻿<%= render (:partial=>"menu") %>
+<% form_for "funds", :url=>{:action=>"profile2_save"}, :html=>{:id=>"profile3"} do |f| %>
+	<%= hidden_field_tag "id", params[:id] %>
+<br/>
+<table><tr><td>
+                                
+                                <br/><br/>
+                            </td>                        
+                        </tr>    
+                        <tr>
+                            <td valign="top">
+                                <table class="content" border="0" cellpadding="1" cellspacing="0">
+
+                                    <tbody><tr>
+                                        <td colspan="3" valign="top" height="20">
+                                            <b>Position &amp; Sector Concentration Limits</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top">Position Limit<br/>(% of Portfolio)</td>
+
+                                        <td valign="top">:</td>
+                                        <td valign="top">
+                                            
+                                            <%= select_tag2("systeminformation2[f2]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","position_limit"]).map{|c| c.name},@system2.f2) %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top" bgcolor="#f6f6f6">Notes</td>
+                                        <td valign="top" bgcolor="#f6f6f6">:</td>
+
+                                        <td valign="top" bgcolor="#f6f6f6">
+                                        	<%= text_area_tag "systeminformation2[f4]", @system2.f4, {:rows=>5, :cols=>35} %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top">Sector Limits (% of Portfolio)</td>
+                                        <td valign="top">:</td>
+                                        <td valign="top">
+                                        	<%= select_tag2("systeminformation2[f3]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","sector_limits"]).map{|c| c.name},@system2.f3) %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top" bgcolor="#f6f6f6">Notes</td>
+                                        <td valign="top" bgcolor="#f6f6f6">:</td>
+                                        <td valign="top" bgcolor="#f6f6f6">
+                                        	<%= text_area_tag "systeminformation2[f5]", @system2.f5, {:rows=>5, :cols=>35} %>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" valign="top">
+                                            <hr color="#cccccc" noshade="noshade" size="1" />
+                                        </td>
+                                    </tr>        
+                                    <tr>
+                                        <td colspan="3" valign="top" height="20">
+                                            <b>Valuation Process</b>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top" bgcolor="#f6f6f6">3rd Party Provides</td>
+                                        <td valign="top" bgcolor="#f6f6f6">:</td>
+                                        <td valign="top" bgcolor="#f6f6f6">
+                                          	<%= select_tag2("systeminformation2[f7]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","3rd_party_provides"]).map{|c| c.name},@system2.f7) %>
+                                            (if some pricing is performed internally,<br/>specify % above - e.g., 30%)
+                                        </td>
+                                    </tr>    
+                                    <tr>
+                                        <td valign="top">Valuation Disclosure</td>
+                                        <td valign="top">:</td>
+                                        <td valign="top">
+                                            <%= select_tag("systeminformation2[f8]",options_for_select(ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","valuation_disclosure"]).map{|c| c.name},@system2.f8)) %>
+                                      </td>
+                                    </tr>    
+                                    <tr>
+
+                                        <td valign="top" bgcolor="#f6f6f6">Notes</td>
+                                        <td valign="top" bgcolor="#f6f6f6">:</td>
+                                        <td valign="top" bgcolor="#f6f6f6">
+                                        	<%= text_area_tag "systeminformation2[f6]", @system2.f6, {:rows=>5, :cols=>35} %>
+                                        </td>
+                                    </tr>
+
+                                </tbody></table> 
+                            </td>
+                            <td class="borderRight">&nbsp;</td>
+
+                            <td>&nbsp;</td>
+                            <td valign="top">
+                                <table class="content" border="0" cellpadding="1" cellspacing="0">
+                                    <tbody><tr>
+                                        <td colspan="3" valign="top" height="20">
+                                            <b>Risk Controls &amp; Stress Testing</b>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td valign="top" bgcolor="#f6f6f6">Track Off-Balance Sheet Leverage</td>
+                                        <td valign="top" bgcolor="#f6f6f6">:</td>
+                                        <td valign="top" bgcolor="#f6f6f6">
+                                            <%= select_tag("systeminformation2[f13]",options_for_select(ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","track_off_balance_sheet_leverage"]).map{|c| c.name},@system2.f13)) %>
+                                        </td>
+                                    </tr>    
+                                    <tr>
+                                        <td valign="top">Notes</td>
+                                        <td valign="top">:</td>
+                                        <td valign="top"><%= text_area_tag "systeminformation5[f2]", @system5.f2, {:rows=>5, :cols=>35} %></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td valign="top" bgcolor="#f6f6f6">Track On-Balance Sheet Leverage</td>
+                                        <td valign="top" bgcolor="#f6f6f6">:</td>
+                                        <td valign="top" bgcolor="#f6f6f6">
+                                            <%= select_tag("systeminformation2[f14]",options_for_select(ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","track_on_balance_sheet_leverage"]).map{|c| c.name},@system2.f14)) %>
+                                        </td>
+                                    </tr>    
+                                    <tr>
+                                        <td valign="top">Notes</td>
+                                        <td valign="top">:</td>
+                                        <td valign="top"><%= text_area_tag "systeminformation5[f3]", @system5.f3, {:rows=>5, :cols=>35} %></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td valign="top" bgcolor="#f6f6f6">Use of VaR or Other Models</td>
+                                        <td valign="top" bgcolor="#f6f6f6">:</td>
+                                        <td valign="top" bgcolor="#f6f6f6">
+                                            <%= select_tag("systeminformation2[f17]",options_for_select(ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","use_of_var_or_other_models"]).map{|c| c.name},@system2.f17)) %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top">Backtesting</td>
+                                        <td valign="top">:</td>
+                                        <td valign="top">
+                                            <%= select_tag("systeminformation2[f18]",options_for_select(ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","backtesting"]).map{|c| c.name},@system2.f18)) %>
+                                        </td>
+                                    </tr>    
+                                    <tr>
+                                        <td valign="top" bgcolor="#f6f6f6">Notes</td>
+
+                                        <td valign="top" bgcolor="#f6f6f6">:</td>
+                                        <td valign="top" bgcolor="#f6f6f6"><%= text_area_tag "systeminformation5[f7]", @system5.f7, {:rows=>5, :cols=>35} %></td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top">Track Liquidity</td>
+                                        <td valign="top">:</td>
+                                        <td valign="top">
+																						<%= select_tag("systeminformation2[f22]",options_for_select(ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","track_liquidity"]).map{|c| c.name},@system2.f22)) %>	
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top" bgcolor="#f6f6f6">Notes</td>
+                                        <td valign="top" bgcolor="#f6f6f6">:</td>
+
+                                        <td valign="top" bgcolor="#f6f6f6">
+                                        		<%= text_area_tag "systeminformation5[f8]", @system5.f8, {:rows=>5, :cols=>35} %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top">Risk Management Policies</td>
+                                        <td valign="top">:</td>
+                                        <td valign="top">
+                                            <%= select_tag("systeminformation2[f23]",options_for_select(ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","risk_management_policies"]).map{|c| c.name},@system2.f23)) %>	
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td valign="top" bgcolor="#f6f6f6">Notes</td>
+                                        <td valign="top" bgcolor="#f6f6f6">:</td>
+                                        <td valign="top" bgcolor="#f6f6f6">
+                                        		<%= text_area_tag "systeminformation2[f9]", @system2.f9, {:rows=>5, :cols=>35} %>
+                                        </td>
+                                    </tr>
+                                </tbody></table> 
+                            </td>
+                        </tr>
+
+                    </tbody></table> 
+                    <table class="content" width="100%" border="0" cellpadding="2" cellspacing="2">    
+                        <tbody><tr>
+                            <td colspan="4"><br/>
+                                <img src="/images/btnConfirmInfo.jpg" onclick="$('profile3').submit();" style="cursor:pointer;cursor:hand;" />
+                               </td></tr></tbody></table>
+<% end %>

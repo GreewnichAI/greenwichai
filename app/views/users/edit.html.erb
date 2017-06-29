@@ -1,0 +1,97 @@
+﻿<span style="color:#FF0000;"><%= flash[:notice] %></span>
+<style type="text/css">
+.fieldWithErrors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+  }
+
+  #errorExplanation {
+  width: 400px;
+  border: 2px solid #red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  }
+
+  #errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom:5px;
+  background-color: #c00;
+  color: #fff;
+  }
+
+  #errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+  }
+
+  #errorExplanation ul li {
+  font-size: 12px;
+  margin-left:20px;
+  list-style: square;
+  }
+
+
+</style>
+<%= error_messages_for "user" %>
+<% form_for @user, :html => {:multipart => true} do |f| %>
+		<table style="width:400px;">
+			
+			<tr><th>Login</th><td><%= f.text_field :login, :readonly=>!@user.id.nil? %></td></tr>
+      <tr><th>Company Name</th><td><%= f.text_field :company_name %></td></tr>
+      <tr><th>Phone Number</th><td><%= f.text_field :phone_number %></td></tr>
+			<tr><th>First Name</th><td><%= f.text_field :first_name %></td></tr>
+			<tr><th>Last Name</th><td><%= f.text_field :last_name %></td></tr>
+			<tr><th>Email</th><td><%= f.text_field :email %></td></tr>
+			<tr><th>Active</th><td><%= f.select :active, [["No",0],["Yes",1]] %></td></tr>
+			
+			<tr><th>Password</th><td><%= f.password_field :password %></td></tr>
+			<tr><th>Password Confirmation</th><td><%= f.password_field :password_confirmation  %></td></tr>
+			<tr><th>Type</th><td><%= f.select :tip, [["Admin", "admin"],["Manager", "member"], ["Data Entry", "data_entry"], ["Data Entry 2", "data_entry2"]]%></td></tr>
+  <tr><th style="width:210px;height:30px;">File1</th><td><%= f.file_field :att1 %>
+  <%if @user.att1.exists? %>
+    <br/><%= link_to @user.att1.original_filename, @user.att1.url %>
+  <% end %>
+  </td></tr>
+  <tr><th style="width:210px;height:30px;">File2</th><td><%= f.file_field :att2 %>
+  <%if @user.att2.exists? %>
+    <br/><%= link_to @user.att2.original_filename, @user.att2.url %>
+  <% end %>
+  </td></tr>
+  <tr><th style="width:210px;height:30px;">File3</th><td><%= f.file_field :att3 %>
+  <%if @user.att3.exists? %>
+    <br/><%= link_to @user.att3.original_filename, @user.att3.url %>
+  <% end %>
+  </td></tr>
+  <tr><th style="width:210px;height:30px;">File4</th><td><%= f.file_field :att4 %>
+  <%if @user.att4.exists? %>
+    <br/><%= link_to @user.att4.original_filename, @user.att4.url %>
+  <% end %>
+  </td></tr>      
+			<tr><th colspan="2">
+					<%= f.submit "Save" %> 
+					<input type="button" value="Back to Users" onclick="document.location.href='/users'">
+			</th></tr>
+		</table>
+<% end %>
+<% if !@user.id.nil? %>
+<hr/>
+<% firm = @user.firm %>
+<% funds = @user.funds %>
+
+<table>
+<tr><th>Firm:</th><td><%= firm.general_partner if firm%>  <%= link_to "[Change Firm]", {:action=>"change_firm", :id=>@user.id} %> </td></tr>
+<tr><th>Funds:</th><td>
+	<% @user.funds.each do |i,fund| %>
+			<%= link_to fund['f20'], "/my/fund_info?id="+fund['id'], :target=>"new_win_"+(rand()%100000).to_s %><br/>
+	<% end %>
+</td></tr>
+<% end %>
+</table>

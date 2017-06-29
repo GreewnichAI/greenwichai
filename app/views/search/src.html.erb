@@ -1,0 +1,123 @@
+<%
+wdth = 400
+
+wdth = 750 if @fields.size==0
+wdth = 608 if @fields.size==1
+wdth = 506 if @fields.size==2
+%>
+
+<div style="float:left;width:<%= wdth %>px;">
+<div id="peer_message">
+
+
+<%=  %>
+<%=  %>
+</div>
+<table style="width:<%= wdth %>px;">
+  <tr>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th> 
+    <th>&nbsp;</th>    
+    <th style="font-size:9px; height:28px;"><%= link_to_function "Name #{image_tag('white-arrow-up.png')} #{image_tag('white-arrow-down.png')}", "$('input[name=order]').val('f20');check_direction(); $('#frm_funds').submit();" %></th>   
+  </tr>
+<% i = 0 %>
+<% @funds.each do |fund| %>
+  <tr class="tr<%= i%2 %> pfund_<%=fund.id%>">
+    <td class="is_portfolio_fund"><%=render :partial => 'portfolio/fund', :locals => {:fund => fund}%></td>     
+    <td><%=link_to 'Add', add_fund_to_portfolio_path(:id => fund.id), :class=>'add_fund_to_portfolio blue_button'%></td>
+    <td><%=link_to 'Remove', remove_fund_from_portfolio_path(:id => fund.id), :class=>'remove_fund_from_portfolio blue_button'%></td>   
+    <td style="text-align:left;white-space:nowrap; "><%= link_to_function "#{fund.f20}", "window.open('"+my_fund_path(fund)+"','mywindow','location=1,status=1,scrollbars=1, width=1090,height=800');" %></td>
+  </tr>
+  <% i = i + 1 %>
+<% end %>
+</table>
+</div>
+
+<div style="float:left;width:<%= 750-wdth %>px;overflow:auto;overflow-y:hidden;">
+<table style="width:100%;">
+  <tr>
+    <% @fields.each do |field| %>
+        <% fn = CRITERIAS.select{|a| a[0]==field}.first[1].gsub("-","<br/>") %>
+        <th style="height:28px;text-align:center;font-size:9px;white-space:nowrap; padding-left:3px;padding-right:3px;"><%= link_to_function("#{fn} #{image_tag('white-arrow-up.png')} #{image_tag('white-arrow-down.png')}", "$('input[name=order]').val('#{field}');check_direction(); $('#frm_funds').submit();") %></th>
+    <% end %>
+  </tr>
+<% i = 0 %>
+<% @funds.each do |fund| %>
+  <tr class="tr<%= i%2 %>">
+    <% @fields.each do |field| %>
+        <% tx = sprintf("%.1f",fund.attributes[field]).to_s.strip %>
+        <% tx = tx + " %" if ((field=~/^sharpe/).nil? or 1==1) and !tx.blank? %>
+        <td style="font-size:11px;"><%= tx %></td>
+    <% end %>
+  </tr>
+  <% i = i + 1 %>
+<% end %>
+  <tr><td colspan="2">&nbsp;</td></tr>
+</table>
+</div>
+
+<div style="clear:both;"></div>
+
+<% if @fund_count!=0 %>
+
+<!-- <div style="background-color:#344184;">
+<table style="width:100%;margin-top:0px;color:#FFFFFF;">
+    <tr>
+      <td style="width:100px;border:solid 0px;">&nbsp;</td>
+      <td style="text-align:center;">
+            <img src='/images/btn_prev.png' style="height:16px;position:relative;top:2px;cursor:pointer;cursor:hand;" onclick="turn_page(-1);" />
+            <input type="text" id="page" name="page" value="<%= @page.to_i %>" style="width:30px;" /> /
+            <input type="text" id="page_count" readonly="readonly" value="<%= @page_count.to_i %>" style="width:30px;" />
+            <img src='/images/btn_next.png' style="height:16px;position:relative;top:2px;cursor:pointer;cursor:hand;" onclick="turn_page(1);" />
+      </td>
+      <td style="width:100px;text-align:right;border:solid 0px;font-size:9px;">Fund Count: <%= @fund_count %></td>
+    </tr>
+</table>
+</div> -->
+
+<script type="text/javascript">
+  function turn_page(k)
+  {
+      nval = parseInt($('#page').val()) + k;
+      if (nval<1) { nval = 1; }
+      if (nval>parseInt($('#page_count').val())) { nval = $('#page_count').val(); }
+      $('#page').val(nval);
+      $('#frm_funds').submit();
+  }
+  
+  function check_direction()
+  {
+    if ($('#direction').val()=="<%= params[:direction] %>") {
+      if ($('#direction').val()=="DESC") {
+        $('#direction').val("ASC");
+      } else {
+        $('#direction').val("DESC");
+      }
+    } else {
+      $('#direction').val("ASC");
+    }
+  }
+
+  $(".add_fund_to_portfolio").live('click', function(){
+    var url = $(this).attr('href');
+
+    $.ajax({
+      url: url
+    });
+
+    return false;
+  });
+
+  $(".remove_fund_from_portfolio").live('click', function(){
+    var url = $(this).attr('href');
+
+    $.ajax({
+      url: url
+    });
+
+    return false;
+  });    
+</script>
+<% else %>
+    Your search returned no results. Please change your search terms and try again.
+<% end %>

@@ -1,0 +1,37 @@
+<%= render :partial=>"admin/menu" %>
+
+<% form_for "frm", :url=>{:action=>"gen_ph1"} do |f| %>
+<%= select_tag "yr", options_for_select((1985..(Time.now.year)).to_a, (Time.now-2.month).year) %>
+<%= select_tag "mn", options_for_select((1..12).to_a, (Time.now-2.month).month) %>
+<%= submit_tag "Generate" %>
+<% end %>
+
+<%
+d = Dir.open("hist_data")
+a = []
+d.each do |p|
+  a << p.gsub("results_", "").gsub(".csv","") if !(p=~/^results/).nil?
+end
+%>
+
+<br/>
+<table style="width:500px;">
+<% a.sort.reverse.each do |aa| %>
+<tr>
+    <td><%= aa %></td>
+    <td>
+      <%= button_to "Get Historical Data XLS", :action=>"hist_ph1", :dt=>aa %>
+    </td>
+    <td>
+      <%= button_to "Get Results CSV", :action=>"results_ph1", :dt=>aa %>
+    </td>
+    <td>
+      <%= button_to "Publish", :action=>"publish_ph1", :dt=>aa %>
+    </td>
+    <td>
+      <%= button_to "Delete", :action=>"delete_ph1", :dt=>aa %>
+    </td>
+    
+</tr>
+<%end %>
+</table>

@@ -1,0 +1,10 @@
+<%= render :partial=>"admin/menu" %>
+<br/><br/>
+Fund List: <small>(One per line - name must be identical to F20 field of Information table)</small>
+<br/>
+<% form_for :invites, :url=>{:action=>"validate_invites"} do |f| %>
+<textarea style="width:790px;height:400px;border:solid 1px #000000;" name="funds">
+</textarea>
+<%= f.submit "Validate" %>
+<% end %>
+

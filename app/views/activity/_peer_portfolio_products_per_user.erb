@@ -1,0 +1,25 @@
+<% 
+	if params[:month]
+		current_month = params[:month]
+	else
+		current_month = Date.today.month
+	end
+	if params[:year]
+		current_year = params[:year]
+	else
+		current_year = Date.today.year
+	end
+%>
+
+<% form_tag '/activity' do -%>
+	<p style="display: inline;">year: </p>
+	<p style="display: inline;"><%= select_tag "year", generate_years_for_form(@months) %></p>
+	<p style="display: inline;">month: </p>
+	<p style="display: inline;"><%= select_tag "month", generate_months_for_form() %></p>
+	<p style="display: inline;"><%= submit_tag 'Display' %></p>
+<% end -%>
+<h1>
+	Activity log from month:
+	<%= current_month %>,
+	year: <%= current_year %>
+</h1>

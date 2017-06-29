@@ -1,0 +1,82 @@
+<style type="text/css">
+		.tbl_hf { width:700px;margin-left:30px; margin-top:10px; font-family:Arial;font-size:8pt; line-height:14pt; }
+		.tbl_hf th { padding-left: 3px; }
+		.tbl_hf td { text-align:right; }
+		
+		.tr_thA { background-color:#353980; color:#FFFFFF; }
+		.tr_thA th { background-color:#353980; color:#FFFFFF; }
+		.tr_thB { background-color:#808080; color:#FFFFFF; }
+		.tr_thB th { background-color:#808080; color:#FFFFFF; }
+		
+		.tr_cls td { background-color:#DCDCDC; color:#000000; }
+		.td_pad { padding-left:50px; }
+		
+		.tr_cls1 td { background-color:#353980; color:#FFFFFF; }
+		.td_pad1 { padding-left:10px; }
+		
+		.tr_cls2 td { background-color:#808080; color:#FFFFFF; }
+		.td_pad2 { padding-left:20px; }
+		
+		.tr_cls3 td { background-color:#DCDCDC; color:#484E8C; }
+		.td_pad3 { padding-left:30px; }
+		
+		.tr_cls4 td { background-color:#DCDCDC; color:#000000; }
+		.td_pad4 { padding-left:40px; }
+		
+		.tr_cls5 td { background-color:#DCDCDC; color:#000000; }
+		.td_pad5 { padding-left:10px; }
+		
+		.tr_cls6 td { background-color:#353980; color:#FFFFFF; }
+		.td_pad6 { padding-left:10px; }
+		
+		
+		.bord_l { border-left: solid 1px #FFFFFF; }
+		.bord_r { border-right: solid 1px #FFFFFF; }
+</style>
+
+
+
+<table class="tbl_hf">
+<tr class="tr_thA">
+	<th style="text-align:left;vertical-align:middle;"><a style="color:#FFFFFF;" href='/index.php?option=com_rubberdoc&view=doc&id=396&format=raw&Itemid=396'>Download Historical Indices</a></th>
+	<th class="bord_l bord_r">Weight<br/>Jan10</th>
+
+	<th colspan="5" style="vertical-align:middle;">Total Return </th>
+	<th colspan="2" class="bord_l bord_r">3 Yr<br/>Annualized</th>
+	<th colspan="2" class="bord_l bord_r">5 Yr<br/>Annualized</th>
+</tr>
+<tr class="tr_thB">
+	<th style="text-align:left;"><a style="color:#FFFFFF;" href='/index.php?option=com_rubberdoc&view=doc&id=395&format=raw&Itemid=395'>Download Methodology</a></th>
+	<th class="bord_l bord_r">&nbsp;</th>
+
+	<th>Jan10</th><th>Dec09</th>
+	<th>YTD</th>
+	<th>3Month</th>
+	<th>1YEAR</th>
+	<th class="bord_l">CAR</th>
+	<th class="bord_r">STD</th>
+
+	<th class="bord_l">CAR</th>
+	<th class="bord_r">STD</th>
+</tr>
+<tr style="height: 10px;"><td></td></tr>
+
+
+<% HfIndice.all(:order=>"position", :conditions=>["mn=? and yr=? and internal_id=?", 1,2010,"list1"]).each do |ind| %>
+    <tr class="tr_cls<%= ind.level %>">
+			<td class="td_pad<%= ind.level %>" style="text-align:left;"><%= ind.fund_name %></td>
+			<td class="bord_l bord_r"><%= ind.weight %></td>
+
+			<td><%= ind.prev_return %>%</td>
+      <td><%= ind.total_return %>%</td>
+      <td><%= ind.ytd %>%</td>
+      <td><%= ind.mon3 %>%</td>
+      <td><%= ind.yr1 %>%</td>
+      <td class="bord_l"><%= ind.ann_yr3_car %>%</td>
+      <td class="bord_r"><%= ind.ann_yr3_std %>%</td>
+      <td class="bord_l"><%= ind.ann_yr5_car %>%</td>
+      <td class="bord_r"><%= ind.ann_yr5_std %>%</td>
+    </tr>
+<% end %>
+
+</table>

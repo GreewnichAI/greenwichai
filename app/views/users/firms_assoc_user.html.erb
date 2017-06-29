@@ -1,0 +1,5 @@
+﻿<table>
+<% @users.each do |user| %>
+<tr><th><%= link_to user.login, {:action=>"do_assoc_user", :controller=>"firms", :user_id=>user.id, :manager_id=>params[:manager_id]} %></th></tr>
+<% end %>
+</table>

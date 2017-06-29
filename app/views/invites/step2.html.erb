@@ -1,0 +1,110 @@
+<% form_for "tab1", :url=>{:action=>"do_save"}, :html=>{:id=>"form_tab1"} do |f| %>
+<%= hidden_field_tag "k", params[:k] %>
+
+<% 
+  @dts = []
+  @dts << (Time.now-1.month).end_of_month
+  @dts << (Time.now-2.month).end_of_month
+  @dts << (Time.now-3.month).end_of_month  
+%>
+
+    <table style="border:solid 1px #000000;width:240px;margin-top:10px;">
+      <tr><th colspan="2" style="border-bottom:solid 1px #FFFFFF;color:#FFFFFF;font-weight:bold;background-color:#3F64AA;">Firm Level AUM</th></tr>
+      <tr><th>Month</th><th>Firm AUM (MMs)</th></tr>
+    <% @dts.each do |dt| %>
+      <% ddt = dt.strftime("%Y-%m-%d") %>
+      <tr>
+        <td><%= ddt %></td><td><%= text_field_tag "firm_aum[#{ddt}]", @firm_aums[ddt] %></td>
+      </tr>
+    <% end %>
+    </table>
+
+<% @informations.each do |@fund_information| %>
+
+<%
+  
+  @system1 = @fund_information.systeminformation1
+  elements = Performance.find(:all, 
+            :conditions=>["ID_1 = ? and DATE_1 between ? and ?",
+            @fund_information.id_1, @dts.last-1.day, @dts.first], 
+            :order=>"DATE_1 desc")
+   
+  elements_v2 = {}
+  elements.each do |element|
+    elements_v2[element.date_1.strftime("%Y%m%d")] = element
+  end
+  @datefmt = @dts.last.strftime("%Y")
+  @perf_vals = elements_v2
+  @elements = elements
+%>
+
+
+
+
+    <%= hidden_field_tag "old_si1_f36", @system1.f36 %> 
+    <%= hidden_field_tag "old_si1_f32", @system1.f32 %> 
+    <%= hidden_field_tag "old_si1_f31", @system1.f31 %> 
+    
+    
+    <%= hidden_field_tag "id", @fund_information.id %>
+    <%= hidden_field_tag "fund_id", @fund_information.id_1 %>
+    <%= hidden_field_tag "span_period", @span_period %>
+
+
+
+    
+    <table style="border:solid 1px #000000;width:800px;margin-top:10px;" >
+      <tr><th colspan="6" style="border-bottom:solid 1px #FFFFFF;color:#FFFFFF;font-weight:bold;background-color:#3F64AA;"><%= @fund_information.f20 %></th></tr>
+      <tr style="background-color:#DDDDDD;"><td style="width:90px;">Month</td><td style="width:100px;">Return(%)</td>
+      <td style="width:110px;">Fund AUM (MMs)</td>
+      <td style="width:110px;">Gross Exposure</td>
+      <td style="width:110px;">NAV/Shares</td><td style="width:100px;">Estimate?</td></tr>
+      <% @dts.each do |dt| %>
+          <% 
+            ddt = dt.strftime("%Y-%m-%d")
+            indice = ddt.gsub("-","") 
+            d_return = ((@perf_vals[indice].nil? or @perf_vals[indice].return.blank?)  ? "" : @perf_vals[indice].return.to_f*100)
+            
+            d_fundaum = (@perf_vals[indice].nil? ? "" : @perf_vals[indice].fundsmanaged.to_s.gsub(",","").to_f/1000000)
+            d_fundaum = d_fundaum.to_s.gsub(".0","") if d_fundaum.to_f==d_fundaum.to_i
+            d_fundaum = "" if d_fundaum.to_f==0
+            
+            d_firmaum = (@perf_vals[indice].nil? ? "" : @perf_vals[indice].firm_aum.to_s.gsub(",","").to_f)
+            d_firmaum = d_firmaum.to_s.gsub(".0","") if d_firmaum.to_f==d_firmaum.to_i
+            d_firmaum = "" if d_firmaum.to_f==0
+            
+            
+            d_nav_shares = (@perf_vals[indice].nil? ? "" : @perf_vals[indice].nav)
+            d_estimate =  (@perf_vals[indice].nil? ? "" : @perf_vals[indice].estimate)
+            #d_firmaum = (@perf_vals[indice].nil? ? "" : @perf_vals[indice].firm_aum)
+            d_gross_exposure = (@perf_vals[indice].nil? ? "" : @perf_vals[indice].gross_exposure)
+          %>
+
+          <tr>
+          
+              <td style="text-align:right;padding-right:10px;"><%= dt.strftime("%m/%d/%Y") %></td>
+              <td><%= text_field_tag "d_return["+@fund_information.id.to_s+"]["+indice+"]",(d_return.to_f == 0.0 ? "" : d_return ),:style=>"width:70px;" %> %</td>
+              <td><%= text_field_tag "d_fundaum["+@fund_information.id.to_s+"]["+indice+"]",d_fundaum,:style=>"width:120px;" %></td>
+              
+              
+              <td><%= text_field_tag "d_gross_exposure["+@fund_information.id.to_s+"]["+indice+"]",d_gross_exposure,:style=>"width:80px;" %> %</td>
+              <td><%= text_field_tag "d_nav_shares["+@fund_information.id.to_s+"]["+indice+"]",d_nav_shares,:style=>"width:100px;" %></td>
+              <td style="padding-left:5px;"> 
+                Yes <%= radio_button_tag "d_estimate["+@fund_information.id.to_s+"]["+indice+"]", "1", d_estimate.to_i==1 %> &nbsp; 
+                No <%= radio_button_tag "d_estimate["+@fund_information.id.to_s+"]["+indice+"]","0", d_estimate.to_i!=1 %>
+                </td>
+              
+          </tr>
+      <% end %>
+    </table>
+    
+        
+    
+    
+    
+    
+    
+    <% end %>
+    <% end %>
+    <br/>
+<img src="/images/btnConfirmInfo.jpg" onclick="$('form_tab1').submit();" style="cursor:pointer;cursor:hand;" />

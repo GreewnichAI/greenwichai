@@ -1,0 +1,90 @@
+<% form_for @wizard, :url=>{:action=>"do_step"}, :html =>{:method => :post, :id=>"wizard"} do |w| %>
+    <%  current_step = false  %>
+    <br/>
+    <div id="wizHeader">
+      <ul>
+        <li>
+          <div class="content">
+            <% if @wizard.first_step?  %>
+                <img src="/images/Step 2.png" />
+                <% current_step = true %>
+            <%end%>
+          </div>
+        </li>
+        <li>
+          <div class="content">
+            <% if @wizard.current_step == @wizard.steps[1]  %>
+                <img src="/images/Step 3.png" />
+                <% current_step = true %>
+            <%end  %>
+          </div>
+        </li>
+        <li>
+          <div class="content">
+            <% if @wizard.current_step == @wizard.steps[2]  %>
+                <img src="/images/Step 4.png" />
+                <% current_step = true %>
+            <%end  %>
+          </div>
+        </li>
+        <li>
+          <div class="content">
+            <% if !current_step && @wizard.current_step == @wizard.steps[3]  %>
+                <img src="/images/Step 5.png" />
+                <% current_step = true %>
+            <%end%>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <br/>
+    <%= render "#{@wizard.current_step}_step", :w => w %>
+
+    <%if !@wizard.first_step?%>
+    <img src="/images/Back.png" onclick="back();" style="cursor:pointer;cursor:hand;" />
+    <%end  %>
+    <%if @wizard.last_step?%>
+    <img src="/images/Save.png" onclick="save();" style="cursor:pointer;cursor:hand;" />
+    <%elsif @wizard.first_step?  %>
+    <% else %>
+    <img src="/images/SaveProceed.png" onclick="save();" style="cursor:pointer;cursor:hand;" />
+    <% end %>
+
+    <script type="text/javascript">
+        function back(){
+            var input = jQuery('<input>').attr('type', 'hidden').attr('name', 'back_button').val('back_button');
+            jQuery('form').append(jQuery(input));
+            jQuery('form').submit();
+        }
+        function save(){
+            <%if @wizard.first_step? %>
+            if(check_ds()){ validateInputs();}
+            <%elsif @wizard.last_step?%>
+            var val1 = jQuery('input:checked').length;
+            var val2 = jQuery('#information_f38').val();
+            var val3 = jQuery('#information_f40').val();
+            if(val1 != 0 && jQuery('#information_f38').val().length != 0 && jQuery('#information_f40').val().length != 0)
+            {
+                alert("Fund profile complete! This listing will be reviewed and activated by Greenwich staff within 3 days.");
+            }
+            jQuery('form').submit();
+            <%else%>
+            jQuery('form').submit();
+            <%end%>
+        }
+
+        jQuery(document).ready(function(){
+           jQuery('.logout').unbind('click');
+           jQuery('.logout').click(function(){
+              var input = jQuery('<input>').attr('type', 'hidden').attr('name', 'logout').val('logout');
+              jQuery('form').append(jQuery(input));
+              jQuery('form').submit();
+           });
+
+            <% if !flash[:notice].nil? && !flash[:notice].blank?%>
+            alert('<%= flash[:notice] %>');
+            <%flash[:notice]="error" %>
+            <% end %>
+        });
+    </script>
+<% end %>

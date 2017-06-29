@@ -1,0 +1,13 @@
+﻿<table style="width:300px;border:solid 1px;">
+<% @set_of_sets.each do |set| %>
+	<tr>
+		<th><%= set.name %></th>
+		<td>
+			<%= link_to "Elements", { :controller=>:elem_of_sets, :set_of_set_id=>set.id} %>
+			<%= link_to "Edit", { :action=>:edit, :id=>set.id } %>
+			<%= link_to "Delete", { :action=>:destroy, :id=>set.id, :method=>:delete } %>
+		</td>
+	</tr>
+<% end %>
+</table>
+<%= link_to "Add", "/set_of_sets/new" %>

@@ -1,0 +1,34 @@
+﻿<%= render (:partial=>"menu") %>
+<%= render (:partial=>"usermenu") %>
+
+
+<br/>
+Fund Name: <strong><%= @fund_information.f20 %></strong><br/>
+
+
+<% form_for "userinfo4", :url=>{:action=>"userinfo4_save"}, :html=>{:id=>"userinfo4"} do |f| %>
+	<%= hidden_field_tag "id", params[:id] %>
+	<%= hidden_field_tag "user_id", params[:user_id] %>
+
+<table><tr><td>
+
+		<table style="width:350px;">
+			<tr><th>Strategy Group  	:</th><td><%= text_field_tag "information[f15]", @fund_information.f15 %></td></tr>
+			<tr><th>Primary Strategy 	:</th><td><%= text_field_tag "information[f37]", @fund_information.f37 %></td></tr>
+			<tr><th>Secondary Strategy 	: 	</th><td><%= text_field_tag "information[f39]", @fund_information.f39 %></td></tr>
+			<% if 1==2 %>
+			<tr><th>DNU 	: 	</th><td><%= text_field_tag "userinformation4[f1]", @user4.f1 %></td></tr>
+			<% end %>
+			<tr><th>Due Diligence (level, person, date) 	: 	</th><td><%= text_field_tag "userinformation4[f6]", @user4.f6 %></td></tr>
+			<tr><th>Due Diligence Performed 	: 	</th><td><%= text_field_tag "userinformation4[f11]", @user4.f11 %></td></tr>
+			<tr><th>Greenwich Fund ID Code 	: 	</th><td><%= text_field_tag "userinformation4[f7]", @user4.f7 %></td></tr>
+			<tr><th>Approval Status 	: 	</th><td><%= text_field_tag "userinformation4[f8]", @user4.f8 %></td></tr>
+			<tr><th>Greenwich Analyst 	: 	</th><td><%= text_field_tag "userinformation4[f10]", @user4.f10 %></td></tr>
+			<tr><th>Risk Committee Coverage 	: 	</th><td><%= text_field_tag "userinformation4[f16]", @user4.f16 %></td></tr>
+			<tr><th>GAI Investment Status 	: 	</th><td><%= text_field_tag "userinformation4[f12]", @user4.f12 %></td></tr>
+			<tr><th>Last Visit 	: 	</th><td><%= text_field_tag "userinformation4[f14]", @user4.f14 %></td></tr>
+			<tr><th>Due Diligence Report Updated: </th><td><%= text_field_tag "userinformation4[f15]", @user4.f15 %></td></tr>
+		</table>
+</td></tr></table>
+<% end %>
+<%= link_to_function image_tag('/images/btnMakeChanges.jpg'), "$('userinfo4').submit();" %>

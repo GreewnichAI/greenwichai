@@ -1,0 +1,64 @@
+﻿<%= render (:partial=>"menu") %>
+<%= render (:partial=>"usermenu") %>
+
+<br/>
+Fund Name: <strong><%= @fund_information.f20 %></strong><br/>
+
+
+<% form_for "userinfo5", :url=>{:action=>"userinfo5_save"}, :html=>{:id=>"userinfo5"} do |f| %>
+	<%= hidden_field_tag "id", params[:id] %>
+	<%= hidden_field_tag "user_id", params[:user_id] %>
+
+<table><tr><td>
+<br/>
+		<table style="width:800px;">
+			<tr>
+				<td>
+					<%= check_box_tag "usercheck2[c1]","1",@uc2.c1=="1" %> Emerging Market Exposure<br/>
+					<%= check_box_tag "usercheck2[c2]","1",@uc2.c2=="1" %>Developed Market Exposure<br/>
+					<hr style="margin-right:10px;"/>
+					<%= check_box_tag "usercheck2[c4]","1",@uc2.c4=="1" %>Aggressive Growth<br/>
+					<%= check_box_tag "usercheck2[c5]","1",@uc2.c5=="1" %>Convertible Arbitrage<br/>
+					<%= check_box_tag "usercheck2[c6]","1",@uc2.c6=="1" %>Currency<br/>
+					<%= check_box_tag "usercheck2[c7]","1",@uc2.c7=="1" %>Distressed Securities<br/>
+					<%= check_box_tag "usercheck2[c8]","1",@uc2.c8=="1" %>Fixed Income Arbitrage<br/>
+					<%= check_box_tag "usercheck2[c9]","1",@uc2.c9=="1" %>Fund of Funds<br/>
+				</td>
+				<td>
+					<%= check_box_tag "usercheck2[c10]","1",@uc2.c10=="1" %>Futures<br/>
+					<%= check_box_tag "usercheck2[c11]","1",@uc2.c11=="1" %>Growth<br/>
+					<%= check_box_tag "usercheck2[c12]","1",@uc2.c12=="1" %>Income<br/>
+					<%= check_box_tag "usercheck2[c13]","1",@uc2.c13=="1" %>Long/Short Credit<br/>
+					<%= check_box_tag "usercheck2[c14]","1",@uc2.c14=="1" %>Macro<br/>
+					<%= check_box_tag "usercheck2[c15]","1",@uc2.c15=="1" %>Market Neutral Arbitrage<br/>
+					<%= check_box_tag "usercheck2[c16]","1",@uc2.c16=="1" %>Equity Market Neutral<br/>
+					<%= check_box_tag "usercheck2[c17]","1",@uc2.c17=="1" %>Market Timing<br/>
+					<%= check_box_tag "usercheck2[c18]","1",@uc2.c18=="1" %>Mutual Fund Switcher<br/>
+				</td>
+				<td>
+					<%= check_box_tag "usercheck2[c19]","1",@uc2.c19=="1" %>Opportunistic<br/>
+					<%= check_box_tag "usercheck2[c20]","1",@uc2.c20=="1" %>Options Arbitrage<br/>
+					<%= check_box_tag "usercheck2[c21]","1",@uc2.c21=="1" %>Quantitative Strategy<br/>
+					<%= check_box_tag "usercheck2[c22]","1",@uc2.c22=="1" %>Regulation D Investing<br/>
+					<%= check_box_tag "usercheck2[c23]","1",@uc2.c23=="1" %>Merger Arbitrage<br/>
+					<%= check_box_tag "usercheck2[c24]","1",@uc2.c24=="1" %>Multi-Strategy<br/>
+					<%= check_box_tag "usercheck2[c25]","1",@uc2.c25=="1" %>Short Selling<br/>
+					<%= check_box_tag "usercheck2[c26]","1",@uc2.c26=="1" %>Special Situations<br/>
+					<%= check_box_tag "usercheck2[c27]","1",@uc2.c27=="1" %>Value<br/>
+				</td>
+				<td>
+					<%= check_box_tag "usercheck2[c28]","1",@uc2.c28=="1" %>Futures Fund<br/>
+					<%= check_box_tag "usercheck2[c29]","1",@uc2.c29=="1" %>Index<br/>
+					<%= check_box_tag "usercheck2[c30]","1",@uc2.c30=="1" %>User Allocation<br/>
+					<%= check_box_tag "usercheck2[c31]","1",@uc2.c31=="1" %>Futures Mgr (CTA)<br/>
+					<%= check_box_tag "usercheck2[c32]","1",@uc2.c32=="1" %>Hedge Fund<br/>
+					<%= check_box_tag "usercheck2[c33]","1",@uc2.c33=="1" %>Equity Manager<br/>
+					<%= check_box_tag "usercheck2[c34]","1",@uc2.c34=="1" %>Security<br/>
+					<%= check_box_tag "usercheck2[c35]","1",@uc2.c35=="1" %>Mutual Fund<br/>
+					<%= check_box_tag "usercheck2[c36]","1",@uc2.c36=="1" %>Reports Quarterly<br/>				</td>
+				
+		</table>
+</td></tr></table>
+
+<% end %>
+<%= link_to_function image_tag('/images/btnMakeChanges.jpg'), "$('userinfo5').submit();" %>

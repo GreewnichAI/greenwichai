@@ -1,0 +1,2 @@
+﻿<%= render(:partial=>"member") if current_user.tip=="member" %>
+<%= render(:partial=>"admin") if current_user.tip=="admin" or current_user.tip=="data_entry" || current_user.tip=="data_entry2" %>

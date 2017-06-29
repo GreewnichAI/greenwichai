@@ -1,0 +1,9 @@
+﻿<%= render :partial=>"admin/menu" %>
+<%= render :partial=>"menu_tools" %>
+<br/><br/>
+<strong>Delete Fund with ID_1</strong>
+<% remote_form_for ("rm", :url=>{:action=>"t1_search"}, :update=>"rez") do |f| %>
+ID_1: <%= text_field_tag "id_1" %> <%= f.submit "Search" %>
+<% end %>
+<div id="rez">
+</div>

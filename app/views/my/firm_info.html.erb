@@ -1,0 +1,113 @@
+﻿<%= render(:partial=>"menu") %>
+<br/>
+
+<% form_for "firm_info", :url=>{:action=>"firm_info_save"}, :html=>{:id=>"firm_info"} do |f| %>
+	<%= hidden_field_tag "id", params[:id] %>
+	
+
+<div style="float:right;width:300px;">
+<strong>Regulatory Information</strong>
+<table style="width:300px;border:solid 0px;">
+<tr><td>License(s) of Firm and Affiliate(s)</td>
+<td>
+<%= check_box_tag "manager_information[amf]","1",@manager_information.amf=="1" %> AMF (France)<br/>
+<%= check_box_tag "manager_information[asic]","1",@manager_information.asic=="1" %> ASIC (Australia)<br/>
+<%= check_box_tag "manager_information[broker_dealer]","1",@manager_information.broker_dealer=="1" %> Broker-Dealer<br/>
+<%= check_box_tag "manager_information[fsc_bvi]","1",@manager_information.fsc_bvi=="1" %> FSC (BVI)<br/>
+<%= check_box_tag "manager_information[cima]","1",@manager_information.cima=="1" %> CIMA (Cayman)<br/>
+<%= check_box_tag "manager_information[cob]","1",@manager_information.cob=="1" %> COB (France)<br/>
+<%= check_box_tag "manager_information[cpo]","1",@manager_information.cpo=="1" %> CPO<br/>
+<%= check_box_tag "manager_information[cta]","1",@manager_information.cta=="1" %> CTA<br/>
+<%= check_box_tag "manager_information[sfa]","1",@manager_information.sfa=="1" %> FSA (UK)<br/>
+<%= check_box_tag "manager_information[fsc_isle]","1",@manager_information.fsc_isle=="1" %> FSC (Isle of Man)<br/>
+<%= check_box_tag "manager_information[gfsc]","1",@manager_information.gfsc=="1" %> GFSC (Guernsey)<br/>
+<%= check_box_tag "manager_information[ifsra]","1",@manager_information.ifsra=="1" %> IFSRA (Ireland)<br/>
+<%= check_box_tag "manager_information[imro]","1",@manager_information.imro=="1" %> IMRO<br/>
+<%= check_box_tag "manager_information[nasd]","1",@manager_information.nasd=="1" %> NASD (US)<br/>
+<%= check_box_tag "manager_information[nfa]","1",@manager_information.nfa=="1" %> NFA (US)<br/>
+<%= check_box_tag "manager_information[osc]","1",@manager_information.osc=="1" %> OSC (Canada)<br/>
+<%= check_box_tag "manager_information[other]","1",@manager_information.other=="1" %> Other<br/>
+<%= check_box_tag "manager_information[registered_investment_advisor]","1",@manager_information.registered_investment_advisor=="1" %> SEC (US)<br/>
+<%= check_box_tag "manager_information[sfc]","1",@manager_information.sfc=="1" %> SFC
+</td></tr></table>
+</div>
+
+
+
+
+<div style="width:450px;float:left;">
+Fund Name: <%= @fund_information['f20'] %><br/>
+<br/>
+<table style="width:350px;">
+	<tr><td>Management Firm</td><td style="width:160px;"><%= text_field_tag "manager_information[general_partner]", @manager_information.general_partner %></td></tr>
+	<tr><td>Address 1</td><td><%= text_field_tag "information[f2]", @fund_information.f2 %></td></tr>
+	<tr><td>Address 2</td><td><%= text_field_tag "information[f3]", @fund_information.f3 %></td></tr>
+	<tr><td>City</td><td><%= text_field_tag "information[f4]", @fund_information.f4 %></td></tr>
+	<tr><td>State/Province</td><td><%= text_field_tag "information[f5]", @fund_information.f5 %></td></tr>
+	<tr><td>Zip Code</td><td><%= text_field_tag "information[f6]", @fund_information.f6 %></td></tr>
+	<tr><td>Country</td><td><%= text_field_tag "information[f7]", @fund_information.f7 %></td></tr>
+	<tr><td>Phone</td><td><%= text_field_tag "information[f9]", @fund_information.f9 %></td></tr>
+	<tr><td>Fax</td><td><%= text_field_tag "information[f10]", @fund_information.f10 %></td></tr>
+	
+	<tr><td>Email</td><td><%= text_field_tag "information[f11]", @fund_information.f11 %></td></tr>
+	<tr><td>Contact Person</td><td><%= text_field_tag "information[f12]", @fund_information.f12 %></td></tr>
+	<tr><td>Contact Title</td><td><%= text_field_tag "information[f13]", @fund_information.f13 %></td></tr>
+	
+	<tr><td>Email - 2</td><td><%= text_field_tag "information[f42]", @fund_information.f42 %></td></tr>
+	<tr><td>Contact Person - 2</td><td><%= text_field_tag "information[f43]", @fund_information.f43 %></td></tr>
+	<tr><td>Contact Title - 2</td><td><%= text_field_tag "information[f44]", @fund_information.f44 %></td></tr>
+	
+	<tr><td>Email - 3</td><td><%= text_field_tag "information[f45]", @fund_information.f45 %></td></tr>
+	<tr><td>Contact Person - 3</td><td><%= text_field_tag "information[f46]", @fund_information.f46 %></td></tr>
+	<tr><td>Contact Title - 3</td><td><%= text_field_tag "information[f47]", @fund_information.f47 %></td></tr>
+	
+	<tr><td>Website</td><td><%= text_field_tag "information[f18]", @fund_information.f18 %></td></tr>
+	<tr><td>Firm Assets (in millions)</td><td><%= text_field_tag "informationX[f34]", @fund_information.f34, :readonly=>true, :style=>"background-color:#DDDDDD;" %></td></tr>
+	<tr><td>Currency of Firm Assets</td><td><% select_tag2("information[f36]", ElemOfSet.find(:all, :conditions=>["set_of_set_id=10000"]).map{|c| c.name}, @fund_information.f36) %>
+		<%= text_field_tag "informationX[f36]",@system1.f36, :readonly=>true, :style=>"background-color:#DDDDDD;" %>
+	</td></tr>
+	<tr><td>Last Updated<br/>(Firm Assets)</td><td><%= text_field_tag "no_information[f37]", @system1.f37, :readonly=>true, :style=>"background-color:#DDDDDD;" %></td></tr>
+	
+</table>
+
+<br/>
+<input type="checkbox" name="usercheck2[c60]" value="-1" <%= @fund_information.usercheck2.c60.to_i==-1 ? "checked" : "" %>> Check this box and then click Make Changes to indicate that you
+would like to provide fund-level service provider information. After
+Making Changes, you will be able to modify service provider
+information for this fund by overriding your firm’s general service
+provider information
+<br/><br/>
+
+<strong>Additional Info</strong><br/><br/>
+<table style="width:350px;">
+	<tr><td>Custodian</td><td style="width:160px;"><%= text_field_tag "systeminformation1[f1]", @system1.f1 %></td></tr>
+	<tr><td>Counsel</td><td><%= text_field_tag "systeminformation1[f2]", @system1.f2 %></td></tr>
+	<tr><td>Administrator</td><td><%= text_field_tag "systeminformation1[f3]", @system1.f3 %></td></tr>
+	<tr><td>Auditor</td><td><%= text_field_tag "systeminformation1[f4]", @system1.f4 %></td></tr>
+	<tr><td>Placement Agent</td><td><%= text_field_tag "systeminformation1[f5]", @system1.f5 %></td></tr>
+	<tr><td>Banker</td><td><%= text_field_tag "systeminformation1[f6]", @system1.f6 %></td></tr>
+	<tr><td>Consultant</td><td><%= text_field_tag "systeminformation1[f7]", @system1.f7 %></td></tr>
+	<tr><td>Prime Broker</td><td><%= text_field_tag "systeminformation1[f8]", @system1.f8 %></td></tr>
+	<tr><td>Additional Broker 1</td><td><%= text_field_tag "systeminformation1[f9]", @system1.f9 %></td></tr>
+	<tr><td>Additional Broker 2</td><td><%= text_field_tag "systeminformation1[f10]", @system1.f10 %></td></tr>
+
+
+</table>
+<br/><br/>
+<%= link_to_function image_tag('/images/btnMakeChanges.jpg'), "$('firm_info').submit();" %>
+<br/><br/>
+</div>
+
+
+<div style="clear:both;"></div>
+
+<% end %>
+
+
+	
+
+<% if flash[:sv].to_i==1 %>
+<script type="text/javascript">
+	alert('Data has been saved')
+</script>
+<% end %>

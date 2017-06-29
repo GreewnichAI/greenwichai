@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+
+    <title>GreenwichOnline - Hedge Fund Manager Reporting</title>
+
+    <style type="text/css">
+        html, body {
+            color: #333;
+            font-family: "Lucida Grande","Lucida Sans Unicode",Arial,sans-serif;
+            font-size: 14px;
+        }
+        #demo-frame > div.demo { padding: 10px !important; };
+    </style>    
+
+    <%= stylesheet_link_tag 'reset-min.css' %>
+    <%= stylesheet_link_tag 'block.css' %>
+    <%= stylesheet_link_tag 'jquery-ui-1.8.10.custom.css' %>
+    <%= stylesheet_link_tag 'funds_show.css', 'report.css', 'qgraph.css', 'navbar.css' %>
+
+    <%= javascript_include_tag 'funds.js' %>
+    <%= render 'layouts/googleUanalytics' %>
+
+</head>
+<body>
+    <div style="width:960px;margin-left:auto;margin-right:auto;margin-top:15px;">
+        <div style="float:right;text-align:right;">
+            Logged in as <%= current_user.login %><br/>
+            
+            <% if current_user.tip=="admin" %>
+              <% msg_count = Message.count(:conditions=>["user_id = ? and archived_at is null", current_user.id]) %>
+              <a href='/messages'  style="color:<%= msg_count.zero? ? "#BBBBBB" : "#FF0000"  %>;">(<%= msg_count %>) new messages</a>
+              
+              <a href="/activity">Activites</a>
+              <img src="/images/admin.jpg" alt='' onclick="document.location.href='/admin';" style="cursor:pointer;cursor:hand;" />
+              <img src="/images/site.jpg" alt='' onclick="document.location.href='/';" style="cursor:pointer;cursor:hand;" />
+            <% end %>
+            <% if current_user.owner_id.to_i>0 %>
+              <img src="/images/my_profile.png" alt='' onclick="document.location.href='/my/profile';" style="cursor:pointer;cursor:hand;" />
+            <% end %>
+            <img src="/images/logout.jpg" alt='' onclick="document.location.href='/logout';" style="cursor:pointer;cursor:hand;" />
+        </div>
+        <a href="http://www.greenwichai.com"><img src="/images/Greenwich.jpg" alt='' /></a><br/>
+        <hr />
+        <%= yield %>
+        <br/>
+        <hr/>
+        <div style="text-align:center;">If you need any assistance, please contact us at +1.203.487.6180 or <a href='mailto:support@greenwichai.com'>support@greenwichai.com</a>.  <br/>All information herein is subject to GreenwichOnline <a href="http://www.greenwichai.com/index.php/database/managers-2/terms-of-use">Terms of Use</a>.</div>        
+    </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+﻿<%= render :partial=>"main/menu" %>
+
+		<% form_for "tab1_search_form", {:action=>"/main/tab1"} do |f| %>
+		<%= hidden_field_tag "id", params[:id] %>
+		<table class="tb_search_form"><tr>
+				<th>From: </th>
+				<td><%= date_select "ds","from_date", { :default=>{:year=>@date2.year, :month=>@date2.month, :day=>@date2.day }, :start_year=>1990, :end_year=>Time.now.year+1 } %></td>
+				<th>Limit: </th>
+				<td><%= text_field_tag "limit", params[:limit] || 50 %></td>
+				<th>View: </th>
+				<td style="padding-left:15px;">
+						<%= select_tag "span_period", options_for_select([["Month","month"],["Week","week"],["Day","day"]], params[:span_period]) %>
+				</td>
+				<td><%= f.submit "Search" %></td>
+		</tr></table>
+		<% end %>
+
+		<br/>
+		
+		
+		<% form_for "tab1", :url=>"/main/tab1_save", :html=>{:id=>"form_tab1"} do |f| %>
+			
+		<img src="/images/btnConfirmInfo.jpg" onclick="$('form_tab1').submit();" style="cursor:pointer;cursor:hand;" />
+		<%= hidden_field_tag "id", params[:id] %>
+		<%= hidden_field_tag "span_period", params[:span_period]||"month" %>
+		<div style="border:solid 1px #000000;width:600px;padding:10px;">
+		<table class="tbl_fund_data">
+			<tr><th style="width:90px;">Month</th><th style="width:100px;">Return(%)</th><th style="width:130px;">Fund AUM (MMs)</th><th style="width:110px;">NAV/Shares</th><th style="width:100px;">Estimate?</th></tr>
+			<% @dts.each do |dt| %>
+					<% 
+						ddt = dt.strftime("%Y-%m-%d")
+						indice = ddt.gsub("-","") 
+						d_return = (@dt_vals[indice].nil? ? "" : @dt_vals[indice]["RETURN"].to_f*100)
+						d_fundaum = (@dt_vals[indice].nil? ? "" : @dt_vals[indice]["FUNDSMANAGED"].to_s.gsub(",","").to_f/1000000)
+						d_fundaum = d_fundaum.to_s.gsub(".0","") if d_fundaum.to_f==d_fundaum.to_i
+						d_fundaum = "" if d_fundaum.to_f==0
+						d_nav_shares = (@dt_vals[indice].nil? ? "" : @dt_vals[indice]["NAV"])
+						d_estimate =  (@dt_vals[indice].nil? ? "" : @dt_vals[indice]["ESTIMATE"])
+					%>
+
+					<tr>
+					
+							<td style="text-align:right;padding-right:10px;"><%= dt.strftime("%m/%d/%Y") %></td>
+							<td><%= text_field_tag "d_return["+indice+"]",d_return,:style=>"width:70px;" %> %</td>
+							<td><%= text_field_tag "d_fundaum["+indice+"]",d_fundaum,:style=>"width:120px;" %></td>
+							<td><%= text_field_tag "d_nav_shares["+indice+"]",d_nav_shares,:style=>"width:100px;" %></td>
+							<td style="padding-left:5px;"> 
+								Yes <%= radio_button_tag "d_estimate["+indice+"]", "yes", d_estimate.to_i==1 %> &nbsp; 
+								No <%= radio_button_tag "d_estimate["+indice+"]","no", d_estimate.to_i!=1 %>
+								</td>
+							
+					</tr>
+			<% end %>
+		</table>
+		</div>
+		<% end %>
+
+
+<% if params[:sv].to_i==1 %>
+<script type="text/javascript">
+	alert('Data has been saved')
+</script>
+<% end %>

@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>FFS</title>
+    <style type="text/css">
+      html, body {
+        color: #333;
+        font-family: "Lucida Grande","Lucida Sans Unicode",Arial,sans-serif;
+        font-size: 14px;
+      }
+      #demo-frame > div.demo { padding: 10px !important; };    
+    </style>
+
+   <%= wicked_pdf_stylesheet_link_tag 'reset-min' %>
+   <%#= wicked_pdf_stylesheet_link_tag 'block' %>
+   <%#= wicked_pdf_stylesheet_link_tag 'jquery-ui-1.8.10.custom' %>
+   <%= wicked_pdf_stylesheet_link_tag 'funds_show' %>
+   <%= wicked_pdf_stylesheet_link_tag 'report' %>
+
+   <style>
+      .title {
+        text-align: center;
+        font-size: 20px;
+        margin: 0 0 30px;
+      }
+      #fund-report {
+        color: #000;
+        font-size: 18px;
+      }
+      #fund-report h1 {
+        color: #000;
+        font-size: 32px;
+        font-weight: bold;
+      }
+      #fund-report h1+p {
+        color: #000;
+        font-size: 26px;
+        font-weight: bold;
+      }      
+      #fund-report .description {
+        color: #000;
+        font-size: 18px;
+        padding: 0 10px;
+      }
+      #fund-report .section h3 {
+        color: #000;
+        font-size: 18px;
+        margin-bottom: 10px;
+      }  
+      #fund-report .section h3 span {
+        border-bottom: 6px solid red;
+      }      
+      #fund-report .section {
+        color: #000;
+        margin: 10px 0;
+      }    
+      #fund-report .section .pull-left {
+        width: 475px;
+        margin: 20px 0px;
+      }
+      .flotr-legend-label {
+        font-size: 12px;
+        max-width: 190px;
+      }
+
+      #fund-report .table td, #fund-report .table th {
+        width: 235px;
+        padding: 3px 0;
+        font-weight: normal;
+      }
+
+      #fund-report .table .small {
+        width: 115px;
+      } 
+
+/*      #fund-report .table.odd {
+        margin-left: 20px;
+      }*/
+
+      #fund-report .table.odd .small {
+        width: 105px;
+      }
+
+      #fund-report .graph {
+        color: #000;
+        font-size: 13px;
+      }
+   </style>
+
+   <%= javascript_include_tag RAILS_ROOT+"/public/javascripts/jquery-1.4.4.js" %>
+   <%= javascript_include_tag RAILS_ROOT+"/public/javascripts/flotr2.min.js" %>
+
+
+
+  </head>
+  <body>
+    <div style="width:960px;margin-left:auto;margin-right:auto;margin-top:15px;">
+      <div class="title">Greenwich Hedge Fund Profile</div>
+      <div id="fund_div">
+        <div id="fund_sub_div">
+          <%= yield %>
+        </div>
+      </div>
+      <div id="login_bottom">&nbsp;</div>
+    </div>
+  </body>
+</html>

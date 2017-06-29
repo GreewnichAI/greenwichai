@@ -1,0 +1,122 @@
+<%-if @informations%>
+  <table class="freezePane summary_table" id="risk_dashboard_table">
+    <thead>
+      <tr>
+        <th class="sortable fund_name">
+          <table class="nested_table">
+            <tr>
+              <td colspan=1 class="heading">&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan=1><%=cus_sortable 'Fund Name', '0'%></td>
+            </tr>
+          </table>
+        </th>
+        <th class="sortable">
+          <table class="nested_table">
+            <tr>
+              <td colspan=1 class="heading strategy">&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan=1 class="strategy"><%=cus_sortable 'Strategy', '1'%></td>
+            </tr>
+          </table>
+        </th>                
+        <th class="sortable">
+          <table class="nested_table">
+            <tr>
+              <td colspan=1 class="heading">&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan=1><%=cus_sortable 'Perf As Of:', '2'%></td>
+            </tr>
+          </table>
+        </th>
+        <%- i = 2%>
+        <%["Last Month", "YTD", 1.year.ago(Date.today).strftime("%Y"), 2.year.ago(Date.today).strftime("%Y")].each do |col| %>
+          <th>
+            <table class="nested_table">
+              <tr>
+                <td colspan=3 class="heading">
+                  <%=col%>
+                </td>
+              </tr>
+              <tr>
+                <%["Fund", "Strategy", "Diff"].each do |r_col|%>
+                  <%i = i+1%>
+                  <td class="sortable"><%=cus_sortable r_col, i.to_s%></td>
+                <%end%>
+              </tr>
+            </table>
+          </th> 
+        <%end%>              
+      </tr>
+    </thead>
+    <tbody>
+      <%@risk_dashboard_snapshot.each do |fund_group, fund_group_data|%>     
+        <tr class="group blankGroup">
+          <th class="grouped" colspan=7>&nbsp;</th>
+        </tr>      
+        <tr class="group hideGroup">
+          <td class="grouped" colspan=7><span><%=field_or_null fund_group%></span></td>
+        </tr>
+        <%fund_group_data.each do |fund|%>
+          <tr>
+            <td class="fund_name">
+              <%=link_to "#{field_or_null(fund[0])}", "/funds/show/#{fund[15]}", :target => '_blank', :class=>"blue-lnk"%>
+            </td>
+            <td class="strategy"><%=field_or_null fund[1]%></td>
+            <%-perf_date = fund[2] ? fund[2].strftime("%b-%y") : '-' %>
+            <td><%=perf_date%></td>
+            <%-counter=2%>
+            <%-4.times do |i|%>
+              <td>
+                <table class="nested_table">
+                  <tr>
+                    <%-2.times do |j|%>
+                      <%-counter=counter+1%>
+                      <td><%=field_or_null_with_percent fund[counter]%></td>
+                    <%end%>
+                    <%-counter=counter+1%>
+                    <td class="<%='highlight' if fund[counter] and fund[counter] < 0 %>"><%=field_or_null_with_percent fund[counter]%></td>
+                  </tr>
+                </table>
+              </td> 
+            <%end%>                                                 
+          </tr>    
+        <%end%>
+      <%end%>
+    </tbody>
+  </table>
+<%else%>
+  <p>You don't have any funds in your portfolio as of now.</p>
+<%end%>
+
+
+<script type="text/javascript">
+  $(".sortable").live('click', function(){
+    var elem = $(this).find('a')[0];
+    var sort_by = $(elem).attr('data-sort-by');
+    var order_by = $(elem).attr('data-order-by');
+
+    $.ajax({
+      url: '/my/my_funds?sort_by='+sort_by+'&order_by='+order_by
+    });
+
+    return false;
+  });
+
+  $("#risk_dashboard_table").freezePanes({
+    width: 900,
+    height: 400,
+    fixedColumnWidth: 150
+  }); 
+
+  $(document).ready(function(){
+    $('.group').each(function(){
+      $(this).css('height', '27px');
+    });
+
+    $("#risk_dashboard_table .hideGroup").hide();
+  });
+</script>

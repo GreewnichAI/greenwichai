@@ -1,0 +1,168 @@
+<%= render (:partial=>"menu") %>
+<style>
+.len200 { width:200px; }
+.lenauto { width:auto; }
+li {margin-left:30px;}
+</style>
+<br/>
+
+
+
+<% form_for "fund_strategy", :url=>{:action=>"fund_strategyC_save"}, :html=>{:id=>"fund_strategy"} do |f| %>
+	<%= hidden_field_tag "id", params[:id] %>
+
+<% clr = @fund_information.in_calc.to_i==1 ?  "border:solid 1px #00FF00;color:#00AA00;background-color:#EEFFEE;" :  "border:solid 1px #ff0000;color:#FF0000;background-color:#FFEEEE;" %>
+<div style="<%= clr %>font-weight:bold;;text-align:center;">
+		<%= check_box_tag "information[in_calc]","1", @fund_information.in_calc.to_i==1 %> INCLUDE FUND IN INDEX CALCULATIONS?
+</div>
+<hr/>
+Manual Edit? <%= check_box_tag "information[manual_edit]", "1", @fund_information.manual_edit==1, :disabled=>true %><br/>
+
+<small>If checked the changes the manager makes on the strategy page will not be reflected on this page and they will have to be done manually!</small>
+<%= link_to "Mappings", "/Index Inclusion Mappings.xls"%>
+<% if @fund_information.manual_edit==1 %>
+		<input type="button" value="Cancel Manual Edit" onclick="document.location.href='/my/cancel_manual_edit/<%= params[:id] %>'" />
+<% end %>
+<hr/>
+
+	<div style="float:left;width:400px;">
+		<ul>
+		<li><%= check_box_tag "usercheck7[c1]","1", @usercheck7.c1==1 %> Long/Short Equity Group</li>
+		<li><ul>
+			<li><%= check_box_tag "usercheck7[c2]","1", @usercheck7.c2==1 %> Value</li>
+			<li><%= check_box_tag "usercheck7[c3]","1", @usercheck7.c3==1 %> Growth</li>
+			<li><%= check_box_tag "usercheck7[c4]","1", @usercheck7.c4==1 %> Opportunistic</li>
+			<li><%= check_box_tag "usercheck7[c5]","1", @usercheck7.c5==1 %> Short-Biased</li>
+		</ul></li>
+		<li><%= check_box_tag "usercheck7[c6]","1", @usercheck7.c6==1 %> Market Neutral Group</li>
+		<li><ul>
+			<li><%= check_box_tag "usercheck7[c7]","1", @usercheck7.c7==1 %> Equity Market Neutral</li>
+			<li><%= check_box_tag "usercheck7[c8]","1", @usercheck7.c8==1 %> Event-Driven</li>
+			<li><ul>
+				<li><%= check_box_tag "usercheck7[c9]","1", @usercheck7.c9==1 %> Merger Arbitrage</li>
+				<li><%= check_box_tag "usercheck7[c10]","1", @usercheck7.c10==1 %> Distressed Securities</li>
+				<li><%= check_box_tag "usercheck7[c11]","1", @usercheck7.c11==1 %> Diversified Event-Driven Strategies</li>
+			</ul></li>
+			<li><%= check_box_tag "usercheck7[c12]","1", @usercheck7.c12==1 %> Arbitrage</li>
+			<li><ul>
+				<li><%= check_box_tag "usercheck7[c13]","1", @usercheck7.c13==1 %> Convertible Arbitrage</li>
+				<li><%= check_box_tag "usercheck7[c14]","1", @usercheck7.c14==1 %> Fixed Income Arbitrage</li>
+				<li><%= check_box_tag "usercheck7[c15]","1", @usercheck7.c15==1 %> Diversified Arbitrage Strategies</li>
+			</ul></li>
+		</ul></li>
+		<li><%= check_box_tag "usercheck7[c16]","1", @usercheck7.c16==1 %> Directional Trading Group</li>
+		<li><ul>
+			<li><%= check_box_tag "usercheck7[c17]","1", @usercheck7.c17==1 %> Macro</li>
+			<li><%= check_box_tag "usercheck7[c18]","1", @usercheck7.c18==1 %> Futures</li>
+			<li><ul>
+				<li><%= check_box_tag "usercheck7[c19]","1", @usercheck7.c19==1 %> Futures Systematic</li>
+				<li><%= check_box_tag "usercheck7[c20]","1", @usercheck7.c20==1 %> Futures Discretionary</li>
+			</ul></li>
+		</ul></li>
+		<li><%= check_box_tag "usercheck7[c21]","1", @usercheck7.c21==1 %> Specialty Strategies</li>
+		<li><ul>
+			<li><%= check_box_tag "usercheck7[c22]","1", @usercheck7.c22==1 %> Fixed Income</li>
+			<li><%= check_box_tag "usercheck7[c23]","1", @usercheck7.c23==1 %> Multi-Strategy</li>
+		</ul></li>
+		<li><%= check_box_tag "usercheck7[c24]","1", @usercheck7.c24==1 %> Fund of Funds</li>
+		</ul>
+<br/>
+<hr/>
+<br/>
+	<ul>
+		<li><%= check_box_tag "usercheck7[c71]","1", @usercheck7.c71==1 %> Equities</li>
+		<li><ul>
+			<li><%= check_box_tag "usercheck7[c72]","1", @usercheck7.c72==1 %> Technology</li>
+			<li><%= check_box_tag "usercheck7[c73]","1", @usercheck7.c73==1 %> Infrastructure</li>
+			<li><%= check_box_tag "usercheck7[c74]","1", @usercheck7.c74==1 %> Energy</li>
+			<li><%= check_box_tag "usercheck7[c75]","1", @usercheck7.c75==1 %> Financials</li>
+			<li><%= check_box_tag "usercheck7[c76]","1", @usercheck7.c76==1 %> Healthcare</li>
+			<li><%= check_box_tag "usercheck7[c77]","1", @usercheck7.c77==1 %> Real Estate</li>
+		</ul></li>
+		<li><%= check_box_tag "usercheck7[c78]","1", @usercheck7.c78==1 %> Fixed Income</li>
+		<li><ul>
+			<li><%= check_box_tag "usercheck7[c79]","1", @usercheck7.c79==1 %> Agency</li>
+			<li><%= check_box_tag "usercheck7[80]","1", @usercheck7.c80==1 %> Government</li>
+			<li><%= check_box_tag "usercheck7[81]","1", @usercheck7.c81==1 %> CS</li>
+			<li><%= check_box_tag "usercheck7[82]","1", @usercheck7.c82==1 %> Credit - Investment Grade</li>
+			<li><%= check_box_tag "usercheck7[83]","1", @usercheck7.c83==1 %> Credit - High Yield</li>
+			<li><%= check_box_tag "usercheck7[84]","1", @usercheck7.c84==1 %> MBS</li>
+			<li><%= check_box_tag "usercheck7[85]","1", @usercheck7.c85==1 %> ABS</li>
+			<li><%= check_box_tag "usercheck7[86]","1", @usercheck7.c86==1 %> ABL</li>
+		</ul></li>	
+		<li><%= check_box_tag "usercheck7[87]","1", @usercheck7.c87==1 %> Commodities</li>
+		<li><ul>
+			<li><%= check_box_tag "usercheck7[88]","1", @usercheck7.c88==1 %> Energy</li>
+			<li><%= check_box_tag "usercheck7[89]","1", @usercheck7.c89==1 %> Agriculture</li>
+			<li><%= check_box_tag "usercheck7[90]","1", @usercheck7.c90==1 %> Metals</li>
+			<li><%= check_box_tag "usercheck7[91]","1", @usercheck7.c91==1 %> Financial</li>
+		</ul></li>
+		<li><%= check_box_tag "usercheck7[92]","1", @usercheck7.c92==1 %> Currencies</li>
+	</ul>
+
+	</div>
+	
+	
+	<div style="float:left;width:400px;">
+<ul>
+<li><%= check_box_tag "usercheck7[c31]","1", @usercheck7.c31==1 %> Global</li>
+<li><%= check_box_tag "usercheck7[c32]","1", @usercheck7.c32==1 %> Asia</li>
+<li><ul>
+	<li><%= check_box_tag "usercheck7[c33]","1", @usercheck7.c33==1 %> Japan</li>
+	<li><%= check_box_tag "usercheck7[c34]","1", @usercheck7.c34==1 %> Australia</li>
+	<li><%= check_box_tag "usercheck7[c35]","1", @usercheck7.c35==1 %> Asia-Pacific</li>
+</ul></li>
+<li><%= check_box_tag "usercheck7[c36]","1", @usercheck7.c36==1 %> Pan-European</li>
+<li><%= check_box_tag "usercheck7[c37]","1", @usercheck7.c37==1 %> Europe (Western)</li>
+<li><ul>
+	<li><%= check_box_tag "usercheck7[c38]","1", @usercheck7.c38==1 %> United Kingdom</li>
+	<li><%= check_box_tag "usercheck7[c39]","1", @usercheck7.c39==1 %> Scandinavia</li>
+	<li><%= check_box_tag "usercheck7[c40]","1", @usercheck7.c40==1 %> Germany</li>
+	<li><%= check_box_tag "usercheck7[c41]","1", @usercheck7.c41==1 %> Italy</li>
+	<li><%= check_box_tag "usercheck7[c42]","1", @usercheck7.c42==1 %> France</li>
+	<li><%= check_box_tag "usercheck7[c43]","1", @usercheck7.c43==1 %> Spain</li>
+	<li><%= check_box_tag "usercheck7[c44]","1", @usercheck7.c44==1 %> Netherlands</li>
+</ul></li>
+<li><%= check_box_tag "usercheck7[c45]","1", @usercheck7.c45==1 %> North America</li>
+<li><ul>
+	<li><%= check_box_tag "usercheck7[c46]","1", @usercheck7.c46==1 %> Canada</li>
+	<li><%= check_box_tag "usercheck7[c47]","1", @usercheck7.c47==1 %> United States</li>
+</ul></li>
+<li><%= check_box_tag "usercheck7[c48]","1", @usercheck7.c48==1 %> Emerging Markets - Global</li>
+<li><%= check_box_tag "usercheck7[c49]","1", @usercheck7.c49==1 %> Emerging Markets - Europe</li>
+<li><ul>
+	<li><%= check_box_tag "usercheck7[c50]","1", @usercheck7.c50==1 %> Eastern Europe</li>
+	<li><%= check_box_tag "usercheck7[c51]","1", @usercheck7.c51==1 %> Russia</li>
+</ul></li>
+<li><%= check_box_tag "usercheck7[c52]","1", @usercheck7.c52==1 %> Emerging Markets - Asia</li>
+<li><ul>
+	<li><%= check_box_tag "usercheck7[c53]","1", @usercheck7.c53==1 %> China</li>
+	<li><%= check_box_tag "usercheck7[c54]","1", @usercheck7.c54==1 %> India</li>
+</ul></li>
+<li><%= check_box_tag "usercheck7[c55]","1", @usercheck7.c55==1 %> Emerging Markets - Latin America</li>
+<li><ul>
+	<li><%= check_box_tag "usercheck7[c56]","1", @usercheck7.c56==1 %> Argentina</li>
+	<li><%= check_box_tag "usercheck7[c57]","1", @usercheck7.c57==1 %> Brazil</li>
+	<li><%= check_box_tag "usercheck7[c58]","1", @usercheck7.c58==1 %> Mexico</li>
+</ul></li>	
+<li><%= check_box_tag "usercheck7[c59]","1", @usercheck7.c59==1 %> Emerging Markets - Middle East and Africa</li>
+<li><ul>
+	<li><%= check_box_tag "usercheck7[c60]","1", @usercheck7.c60==1 %> Middle East</li>
+	<li><%= check_box_tag "usercheck7[c61]","1", @usercheck7.c61==1 %> Africa</li>
+</ul></li>
+</ul>
+
+	</div>
+	<div style="clear:both;"></div>
+	
+	<br/><br/>
+	<img src="/images/btnConfirmInfo.jpg" onclick="$('fund_strategy').submit();" style="cursor:pointer;cursor:hand;" />
+	
+<% end %>
+
+
+<% if flash[:sv].to_i==1 %>
+<script type="text/javascript">
+	alert('Data has been saved')
+</script>
+<% end %>

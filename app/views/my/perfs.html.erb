@@ -1,0 +1,409 @@
+﻿<%= render (:partial=>"layouts/google_analytics") %>
+<%= render (:partial=>"menu") %>
+
+
+
+<br/>
+Fund Name: <strong><%= @fund_information.f20 %></strong><br/>
+<br/>
+		<% form_for "tab1_search_form", {:action=>"show"} do |f| %>
+		<%= hidden_field_tag "id", @fund_information.id %>
+		
+		
+		<table class="tb_search_form"><tr>
+				<th>From: </th>
+				<td><%= date_select "ds","from_date", { :default=>{:year=>@date2.year, :month=>@date2.month, :day=>@date2.day }, :start_year=>1990, :end_year=>Time.now.year+1 } %></td>
+				<th>Limit: </th>
+				<td><%= text_field_tag "limit", @limit_items %></td>
+				<th>View: </th>
+				<td style="padding-left:15px;">
+						<%= select_tag "span_period", options_for_select([["Month","month"],["Week","week"],["Day","day"]], @span_period) %>
+				</td>
+				<td><%= f.submit "Search" %></td>
+		</tr></table>
+		<% end %>
+
+		<br/>
+		
+		<% form_for "tab1", :url=>{:action=>"perfs_save"}, :html=>{:id=>"form_tab1"} do |f| %>
+		<%= hidden_field_tag "old_si1_f36", @system1.f36 %>	
+		<%= hidden_field_tag "old_si1_f32", @system1.f32 %>	
+		<%= hidden_field_tag "old_si1_f31", @system1.f31 %>	
+		
+		<img src="/images/btnConfirmInfo.jpg" onclick="if (check_ds()){ validateInputs();}" style="cursor:pointer;cursor:hand;" />
+		<%= hidden_field_tag "id", @fund_information.id %>
+		<%= hidden_field_tag "fund_id", @fund_information.id_1 %>
+		<%= hidden_field_tag "span_period", @span_period %>
+
+		<br/>
+		
+		<br/>
+		<table>
+			<tr>
+				<td>
+						<table style="width:250px;height:260px;margin:5px;background-color:#F6F6F6;margin-right:0px;border:solid 1px #000000;">
+							<tr><td colspan="2"><strong>Firmwide AUM (MMs);e.g., 23.45 for 23,450,000</strong></td></tr>
+							<tr><td>Asset (MMs):</td><td><%= text_field_tag("no_systeminformation1[f35]",@fund_information.last_firm_aum, :class=>"len50", :readonly=>true, :style=>"background-color:#DDDDDD;" ) %></td>
+							<tr><td>Currency:</td><td>
+									<%= select_tag2("systeminformation1[f36]",ElemOfSet.find(:all, :conditions=>["set_of_set_id=10000"]).map{|c| c.name},@system1.f36) %>
+										
+							</td>
+							<tr><td>Last Updated:</td><td><%= text_field_tag("no_systeminformation1[f37]",@system1.f37, :readonly=>true, :style=>"background-color:#DDDDDD;") %></td>
+						</table>
+				</td>
+				<td>
+						<table style="width:250px;height:260px;margin:5px;background-color:#F6F6F6;margin-right:0px;border:solid 1px #000000;" >
+							<tr><td colspan="2"><strong>Fund Assets & Statistics (update table below)</strong></td></tr>
+							<tr><td>Asset (MMs):</td><td><%= text_field_tag("no_systeminformation1[f27]",@fund_information.last_aum, :class=>"len50", :readonly=>true, :style=>"background-color:#DDDDDD;" ) %></td></tr>
+							<tr><td>Currency:</td><td>
+								<%= select_tag2("systeminformation1[f28]",ElemOfSet.find(:all, :conditions=>["set_of_set_id=10000"]).map{|c| c.name}, @system1.f28)  %>
+							</td></tr>
+							<tr><td>YTD Return %:</td><td><%= text_field_tag("no_ytd", @fund_information.ytd.round(2), :class=>"len50", :readonly=>true, :style=>"background-color:#DDDDDD;") %>%</td></tr>
+							<tr><td>Cumulative % (Inception)</td><td><%= text_field_tag("no_cummulative", @fund_information.cummulative.round(2), :class=>"len50", :readonly=>true, :style=>"background-color:#DDDDDD;") %>%</td></tr>
+							<tr><td>Annualized % (Inception):</td><td><%= text_field_tag("no_ann_cummulative", @fund_information.ann_cummulative, :class=>"len50", :readonly=>true, :style=>"background-color:#DDDDDD;") %>%</td></tr>
+							<tr><td> 	</td><td></td></tr>
+							<tr><td>Returns Currency: 	</td><td nowrap><%= select_tag2("information[f35]",ElemOfSet.find(:all, :conditions=>["set_of_set_id=10000"]).map{|c| c.name}, @fund_information.f35) %></td></tr>
+							</table>
+				</td>
+				<td>
+						<table style="width:250px;height:260px;margin:5px;background-color:#F6F6F6;margin-right:0px;border:solid 1px #000000;">
+							<tr><td colspan="2"><strong>Firmwide Assets in Strategy (MMs);<br/>e.g., 23.45 for 23,450,000</strong></td></tr>
+							<tr><td>Asset (MMs):</td><td><%= text_field_tag("systeminformation1[f31]",@system1.f31.to_s.gsub(",","").to_f>0 ? (@system1.f31.to_s.to_s.gsub(",","").to_f/1000000) : @system1.f31, :class=>"len50" ) %></td>
+							<tr><td>Currency:</td><td><%=  select_tag2("systeminformation1[f32]",ElemOfSet.find(:all, :conditions=>["set_of_set_id=10000"]).map{|c| c.name}, @system1.f32)  %></td>
+							<tr><td>Last Updated:</td><td><%= text_field_tag("no_systeminformation1_no[f33]",@system1.f33, :readonly=>true, :style=>"background-color:#DDDDDD;") %></td>
+						</table>
+				</td>
+				<% if current_user.tip!="member" %>
+				<td>
+						<table style="width:250px;height:260px;margin:5px;background-color:#F6F6F6;margin-right:0px;border:solid 1px #000000;">
+							<tr><td><strong>Data Entry Notes<strong></td></tr>
+							<tr><td><%= text_area_tag("userinformation1[data_entry_notes]",@user1.data_entry_notes, :class=>"multiline", :style=>"width:250px;height:240px;" ) %></td></tr>
+						</table>
+				</td>
+				<%end%>
+			</tr>
+		
+		</table>
+		<br/>		
+    
+		
+		<table style="border:solid 1px #000000;width:1200px;" class="blue_table">
+			<tr><th style="width:90px;">Month</th><th style="width:100px;">Return(%)</th>
+      <% if current_user.tip=="admin" %>
+          <th>Data Source</th>
+          <th>Return Update Timestamp</th>
+      <% end %>
+			<th style="width:110px;">Fund AUM (MMs)</th>
+      <% if current_user.tip=="admin" %>
+          <th>Data Source</th>
+          <th>AUM Update Timestamp</th>
+      <% end %>      
+			<th style="width:90px;">Firm AUM (MMs)</th>
+			<th style="width:110px;">Gross Exposure</th>
+			<th style="width:110px;">NAV/Shares</th><th style="width:100px;">Estimate?</th></tr>
+			<% @dts.each do |dt| %>
+					<% 
+						ddt = dt.strftime("%Y-%m-%d")
+						indice = ddt.gsub("-","") 
+						d_return = ((@perf_vals[indice].nil? or @perf_vals[indice].return.blank?)  ? "" : @perf_vals[indice].return.to_f*100)
+						
+						d_fundaum = (@perf_vals[indice].nil? ? "" : @perf_vals[indice].fundsmanaged.to_s.gsub(",","").to_f/1000000)
+						d_fundaum = d_fundaum.to_s.gsub(".0","") if d_fundaum.to_f==d_fundaum.to_i
+						d_fundaum = "" if d_fundaum.to_f==0
+						
+						d_firmaum = (@perf_vals[indice].nil? ? "" : @perf_vals[indice].firm_aum.to_s.gsub(",","").to_f/1000000)
+						d_firmaum = d_firmaum.to_s.gsub(".0","") if d_firmaum.to_f==d_firmaum.to_i
+						d_firmaum = "" if d_firmaum.to_f==0
+						
+						
+						d_nav_shares = (@perf_vals[indice].nil? ? "" : @perf_vals[indice].nav)
+            d_return_ds = (@perf_vals[indice].nil? ? "" : @perf_vals[indice].return_ds)
+            d_return_ut = (@perf_vals[indice].nil? ? "" : @perf_vals[indice].return_ut)
+            
+            d_aum_ds = (@perf_vals[indice].nil? ? "" : @perf_vals[indice].aum_ds)
+            d_aum_ut = (@perf_vals[indice].nil? ? "" : @perf_vals[indice].aum_ut)
+            
+						d_estimate =  (@perf_vals[indice].nil? ? "" : @perf_vals[indice].estimate)
+						#d_firmaum = (@perf_vals[indice].nil? ? "" : @perf_vals[indice].firm_aum)
+						d_gross_exposure = (@perf_vals[indice].nil? ? "" : @perf_vals[indice].gross_exposure)
+					%>
+
+					<tr>
+					
+							<td style="text-align:left;padding-right:10px;" id="<%=indice%>"><%= dt.strftime("%m/%d/%Y") %></td>
+							<td><%= text_field_tag("d_return["+indice+"]",d_return,:style=>"width:70px;", :class=>"cls_ret") %> %</td>
+              
+              <% if current_user.tip=="admin" %>
+                  <% select_options = [d_return_ds] %>
+                  <% select_options =["","Self-Reporting", "Email Invitation"]+SetOfSet.find_by_name("reporting_method").elem_of_sets.map{|c| c.name} if d_return_ds.to_s.strip=="" %>
+                  <td><%= select_tag "d_return_ds["+indice+"]",options_for_select(select_options,d_return_ds),:style=>"width:70px;" %></td>
+                  <td><%= text_field_tag "d_return_ut["+indice+"]",d_return_ut,:style=>"width:70px;", :readonly=>"readonly" %></td>
+              <% end %>
+              
+							<td><%= text_field_tag "d_fundaum["+indice+"]",d_fundaum,:style=>"width:120px;", :class=>"cls_aum maximum" %></td>
+              
+              
+              <% if current_user.tip=="admin" %>
+                  <% select_options = [d_aum_ds] %>
+                  <% select_options =["", "Self-Reporting", "Email Invitation"]+SetOfSet.find_by_name("reporting_method").elem_of_sets.map{|c| c.name} if d_aum_ds.to_s.strip=="" %>
+                  <td><%= select_tag "d_aum_ds["+indice+"]",options_for_select(select_options,d_aum_ds),:style=>"width:70px;" %></td>
+                  <td><%= text_field_tag "d_aum_ut["+indice+"]",d_aum_ut,:style=>"width:70px;", :readonly=>"readonly" %></td>
+              <% end %>
+							
+							<td><%= text_field_tag "d_firmaum["+indice+"]",d_firmaum,:style=>"width:120px;", :class=>"maximum" %></td>
+							<td><%= text_field_tag "d_gross_exposure["+indice+"]",d_gross_exposure,:style=>"width:80px;" %> %</td>
+							<td><%= text_field_tag "d_nav_shares["+indice+"]",d_nav_shares,:style=>"width:100px;" %></td>
+							<td style="padding-left:5px;"> 
+								Yes <%= radio_button_tag "d_estimate["+indice+"]", "yes", d_estimate.to_i==1 %> &nbsp; 
+								No <%= radio_button_tag "d_estimate["+indice+"]","no", d_estimate.to_i!=1 %>
+								</td>
+							
+					</tr>
+			<% end %>
+		</table>
+		
+		Initial NAV: <%= text_field_tag "systemcontrol[nav]", @systemcontrol.nav %>
+		
+		
+		
+		
+		
+
+		<% end %>
+<div id="dialog-modal">
+    <p></p>
+</div>
+<div id="dialog-modal-refresh-page">
+  <p></p>
+</div>
+<div id="prompt-modal">
+  <p></p>
+  <input type="text" name="prompt-value" id="prompt-value" class="text ui-widget-content ui-corner-all" />
+</div>
+<script type="text/javascript">
+  function check_good_data()
+  {
+    np = true;
+
+//    perc = 0 ; $$('.cls_ret').each(function(z) { if (z.value>25 || z.value<(-25)) { perc = z.value; } });
+//    if (perc!=0) {
+//        np = confirm('You have entered a return of '+perc+' . Are you sure this is accurate?');
+//    }
+    return np;
+  }
+
+  function check_ds()
+  {
+     var pk = true;
+     <% if current_user.tip=="admin" %>
+     $$(".cls_ret").each(function(k) {
+         if ( $(k.id.replace("d_return","d_return_ds")).value == "" ) {
+             if (k.value!="" && k.defaultValue=="") {
+                pk = false;
+             }
+         }
+     });
+     
+     
+     $$(".cls_aum").each(function(k) {
+         if ( $(k.id.replace("d_fundaum","d_aum_ds")).value == "" ) {
+             if (k.value!="" && k.defaultValue=="") {
+                pk = false;
+             }
+         }
+     });
+     <% end %>
+     if (!pk) {
+        alert('Data Source must be updated before saving');
+     }
+
+     if(pk) {
+         pk = check_good_data();
+     }
+     return pk;
+
+  }
+  $$('.cls_ret').invoke('observe', 'keyup', function(event) {
+    vl = parseFloat(this.value.replace(",","."));
+      if ((vl>25) || (vl<-25)) {
+        if ((event.keyCode>47 && event.keyCode<59) || event.keyCode==188 || event.keyCode==190 || event.keyCode==189 || (event.keyCode>95 && event.keyCode < 106)) {
+          alert('You have entered a return of '+this.value+'% . Are you sure this is accurate?');
+        }
+      }
+  });
+
+  function changeClassf32(){
+      if(!jQuery('#over_systeminformation1_f32').hasClass('required') && jQuery('#systeminformation1_f32').val() == 'other'){
+          jQuery('#over_systeminformation1_f32').attr('class', 'require validate-only-letters len50');
+      }
+      else{
+          jQuery('#over_systeminformation1_f32').attr('class', 'len50');
+      }
+  }
+
+  function changeClassf36(){
+      if(!jQuery('#over_systeminformation1_f36').hasClass('required') && jQuery('#systeminformation1_f36').val() == 'other'){
+          jQuery('#over_systeminformation1_f36').attr('class', 'require validate-only-letters len50');
+      }
+      else{
+          jQuery('#over_systeminformation1_f36').attr('class', 'len50');
+      }
+  }
+
+  function changeClassf35(){
+      if(!jQuery('#over_information_f35').hasClass('required') && jQuery('#information_f35').val() == 'other'){
+          jQuery('#over_information_f35').attr('class', 'require validate-only-letters len50');
+      }
+      else{
+          jQuery('#over_information_f35').attr('class', 'len50');
+      }
+  }
+
+  function changeClassf28(){
+      if(!jQuery('#over_systeminformation1_f28').hasClass('required') && jQuery('#systeminformation1_f28').val() == 'other'){
+          jQuery('#over_systeminformation1_f28').attr('class', 'require validate-only-letters len50');
+      }
+      else{
+          jQuery('#over_systeminformation1_f28').attr('class', 'len50');
+      }
+  }
+
+      jQuery('#systeminformation1_f32').change(function() {
+          changeClassf32();
+      });
+
+  jQuery('#systeminformation1_f36').change(function() {
+         changeClassf36();
+  });
+
+  jQuery('#information_f35').change(function() {
+          changeClassf35();
+  });
+  jQuery('#systeminformation1_f28').change(function() {
+            changeClassf28();
+  });
+
+  jQuery(document).ready(function() {
+      changeClassf28();
+      changeClassf32();
+      changeClassf35();
+      changeClassf36();
+  });
+
+  jQuery('.maximum').blur(function(){
+    if(jQuery(this).val() > 100000){
+        jQuery("#dialog-modal").find('p').text('You have entered assets of '+jQuery(this).val()+ ' million. Are you sure this is accurate?');
+        jQuery("#dialog-modal").dialog("open");
+    }
+  });
+
+  var newReturnTimeSpan;
+  var newReturnsValue;
+  var newReturnId;
+  var oldReturnValue;
+  var newReturnTimeSpanString;
+
+  jQuery('.cls_ret').change(function(){
+      var id = jQuery(this).parent().parent().find('td')[0];
+      var date =  Date.parse(jQuery(id).text());
+      if(jQuery(this).val() != '' && (newReturnTimeSpan == null || date > newReturnTimeSpan || date == newReturnTimeSpan)){
+        newReturnsValue = jQuery(this).val();
+        newReturnId = id;
+        newReturnTimeSpan = date;
+          newReturnTimeSpanString = jQuery(id).text();
+          oldReturnValue = this.defaultValue;
+      }
+      else if(id == newReturnId && jQuery(this).val() == ''){
+          newReturnsValue = null;
+      }
+  });
+
+  jQuery(function() {
+      jQuery( "#dialog-modal" ).dialog({
+          autoOpen: false,
+          modal: true,
+          buttons: {
+              Ok: function() {
+                  jQuery( this ).dialog( "close" );
+              }
+          }
+      });
+
+      jQuery('#dialog-modal-refresh-page').dialog({
+          autoOpen: false,
+          modal: true,
+          buttons: {
+              Ok: function() {
+                  jQuery( this ).dialog( "close" );
+                  window.location.href=window.location.href;
+              }
+          }
+      });
+
+      jQuery( "#prompt-modal" ).dialog({
+          autoOpen: false,
+          modal: true,
+          buttons: {
+              Ok: function() {
+                  jQuery( this ).dialog( "close" );
+                  var returnMessage = jQuery("#prompt-value").val();
+                  if(returnMessage != newReturnsValue){
+                      result =false;
+                      jQuery.ajax({
+                          url: "/my/create_fundsmistake",
+                          dataType: "json",
+                          type: "POST",
+                          processData: false,
+                          contentType: "application/json",
+                          data: "{\"fund_name\":\"<%= @fund_information.f20 %>\", \"fund_id\":\"<%= @fund_information.id_1 %>\"}"
+                      });
+                      jQuery("#dialog-modal-refresh-page").find('p').text('Values do not match. Please double-check your data and enter the return again');
+                      jQuery("#dialog-modal-refresh-page").dialog("open");
+                  }
+                  else{
+                      $('form_tab1').submit();
+                  }
+              },
+              Cancel: function(){
+                  jQuery( this ).dialog( "close" );
+              }
+          }
+      });
+  });
+
+  function validateInputs(){
+      var valid = new Validation('form_tab1');
+      var result = valid.validate();
+      <% if current_user.tip=="admin" || current_user.tip=="data_entry" || current_user.tip=="data_entry2" %>
+      if(result){
+          if(newReturnsValue!= null){
+              jQuery("#prompt-modal").find("p").text('Please re-enter the return for ' + newReturnTimeSpanString + '');
+              jQuery("#prompt-modal").dialog("open");
+          }
+          else{
+              $('form_tab1').submit();
+          }
+      }
+      <% else%>
+      if(result){
+          $('form_tab1').submit();
+      }
+      <% end %>
+      return false;
+  }
+
+  Validation.add('validate-only-letters', 'Only letters allowed', {
+      pattern : new RegExp("^[a-zA-Z]+$") // only letter allowed
+});
+
+
+</script>
+		
+
+<% if flash[:sv].to_i==1 %>
+<script type="text/javascript">
+	alert('Data has been saved')
+</script>
+<% end %>
+
+

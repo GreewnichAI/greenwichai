@@ -1,0 +1,13 @@
+<!-- Top navbar for all pages once user sign in -->
+
+<ul class="navbar clearfix">
+  <li><%= link_to "My Funds",'/my_funds', :"data-trackable" => current_user.id %></a></li>
+  <li><%= link_to "Update my Funds",update_my_funds_path %></li>
+  <li><%= link_to "My Performance Summary",'/my_performance_summary', :class => 'no_align' %></li>
+  <li><%= link_to "Peer Report",'/reviews', :"data-creatable" => current_user.id  %></li>
+  <li><%= link_to "My Peer Portfolio",'/my_peer_portfolio' %></li>
+  <li><%= link_to "Search the Database",'/search', :class => 'no_align' %></li>
+  <li><%= link_to "Market My Funds",'/market_my_funds' %></li>
+  <!-- <li><a href='http://hedgefund.com'>Market My Funds</a></li> -->
+  <li><a href='http://greenwichai.com/index.php/indices/hedge-fund-indices/global-hf-index/gai-global-returns' target='_blank'>Indices</a></li>
+</ul>

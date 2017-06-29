@@ -1,0 +1,91 @@
+﻿<%= render :partial=>"admin/menu" %>
+<br/><br/>
+
+
+
+<script type="text/javascript">
+var grid;
+Ext.onReady(function(){
+	 	store = new Ext.data.JsonStore(
+				{ autoDestroy: true, url: '/users/index_json', remoteSort: true, sortInfo: { field: 'id', direction: 'ASC' },
+  				storeId: 'myStore', idProperty: 'id', root: 'data', totalProperty: 'total', 
+  				fields: [
+	  						{ name: 'id' },
+	  						{ name: 'login' }, 
+		  					{ name: 'g_addresses_email' }, 
+		  					{ name: 'g_addresses_phone' }, 
+	  						{ name: 'fund_names' },
+	  						{ name: 'active' },
+	  						{ name: 'firm_name' },
+	  						{ name: 'user_names' }
+  				]
+    });
+
+		var filters = new Ext.ux.grid.GridFilters({ encode: false, local: false,
+        filters: [
+						{ type: 'string', dataIndex: 'id' }, 
+						{ type: 'string', dataIndex: 'login' }, 
+	  				{ type: 'string', dataIndex: 'g_addresses_email' }, 
+	  				{ type: 'string', dataIndex: 'g_addresses_phone' },
+	  				{ type: 'string', dataIndex: 'active' },
+	  				{ type: 'string', dataIndex: 'firm_name'}
+	  				
+	  		]
+    });    
+
+
+		var createColModel = function (finish, start) {
+        var columns = [
+		        { dataIndex: 'id', header: 'Id', id: 'id', align: 'left', filter: { type: 'string' } },
+         		{ dataIndex: 'login', header: 'Login', id: 'login', align: 'left', filter: { type: 'string' } },
+         		{ dataIndex: 'g_addresses_email', header: 'Email', id: 'email', align: 'left', filter: { type: 'string' } },
+         		{ dataIndex: 'g_addresses_phone', header: 'Phone', id: 'phone', align: 'left', filter: { type: 'string' } },
+			  		{ dataIndex: 'fund_names', header: 'Fund Names', id: 'fund_names', align: 'left', sortable: false },
+			  		{ dataIndex: 'active', header: 'Active', id: 'active', align: 'left', filter: { type: 'string' } },
+			  		{ dataIndex: 'firm_name', header: 'Firm Name', id: 'firm_name', align: 'left', filter: { type: 'string' } }
+			  		
+        ];
+
+        return new Ext.grid.ColumnModel({
+            columns: columns.slice(start || 0, finish),
+            defaults: { sortable: true }
+        });
+    };
+
+    grid = new Ext.grid.GridPanel({
+        border: false,
+        closable: false,
+        store: store,
+        colModel: createColModel(<%= 7 %>),
+        loadMask: true,
+        plugins: [filters],
+        autoExpandColumn: 'fund_names',
+        listeners: { render: { fn: function(){ store.load({ params: { start: 0, limit: 10 } }); } } },
+        bbar: new Ext.PagingToolbar({ store: store, pageSize: 10, plugins: [filters] }),
+        tbar: [
+        		{ text: 'Add', iconCls: 'silk-add', handler: function() { document.location.href="/users/new"; }, scope: this }, '-', 
+		        
+		       	{ text: 'Edit', iconCls: 'silk-edit', handler:function() {
+		       						if (grid.getSelectionModel().getSelections().length>0) {
+		       								r_id = grid.getSelectionModel().getSelections()[0].id
+				        					document.location.href="/users/"+r_id+"/edit";
+		        					}}, scope: this
+		        },'-',
+		        
+		        { text: 'Enable/Disable', iconCls: 'silk-delete', handler: function() { 
+		        					if (grid.getSelectionModel().getSelections().length>0) {
+				        					r_id = grid.getSelectionModel().getSelections()[0].id;
+                          <%= remote_function :url=>"/users/toggle_enable", :with=>"'id='+r_id", :update=>"dv_wind", :script=>true %>
+				        					// document.location.href="/users/toggle_enable/"+r_id;
+                          
+		        					}}, scope: this 
+		        }, '-'
+		        ]
+    });
+
+ 		 var win = new Ext.Window({ title: 'Users', height: 600, width: 900, layout: 'fit', items: grid, closable: false, resizable: false}).show();
+    
+});
+</script>
+
+<div id="dv_wind"></div>

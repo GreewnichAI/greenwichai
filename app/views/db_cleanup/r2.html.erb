@@ -1,0 +1,13 @@
+﻿<%= render :partial=>"admin/menu" %>
+<%= render :partial=>"menu" %>
+<br/><br/>
+<strong>Wrong AUM MM</strong>
+<hr/>
+<br/>
+
+<% rez = ActiveRecord::Base.connection.execute("select si1.id,si1.f35,i.f20 from systeminformation1 si1 join information i on si1.id_1=i.id_1 where char_length(si1.f35)>15 ") %>
+<table>
+<% while row = rez.fetch_hash do %>
+		<tr><td><%= link_to (row['f20'],"/my/perfs?id="+row['id'], :target=>"nww") %></td></tr>
+<% end %>
+</table>

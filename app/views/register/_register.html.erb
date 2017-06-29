@@ -1,0 +1,118 @@
+<style type="text/css">
+.fieldWithErrors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+  }
+
+  #errorExplanation {
+  width: 400px;
+  border: 2px solid #red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  }
+
+  #errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom:5px;
+  background-color: #c00;
+  color: #fff;
+  }
+
+  #errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+  }
+
+  #errorExplanation ul li {
+  font-size: 12px;
+  margin-left:20px;
+  list-style: square;
+  }
+  h1 {  background-color: #272264; color:#FFFFFF; font-size:18px; padding: 5px 10px; }
+  .box { border: solid 1px #272264; }
+  .box div { padding: 10px;}
+
+</style>
+
+<div class="box">
+<h1>Sign up now to list your funds in the Greenwich Database</h1>
+<div>
+Listing your fund in the Greenwich hedge fund database is an easy and cost-free way of increasing fund exposure to accredited investors around the world.   In addition, all funds in the Greenwich database are eligible of inclusion in all of the Greenwich hedge fund indices, which are among the most-followed benchmarks of hedge fund performance.<br/>
+<br/>
+Registration takes only a few minutes and reporting to us is easy. Participating managers have access to their fund profiles online through GreenwichOnline, which enables you to quickly update performance information, edit  any fund information, and add new funds. <br/>
+<br/>
+For more information on manager reporting, please view our <a target="nwin2" href="http://www.greenwichai.com/index.php/hedge-fund-database/hedge-fund-database-faq">Frequently Asked Questions</a>. You can also contact us at info@greenwichai.com or  +1.203.487.6180.<br/>
+<br/>
+To get started, please fill out the form below. <br/>
+<br/>
+</div>
+</div>
+<br/><br/>
+
+<div class="box">
+<h1>Registration Form</h1>
+<div>
+
+<% if @user.errors.size>0 %>
+<div id="errorExplanation" class="errorExplanation">
+  <h2>Please address problems listed below to complete your registration.</h2>
+  <p>There were problems with the following fields:</p>
+  <ul>
+    <% @user.errors.each do |err| %>
+      <li><%= "#{err[0].titleize} #{err[1]}".gsub("Login Email", "Email").gsub("<li>Password can't be blank</li>", "") %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<% form_for @user, :url=>{:action=>"user_save"},  :html => {:multipart => true} do |f| %>
+<table>
+<tr><th style="width:210px;height:30px;">Firm Name</th><td><%= text_field_tag "user[company_name]", @user.company_name %></td></tr>
+<tr><th style="width:210px;height:30px;">First Name</th><td><%= text_field_tag "user[first_name]", @user.first_name %></td></tr>
+  <tr><th style="width:210px;height:30px;">Last Name</th><td><%= text_field_tag "user[last_name]", @user.last_name %></td></tr>
+  
+  <tr><th style="width:210px;height:30px;">Email</th><td><%= text_field_tag "user[email]", @user.email, :autocomplete=>:off %></td></tr>
+  <tr><th style="width:210px;height:30px;">Password</th><td><%= password_field_tag "user[password]" %></td></tr>
+  <tr><th style="width:210px;height:30px;">Password Confirmation</th><td><%= password_field_tag "user[password_confirmation]" %></td></tr>
+  <tr><th style="width:210px;height:30px;">Phone Number</th><td><%= text_field_tag "user[phone_number]", @user.phone_number %></td></tr>
+  <% if 1==2 %>
+  <tr><td colspan="2">Please upload offering documentation for each fund which you would like to have listed.</td></tr>
+  <tr><th style="width:210px;height:30px;">File1</th><td><%= f.file_field :att1 %></td></tr>
+  <tr><th style="width:210px;height:30px;">File2</th><td><%= f.file_field :att2 %></td></tr>
+  <tr><th style="width:210px;height:30px;">File3</th><td><%= f.file_field :att3 %></td></tr>
+  <tr><th style="width:210px;height:30px;">File4</th><td><%= f.file_field :att4 %></td></tr>
+  <% end %>
+  <tr><td colspan="2">
+  <input type="checkbox" id="agree" name="agree" value="1" <%= params[:agree].to_i==1 ? "checked" : ""%>/> I agree to the <a target="nwin" href="http://www.greenwichai.com/index.php/hedge-fund-database/hedge-fund-database-overview/54">Greenwich Database Terms of Use</a>
+  </td></tr>
+</table>
+
+<br/>
+<br/>
+<%= f.submit "Register" , :style=>"margin-left:170px;", :onclick=>"return do_check();" %>
+<% end %>
+</div>
+</div>
+<script>
+function do_check()
+{
+    var b = true;
+    if ($('agree').checked==false) {
+        b = false;
+        alert('You did not agree to the terms');
+    }
+    if ($('user_company_name').value=='')  {
+        b = false;
+        alert('Please enter the company name');
+    }
+    return b;
+}
+</script>

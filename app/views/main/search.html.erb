@@ -1,0 +1,22 @@
+﻿<div style="border:solid 1px #000000;width:480px;margin-left:auto;margin-right:auto;padding:10px;">
+<% form_for "funds", :url=>"/main/search" do |f| %>
+	Fund Name: <%= text_field_tag "fund_name", params[:fund_name] %><br/>
+	<%= f.submit "Search" %>
+<% end %>
+</div>
+<br/>
+
+<% if params[:fund_name]
+	
+	q = "Select i.ID_1 as id, i.F20 as name, ui4.F8 as platform from Information i left outer join UserInformation4 ui4 on i.id_1=ui4.id_1 Where upper(i.F20) like '%"+params[:fund_name].upcase+"%' order by i.F20 "
+	rez = ActiveRecord::Base.connection.execute(q) %>
+
+	<table style="border:solid 1px #000000;width:500px;margin-left:auto;margin-right:auto;"> 
+	<% while rw = rez.fetch_hash %> 
+		<tr><td style="padding-left:10px;padding-right:10px;" id="td_<%= rw['ID'] %>">
+				<%= link_to rw['NAME'], "/main/tab1?id="+rw['ID'].to_s %>
+		</td></tr>
+	<% end %>
+	</table>
+	
+<% end %>

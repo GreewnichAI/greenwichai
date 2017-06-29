@@ -1,0 +1,40 @@
+﻿<script type="text/javascript">
+var selected_fund=0;
+Ext.onReady(function(){
+	
+	function handleActivate(button, event){
+  	if (selected_fund!=0)	{
+  		if (button.id=="tab2") {
+  			<%= remote_function(:url=>"/main/tab2", :with=>"'selected_fund='+selected_fund", :update=>"tab2") %>
+  		}
+  	} else {
+  			alert('Select a fund first please!');	
+  	}
+	};
+
+	
+	new Ext.Viewport({
+    layout: 'border',
+    items: [{
+        region: 'center',
+        xtype: 'tabpanel',
+        activeTab: 0,
+        defaults: { autoScroll:true, containerScroll:true },
+        items: [{
+            title: 'Funds',
+            html: '<%= render(:partial=>"funds").gsub("\n","") %>',
+            id: 'tab1'
+        },{
+        		title: 'Fund Performance & Assets',
+        		html: 'Valueeeees',
+						listeners: {activate: handleActivate},
+						id: 'tab2'
+
+        },{
+        		title	: 'Logout',
+        		html: 'logout'
+        }]
+    }]
+	});
+});
+</script>

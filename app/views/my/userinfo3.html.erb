@@ -1,0 +1,42 @@
+﻿<%= render (:partial=>"menu") %>
+<%= render (:partial=>"usermenu") %>
+
+
+<br/>
+Fund Name: <strong><%= @fund_information.f20 %></strong><br/>
+
+
+<% form_for "userinfo3", :url=>{:action=>"userinfo3_save"}, :html=>{:id=>"userinfo3"} do |f| %>
+	<%= hidden_field_tag "id", params[:id] %>
+	<%= hidden_field_tag "user_id", params[:user_id] %>
+
+<table><tr><td>
+
+		<table style="width:350px;">
+			<tr><th>TAUM 1993  	:  	</th><td><%= text_field_tag "userinformation3[f1]", @user3.f1 %></td></tr>
+			<tr><th>TAUM 1994 	: 	</th><td><%= text_field_tag "userinformation3[f2]", @user3.f2 %></td></tr>
+			<tr><th>TAUM 1995 	: 	</th><td><%= text_field_tag "userinformation3[f3]", @user3.f3 %></td></tr>
+			<tr><th>TAUM 1996 	: 	</th><td><%= text_field_tag "userinformation3[f4]", @user3.f4 %></td></tr>
+			<tr><th>TAUM 1997 	: 	</th><td><%= text_field_tag "userinformation3[f5]", @user3.f5 %></td></tr>
+			<tr><th>TAUM 1998 	: 	</th><td><%= text_field_tag "userinformation3[f6]", @user3.f6 %></td></tr>
+			<tr><th>TAUM 1999 	: 	</th><td><%= text_field_tag "userinformation3[f7]", @user3.f7 %></td></tr>
+			<tr><th>TAUM 2000 	: 	</th><td><%= text_field_tag "userinformation3[f8]", @user3.f8 %></td></tr>
+			<tr><th>TAUM 2001 	: 	</th><td><%= text_field_tag "userinformation3[f9]", @user3.f9 %></td></tr>
+		</table>
+
+</td><td>
+		<table style="width:350px;">	 	
+			<tr><th>TAUM 2002 	: 	 			 	</th><td><%= text_field_tag "userinformation3[f10]", @user3.f10 %></td></tr>
+			<tr><th>2002 TAUM as of date 	:	</th><td><%= text_field_tag "userinformation3[f11]", @user3.f11 %></td></tr>
+			<tr><th>TAUM 2003 	: 	  			</th><td><%= text_field_tag "userinformation3[f12]", @user3.f12 %></td></tr>
+			<tr><th>2003 TAUM as of date 	:	</th><td><%= text_field_tag "userinformation3[f13]", @user3.f13 %></td></tr>
+			<tr><th>TAUM 2004 	: 	  			</th><td><%= text_field_tag "userinformation3[f14]", @user3.f14 %></td></tr>
+			<tr><th>2004 TAUM as of date 	: </th><td><%= text_field_tag "userinformation3[f15]", @user3.f15 %></td></tr>
+			<tr><th>TAUM 2005 	: 	  			</th><td><%= text_field_tag "userinformation3[f16]", @user3.f16 %></td></tr>
+			<tr><th>2005 TAUM as of date 	: </th><td><%= text_field_tag "userinformation3[f17]", @user3.f17 %></td></tr>
+			<tr><th>TAUM 2006 	: 	  			</th><td><%= text_field_tag "userinformation3[f18]", @user3.f18 %></td></tr>
+			<tr><th>2006 TAUM as of date 	: </th><td><%= text_field_tag "userinformation3[f19]", @user3.f19 %></td></tr>
+		</table>
+</td></tr></table>
+<% end %>
+<%= link_to_function image_tag('/images/btnMakeChanges.jpg'), "$('userinfo3').submit();" %>

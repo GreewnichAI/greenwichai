@@ -1,0 +1,53 @@
+﻿<!-- <div class="newFeature">
+  <div class="holder">
+    <p>NEW FEATURE AVAILABLE</p>
+    The Greenwich Peer Comparison Tool is now available as a free service to all managers reporting to the Greenwich Database. Use this tool to see how your funds stack up against other funds and benchmarks. Click the "Peer Comparison" button below to try it out.
+  </div>
+<!-- peer comaprioson button image is "/images/Peercomparison.jpg"  -->
+<br/> 
+
+<div style="margin-top:5px;">
+<a href="/reviews"><img src='/images/Peercomparison.jpg'></a>
+</div>
+<br>
+
+<h4>ADD NEW FUND</h4>
+<div style="margin-top:5px;">
+<a href="/funds/add"><img src='/images/Addnewfund.jpg'></a>
+</div>
+<br/>
+
+<h4>LIST OF FUNDS</h4>
+(Click Funds to view & update information)<br/>
+<br/>
+
+
+<table class="blue_table" style="width:800px;">
+<tr><th>Fund Name</th><th style="text-align:right;">Last Updated</th></tr>
+<% @informations.each do |information| %>
+	<tr>
+              <%  if !information.finished && (information.systeminformation1.f36.nil? || information.systeminformation1.f28.nil?|| information.f35.nil? ) %>
+                <td>
+                  <%= link_to "<span style='color:red'>(Incomplete)</span> "+information.f20, {:controller => "wizards", :action=>"new", :id=>information.id, :step=>"0"} %>
+                </td >
+              <% elsif !information.finished && (information.f2.nil? || information.f4.nil? || information.f7.nil? || information.f9.nil? || information.f11.nil? || information.f12.nil? || information.f2.blank? || information.f4.blank? || information.f7.blank? || information.f9.blank? || information.f11.blank? || information.f12.blank?)  %>
+                  <td>
+                    <%= link_to "<span style='color:red'>(Incomplete)</span> "+information.f20, {:controller => "wizards", :action=>"new", :id=>information.id, :step=>"1"} %>
+                  </td >
+              <% elsif !information.finished && (information.f14.nil? || information.f22.nil? || information.f24.nil? || information.f23.nil? || information.f25.nil? || information.f27.nil? || information.f28.nil? || information.f29.nil? || information.systeminformation1.f49.nil? || information.f14.blank? || information.f22.blank? || information.f24.blank? || information.f23.blank? || information.f25.blank? || information.f27.blank? || information.f28.blank? || information.f29.blank? || information.systeminformation1.f49.blank?)  %>
+                <td>
+                   <%= link_to "<span style='color:red'>(Incomplete)</span> "+information.f20, {:controller => "wizards", :action=>"new", :id=>information.id, :step=>"2"} %>
+                </td >
+              <% elsif !information.finished && (information.f49.nil? || information.f38.nil? || information.f40.nil? || information.f49.blank? || information.f38.blank? || information.f40.blank?)  %>
+                <td>
+                   <%= link_to "<span style='color:red'>(Incomplete)</span> "+information.f20, {:controller => "wizards", :action=>"new", :id=>information.id, :step=>"3"} %>
+                </td >
+              <%else%>
+                <td>
+                  <%= link_to information.f20, {:action=> "perfs", :id=> information.id} %>
+                </td>
+              <%end%>
+			<td style="text-align:right;"><%= information.lastupdated.nil? ? "" : information.lastupdated.strftime("%m/%d/%Y %I:%M %p") %></td>
+	</tr>
+<% end %>
+</table>

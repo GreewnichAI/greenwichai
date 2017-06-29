@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="../javascripts/jquery-1.8.2.js"></script>
+	<style type="text/css">
+	  body{margin-top:-25px;margin-left:-15px}
+	  .tbl_gai {color:#333;  width:97%;margin-left:30px; margin-top:10px; font-family:Geneva, Tahoma, sans-serif; font-size:12px; line-height:20px; }
+	  .tbl_gai th { text-align:left; }
+	
+	  .tr_thA { background-color:#262262; color:#FFFFFF; font-weight: bold;}
+	  .tr_thA td { background-color:#262262; color:#FFFFFF; text-align:center; }
+	  .tr_thB { background-color:#808080; color:#FFFFFF; }
+	  .tr_thB td { background-color:#808080; color:#FFFFFF; text-align:center; }
+	  .tr_thB th { background-color:#808080; color:#FFFFFF; text-align:center; }
+	  
+	  .l_border { border-left: solid 2px #FFFFFF; }
+	  .r_border { border-right: solid 2px #FFFFFF; }
+	  .tbl_data { text-align:center; }
+	  .tbl_foot { color: #1f69b0;}
+	</style>
+</head>
+<body>
+<table style="margin-left:20px;" class="tbl_gai" cellspacing="0">
+  <tr class="tr_thA">
+    <td style="text-align:left;" class="r_border">&nbsp;</td>
+    <td class="r_border l_border"><%= @equity.first.date_1.strftime("%d-%b") %> *</td>
+    <td class="r_border l_border">MTD *</td>
+    <td class="l_border">YTD *</td>
+  </tr>
+  <tr>
+  	<td>
+  		GAI HF UCITS Global Index
+	</td>
+	<td class="tbl_data">
+  		<%= number_with_precision((@globalIndex.first.return.to_f*100).round(2), :precision=>2).to_s+" %" %>
+  	</td>
+  	<td class="tbl_data">
+  		<%= @globalIndexMTD.round(2).to_s+" %" %>	
+  	</td>
+  	<td class="tbl_data">
+  		<%= @globalIndexYTD.round(2).to_s+" %" %>
+  	</td>
+  </tr>
+  <tr>
+  	<td>
+  		&nbsp;&nbsp;&nbsp;&nbsp;Equity Market Neutral Index
+  	</td>
+  	<td class="tbl_data">
+  		<%= number_with_precision((@equity.first.return.to_f*100).round(2), :precision=>2).to_s+" %" %>
+  	</td>
+  	<td class="tbl_data">
+  		<%= @equityMTD.round(2).to_s+" %" %>	
+  	</td>
+  	<td class="tbl_data">
+  		<%= @equityYTD.round(2).to_s+" %" %>
+  	</td>
+  </tr>
+  <tr>
+  	<td>
+  		&nbsp;&nbsp;&nbsp;&nbsp;Event-Driven Index
+  	</td>
+  	<td class="tbl_data">
+  		<%= number_with_precision((@eventDrive.first.return.to_f*100).round(2), :precision=>2).to_s+" %" %>
+  	</td>
+  	<td class="tbl_data">
+  		<%= @eventDriveMTD.round(2).to_s+" %" %>
+  	</td>
+  	<td class="tbl_data">
+  		<%= @eventDriveYTD.round(2).to_s+" %" %>
+  	</td>>
+  </tr>
+  <tr>
+  	<td>
+  		&nbsp;&nbsp;&nbsp;&nbsp;Arbitrage Index
+  	</td>
+  	<td class="tbl_data">
+  		<%= number_with_precision((@arbitrage.first.return.to_f*100).round(2), :precision=>2).to_s+" %" %>
+  	</td>
+  	<td class="tbl_data">
+  		<%= @arbitrageMTD.round(2).to_s+" %" %>
+  	</td>
+  	<td class="tbl_data">
+  		<%= @arbitrageYTD.round(2).to_s+" %" %>
+  	</td>
+  </tr>
+  <tr>
+  	<td>
+  		&nbsp;&nbsp;&nbsp;&nbsp;Long-Short Equity Index
+  	</td>
+  	<td class="tbl_data">
+  		<%= number_with_precision((@longShortEquity.first.return.to_f*100).round(2), :precision=>2).to_s+" %" %>
+  	</td>
+  	<td class="tbl_data">
+  		<%= @longShortEquityMTD.round(2).to_s+" %" %>
+  	</td>
+  	<td class="tbl_data">
+  		<%= @longShortEquityYTD.round(2).to_s+" %" %>
+  	</td>
+  </tr>
+  <tr>
+  	<td>
+  		&nbsp;&nbsp;&nbsp;&nbsp;Futures Index
+  	</td>
+  	<td class="tbl_data">
+  		<%= number_with_precision((@futures.first.return.to_f*100).round(2), :precision=>2).to_s+" %"  %>
+  	</td>
+  	<td class="tbl_data">
+  		<%= @futuresMTD.round(2).to_s+" %" %>
+  	</td>
+  	<td class="tbl_data">
+  		<%= @futuresYTD.round(2).to_s+" %" %>
+  	</td>
+  </tr>
+  <tr>
+  	<td>
+  		&nbsp;&nbsp;&nbsp;&nbsp;Macro Index
+  	</td>
+  	<td class="tbl_data">
+  		<%= number_with_precision((@macro.first.return.to_f*100).round(2), :precision=>2).to_s+" %" %>
+  	</td>
+  	<td class="tbl_data">
+  		<%= @macroMTD.round(2).to_s+" %" %>
+  	</td>
+  	<td class="tbl_data">
+  		<%= @macroYTD.round(2).to_s+" %" %>
+  	</td>
+  </tr>
+  <tr>
+  	<td>
+  		&nbsp;&nbsp;&nbsp;&nbsp;Long-Short Credit Index
+  	</td>
+  	<td class="tbl_data">
+  		<%= number_with_precision((@longShortCredit.first.return.to_f*100).round(2), :precision=>2).to_s+" %" %>
+  	</td>
+  	<td class="tbl_data">
+  		<%= @longShortCreditMTD.round(2).to_s+" %" %>
+  	</td>
+  	<td class="tbl_data">
+  		<%= @longShortCreditYTD.round(2).to_s+" %" %>
+  	</td>
+  </tr>
+  <tr>
+  	<td>
+  		&nbsp;&nbsp;&nbsp;&nbsp;Multi-Strategy Index
+  	</td>
+  	<td class="tbl_data">
+  		<%= number_with_precision((@multiStrategy.first.return.to_f*100).round(2), :precision=>2).to_s+" %" %>
+  	</td>
+  	<td class="tbl_data">
+  		<%= @multiStrategyMTD.round(2).to_s+" %" %>
+  	</td>
+  	<td class="tbl_data">
+  		<%= @multiStrategyYTD.round(2).to_s+" %" %>
+  	</td>
+  </tr>
+  <tr>
+  	<td class="tbl_foot">
+  		* indicates an estimated return
+  	</td>
+  </tr>
+</table>
+<script type="text/javascript">
+	$(function() {
+		    $(document).html(function(i,o){
+  						return $(i).replace( '>', '' );
+					});
+			$(document).text().replace(">","");
+			return false;
+		}
+	);
+</script>
+</body>
+</html>

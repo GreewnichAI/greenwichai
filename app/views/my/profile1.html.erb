@@ -1,0 +1,105 @@
+﻿<%= render (:partial=>"menu") %>
+<br/>
+
+<% form_for "fund_strategy", :url=>{:action=>"profile1_save"}, :html=>{:id=>"profile1"} do |f| %>
+	<%= hidden_field_tag "id", params[:id] %>
+
+
+<div style="float:left;width:350px;">
+<table>
+<tr><th colspan="2">Service Providers</th></tr>
+<tr><td style="width:90px;">Custodian</td><td><%= text_field_tag "systeminformation1[f1]", @system1.f1 %></td></tr>
+<tr><td>Counsel</td><td><%= text_field_tag "systeminformation1[f2]", @system1.f2 %></td></tr>
+<tr><td>Administrator</td><td><%= text_field_tag "systeminformation1[f3]", @system1.f3 %></td></tr>
+<tr><td>Auditor</td><td><%= text_field_tag "systeminformation1[f4]", @system1.f4 %></td></tr>
+<tr><td>Placement Agent</td><td><%= text_field_tag "systeminformation1[f5]", @system1.f5 %></td></tr>
+<tr><td>Banker</td><td><%= text_field_tag "systeminformation1[f6]", @system1.f6 %></td></tr>
+<tr><td>Consultant</td><td><%= text_field_tag "systeminformation1[f7]", @system1.f7 %></td></tr>
+<tr><td>Prime Broker</td><td><%= text_field_tag "systeminformation1[f8]", @system1.f8 %></td></tr>
+<tr><td>Additional Broker 1</td><td><%= text_field_tag "systeminformation1[f9]", @system1.f9 %></td></tr>
+<tr><td>Additional Broker 2</td><td><%= text_field_tag "systeminformation1[f10]", @system1.f10 %></td></tr>
+<tr><td>Bloomberg Code</td><td><%= text_field_tag "systeminformation1[f11]", @system1.f11 %></td></tr>
+</table>
+<hr/>
+
+<table>
+<tr><th colspan="2">Turnover</th></tr>
+<tr><td style="width:90px;">Average Turnover (per year)</td><td><%= text_field_tag "systeminformation1[f13]", @system1.f13%></td></tr>
+<tr><td>Average Number of Positions</td><td><%= text_field_tag "systeminformation1[f14]", @system1.f14 %></td></tr>
+</table>
+<hr/>
+
+<table>
+<tr><th colspan="2">Current Market Exposure</th></tr>
+<tr><td style="width:90px;">Long (Gross %)</td><td><%= text_field_tag "systeminformation1[f16]", @system1.f16 %></td></tr>
+<tr><td>Short (Gross %)</td><td><%= text_field_tag "systeminformation1[f17]", @system1.f17 %></td></tr>
+<tr><td>Net (Long - Short)</td><td><%= text_field_tag "systeminformation1[f18]", @system1.f18 %></td></tr>
+<tr><td>Last Updated</td><td><%= text_field_tag "systeminformation1[f19]", @system1.f19 %></td></tr>
+</table>
+<hr/>
+
+<table>
+<tr><th colspan="2">Subscription/Redemption</th></tr>
+<tr><td style="width:90px;">Subscription Notice</td><td><%= text_field_tag "systeminformation1[f21]", @system1.f21 %></td></tr>
+
+<tr><td>Redemption Fees</td><td><%= text_field_tag "systeminformation1[f23]", @system1.f23 %></td></tr>
+
+<tr><td>SMA Minimum</td><td><%= text_field_tag "systeminformation1[f25]", @system1.f25 %></td></tr>
+<tr><td>Open for Investment</td><td><%= text_field_tag "systeminformation1[f48]", @system1.f48 %></td></tr>
+<tr><td>Minimum Investment Denomination</td><td><%= text_field_tag "systeminformation1[f49]", @system1.f49 %></td></tr>
+<tr><td>Additional Investment</td><td><%= text_field_tag "systeminformation1[f50]", @system1.f50 %></td></tr>
+</table>
+</div>
+
+
+<div style="float:left;width:350px;">
+
+<table>
+<tr><th colspan="2">Fund Assets</th></tr>
+<tr><td style="width:90px;">Fund Assets</td><td><%= text_field_tag "systeminformation1[f27]", @system1.f27 %></td></tr>
+<tr><td>Asset Currency</td><td><%= text_field_tag "systeminformation1[f28]", @system1.f28 %></td></tr>
+<tr><td>Last Updated</td><td><%= text_field_tag "systeminformation1[f29]", @system1.f29 %></td></tr>
+</table>
+<hr/>
+
+<table>
+<tr><th colspan="2">Strategy Assets</th></tr>
+<tr><td style="width:90px;">Strategy Assets</td><td><%= text_field_tag "systeminformation1[f31]", @system1.f31 %></td></tr>
+<tr><td>Asset Currency</td><td><%= text_field_tag "systeminformation1[f32]", @system1.f32 %></td></tr>
+<tr><td>Last Updated</td><td><%= text_field_tag "systeminformation1[f33]", @system1.f33 %></td></tr>
+</table>
+<hr/>
+
+<table>
+<tr><th colspan="2">Firm Assets</th></tr>
+<tr><td style="width:90px;">Firm Assets</td><td><%= text_field_tag "systeminformation1[f35]", @system1.f35 %></td></tr>
+<tr><td>Asset Currency</td><td><%= text_field_tag "systeminformation1[f36]", @system1.f36 %></td></tr>
+<tr><td>Last Updated</td><td><%= text_field_tag "systeminformation1[f37]", @system1.f37 %></td></tr>
+</table>
+<hr/>
+
+<table>
+<tr><th colspan="2">Leverage</th></tr>
+<tr><td style="width:90px;">Long % (e.g., 150)</td><td><%= text_field_tag "systeminformation1[f40]", @system1.f40 %></td></tr>
+<tr><td>Short % (e.g., 70)</td><td><%= text_field_tag "systeminformation1[f41]", @system1.f41 %></td></tr>
+<tr><td>Last Updated</td><td><%= text_field_tag "systeminformation1[f42]", @system1.f42 %></td></tr>
+<tr><td>Average Leverage % (Long + Short)</td><td><%= text_field_tag "systeminformation1[f43]", @system1.f43 %></td></tr>
+<tr><td>Maximum Leverage</td><td><%= text_field_tag "systeminformation1[f44]", @system1.f44 %></td></tr>
+<tr><td>Leverage Description</td><td><%= text_area_tag "systeminformation5[f1]", @system5.f1, :style=>"width:270px;height:200px;" %></td></tr>
+</table>
+<br/>
+<br/>
+<img src="/images/btnConfirmInfo.jpg" onclick="$('profile1').submit();" style="cursor:pointer;cursor:hand;" />
+</div>
+<div style="clear:both;"></div>
+<br/><br/>
+<% end %>
+
+
+	
+
+<% if flash[:sv].to_i==1 %>
+<script type="text/javascript">
+	alert('Data has been saved')
+</script>
+<% end %>

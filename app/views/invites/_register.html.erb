@@ -1,0 +1,69 @@
+<style type="text/css">
+.fieldWithErrors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+  }
+
+  #errorExplanation {
+  width: 400px;
+  border: 2px solid #red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  }
+
+  #errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom:5px;
+  background-color: #c00;
+  color: #fff;
+  }
+
+  #errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+  }
+
+  #errorExplanation ul li {
+  font-size: 12px;
+  margin-left:20px;
+  list-style: square;
+  }
+
+
+</style>
+
+
+Greenwich Alternative Investments is pleased to offer GreenwichOnline, a web-based solution for performance reporting. Participating fund managers will benefit from:<br/>
+<br/>
+* Streamlined Reporting<br/>
+* Exclusive Exposure to Greenwich's Clients (Institutional Investors)<br/>
+* (optional) Additional Exposure to Qualified Investors Worldwide<br/>
+<br/>
+To register for full access to GreenwichOnline, please complete the form below.
+<br/><br/>
+
+<%= error_messages_for "user" %>
+<% form_for @user, :url=>{:action=>"user_save"} do |f| %>
+<table>
+  <tr><th style="width:210px;height:30px;">Company Name</th><td><%= text_field_tag "user[company_name]", @user.company_name %></td></tr>
+  <tr><th style="width:210px;height:30px;">First Name</th><td><%= text_field_tag "user[first_name]", @user.first_name %></td></tr>
+  <tr><th style="width:210px;height:30px;">Last Name</th><td><%= text_field_tag "user[last_name]", @user.last_name %></td></tr>
+  <tr><th style="width:210px;height:30px;">Email</th><td><%= text_field_tag "user[email]", @user.email %></td></tr>
+  <tr><th style="width:210px;height:30px;">Password</th><td><%= password_field_tag "user[password]" %></td></tr>
+  <tr><th style="width:210px;height:30px;">Password Confirmation</th><td><%= password_field_tag "user[password_confirmation]" %></td></tr>
+  <tr><th style="width:210px;height:30px;">Phone Number</th><td><%= text_field_tag "user[phone_number]", @user.phone_number %></td></tr>
+</table>
+<br/>
+<br/>
+<%= f.submit "Register" , :style=>"margin-left:170px;"
+#, :onclick=>"if (($('user_password').value=='') || ($('user_password').value != $('user_password_confirmation').value)) { alert('Check the passwords please'); return false;}" 
+%>
+<% end %>

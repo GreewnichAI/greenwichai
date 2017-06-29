@@ -1,0 +1,99 @@
+<%= render :partial=>"admin/menu" %>
+<style type="text/css">
+    .tbl_hf { width:700px;margin-left:30px; margin-top:10px; font-family:Arial;font-size:8pt; line-height:14pt; }
+		.tbl_hf th { padding-left: 3px; }
+		.tbl_hf td { text-align:right; }
+		
+		.tr_thA { background-color:#353980; color:#FFFFFF; }
+		.tr_thA th { background-color:#353980; color:#FFFFFF; }
+		.tr_thB { background-color:#808080; color:#FFFFFF; }
+		.tr_thB th { background-color:#808080; color:#FFFFFF; }
+		
+		.tr_cls_FUND td { background-color:#DCDCDC; color:#000000; }
+		.td_pad_FUND { padding-left:50px; }
+		
+		.tr_cls_FUND1 td { background-color:#353980; color:#FFFFFF; }
+		.td_pad_FUND1 { padding-left:10px; }
+		
+		.tr_cls_FUND2 td { background-color:#808080; color:#FFFFFF; }
+		.td_pad_FUND2 { padding-left:20px; }
+		
+		.tr_cls_FUND3 td { background-color:#DCDCDC; color:#484E8C; }
+		.td_pad_FUND3 { padding-left:30px; }
+		
+		.tr_cls_FUND4 td { background-color:#DCDCDC; color:#000000; }
+		.td_pad_FUND4 { padding-left:40px; }
+		
+		.tr_cls_FUND5 td { background-color:#DCDCDC; color:#000000; }
+		.td_pad_FUND5 { padding-left:10px; }
+		
+		.tr_cls_FUND6 td { background-color:#353980; color:#FFFFFF; }
+		.td_pad_FUND6 { padding-left:10px; }
+		
+		.tr_cls_DESC1 td { background-color:#353980; color:#FFFFFF; }
+		.td_pad_DESC1 { padding-left:10px; }
+		
+    .tr_cls_DESC2 td { background-color:#808080; color:#FFFFFF; }
+		.td_pad_DESC2 { padding-left:20px; }
+		
+		
+		
+		.bord_l { border-left: solid 1px #FFFFFF; }
+		.bord_r { border-right: solid 1px #FFFFFF; }
+
+</style>
+
+<table class="tbl_hf">
+<tr class="tr_thA">
+	<th style="text-align:left;vertical-align:middle;"><a style="color:#FFFFFF;" href='/index.php?option=com_rubberdoc&view=doc&id=396&format=raw&Itemid=396'>Download Historical Indices</a></th>
+	<th class="bord_l bord_r">Weight<br/>Jan10</th>
+
+	<th colspan="5" style="vertical-align:middle;">Total Return </th>
+	<th colspan="2" class="bord_l bord_r">3 Yr<br/>Annualized</th>
+	<th colspan="2" class="bord_l bord_r">5 Yr<br/>Annualized</th>
+</tr>
+<tr class="tr_thB">
+	<th style="text-align:left;"><a style="color:#FFFFFF;" href='/index.php?option=com_rubberdoc&view=doc&id=395&format=raw&Itemid=395'>Download Methodology</a></th>
+	<th class="bord_l bord_r">&nbsp;</th>
+
+	<th>Jan10</th><th>Dec09</th>
+	<th>YTD</th>
+	<th>3Month</th>
+	<th>1YEAR</th>
+	<th class="bord_l">CAR</th>
+	<th class="bord_r">STD</th>
+
+	<th class="bord_l">CAR</th>
+	<th class="bord_r">STD</th>
+</tr>
+<tr style="height: 10px;"><td></td></tr>
+
+<% @hf_indices.each do |hfi| %>
+<% 
+  ind_name = hfi.fund_name.gsub("Greenwich Global ", "").gsub(" Index", "")  
+  ind_name = "Greenwich Global Hedge Fund Index" if ind_name=="Hedge Fund"
+%>
+    <tr class="tr_cls_<%= hfi.tip %><%= hfi.level.to_i+1 %>">
+			<td class="td_pad_<%= hfi.tip %><%= hfi.level.to_i+1 %>" style="text-align:left;"><%= ind_name %></td>
+			<td class="bord_l bord_r"><%= hfi.weight ? sprintf("%.2f",hfi.weight) : "" %></td>
+			<td><%= hfi.total_return ? sprintf("%.2f\%",hfi.total_return) : "" %></td>
+      <td><%= hfi.prev_return ? sprintf("%.2f\%",hfi.prev_return) : "" %>
+      <td><%= hfi.ytd ? sprintf("%.2f\%",hfi.ytd) : "" %></td>
+      <td><%= hfi.mon3 ? sprintf("%.2f\%",hfi.mon3) : "" %></td>
+      <td><%= hfi.yr1 ? sprintf("%.2f\%",hfi.yr1) : "" %></td>
+      <td class="bord_l"><%= hfi.ann_yr3_car ? sprintf("%.2f\%",hfi.ann_yr3_car) : "" %></td>
+      <td class="bord_r"><%= hfi.ann_yr3_std ? sprintf("%.2f\%",hfi.ann_yr3_std) : "" %></td>
+      <td class="bord_l"><%= hfi.ann_yr5_car ? sprintf("%.2f\%",hfi.ann_yr5_car) : "" %></td>
+      <td class="bord_r"><%= hfi.ann_yr5_std ? sprintf("%.2f\%",hfi.ann_yr5_std) : "" %></td>
+    </tr>
+
+
+<% end %>
+
+
+</table>
+<br/>
+<div style="text-align:center;">
+<%= button_to "Publish", :action=>"publish_indices", :tm=>@tm.to_i, :internal_id=>@internal_id %>
+<%= button_to "Generate", :action=>"generate_indices", :tm=>@tm.to_i, :internal_id=>@internal_id %>
+</div>

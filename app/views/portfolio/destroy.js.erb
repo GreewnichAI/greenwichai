@@ -1,0 +1,5 @@
+$("#peer_message").html("<p class='message'><%=@message%></p>");
+$(".pfund_<%=@fund.id%> .is_portfolio_fund").html("<%=render :partial => 'portfolio/fund', :locals => {:fund => @fund}%>");
+<%-if @is_success == true%>
+  $("#portfolio_funds .fund_holder_<%=@fund.id%>").remove();
+<%end%>

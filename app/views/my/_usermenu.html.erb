@@ -1,0 +1,21 @@
+﻿<% @mbar = "font-weight:bold;" %>
+<table>
+	<tr>
+		<% if 1==2 %>
+		<td style="width:120px;"><a href="/my/userinfo0?id=<%= params[:id] %>">Select User</a></td>
+		<% end %>
+		<td style="width:120px;<%= @current_submenu =="userinfo1" ? @mbar : '' %>"><a href="/my/userinfo1?id=<%= params[:id] %>&user_id=<%= params[:user_id]%>">Fund Reporting</a></td>
+		
+		<% if 1==2 %>
+		<td style="width:70px;"><a href="/my/userinfo2?id=<%= params[:id] %>&user_id=<%= params[:user_id]%>">User 2</a></td>
+		<td style="width:70px;"><a href="/my/userinfo3?id=<%= params[:id] %>&user_id=<%= params[:user_id]%>">User 3</a></td>
+		<% end %>
+		<td style="width:120px;<%= @current_submenu =="userinfo4" ? @mbar : '' %>"><a href="/my/userinfo4?id=<%= params[:id] %>&user_id=<%= params[:user_id]%>">Due Diligence</a></td>
+		<% if 1==2 %>
+		<td style="width:140px;white-space:nowrap;<%= @current_submenu =="userinfo5" ? @mbar : '' %>"><a href="/my/userinfo5?id=<%= params[:id] %>&user_id=<%= params[:user_id]%>">Original Strategy</a></td>
+		<% end %>
+		<td style="width:70px;<%= @current_submenu =="userinfo6" ? @mbar : '' %>"><a href="/my/userinfo6?id=<%= params[:id] %>&user_id=<%= params[:user_id]%>">Notes</a></td>
+		<td style="width:120px;<%= @current_menu =="fund_strategy" ? @mbar : '' %>"><a href="/my/fund_strategyC?id=<%= params[:id] %>&user_id=<%= params[:user_id]%>">Index Inclusion</a></td>
+		<td>&nbsp;</td>
+	</tr>
+</table>

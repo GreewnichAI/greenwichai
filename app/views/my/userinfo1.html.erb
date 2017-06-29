@@ -1,0 +1,100 @@
+﻿<%= render (:partial=>"menu") %>
+<%= render (:partial=>"usermenu") %>
+
+<br/>
+
+<br/>
+Fund Name: <strong><%= @fund_information.f20 %></strong><br/>
+
+<% form_for "userinfo1", :url=>{:action=>"userinfo1_save"}, :html=>{:id=>"userinfo1"} do |f| %>
+	<%= hidden_field_tag "id", params[:id] %>
+	<%= hidden_field_tag "user_id", params[:user_id] %>
+
+
+
+<table><tr>
+<% if 1==2 %>
+<td>
+
+		<table style="width:350px;">
+			<% if !@selected_user.nil? %>
+			<tr><th>Web User Name  	:</th><td><%= @selected_user.login %></td></tr>
+			<% end %>
+			<tr><th>User Title 	: 	 </th><td></td></tr>
+			<tr><th>User Signature 	:</th><td><%= text_field_tag "userinformation1[f3]",@user1.f3 %></td></tr>
+			<tr><th>Signature Date 	:</th><td><%= text_field_tag "userinformation1[f4]",@user1.f4 %></td></tr>
+			<tr><th>User Email 	: 	 </th><td></td></tr>
+			<tr><th>User Phone 	: 	 </th><td></td></tr>
+			<tr><th>User Fax 	: 	   </th><td></td></tr>
+			<% if !@selected_user.nil? %>
+			<tr><th>User Log on ID 	:</th><td><%= @selected_user.login %></td></tr>
+			<tr><th>User Password 	:</th><td><%= @selected_user.old_pwd %></td></tr>
+			<% end %>
+		</table>
+
+</td>
+<% end %>
+<td>
+		<table style="width:350px;">
+			<tr><th>Date Fund Entered (mm/dd/yyyy) 	:</th><td><%= text_field_tag "userinformation1[f20]",@user1.f20, :readonly=>true %></td></tr>
+			<% if 1==2 %>
+			<tr><th>Date Changed By (mm/dd/yyyy) 	: 	</th><td><%= text_field_tag "userinformation1[f21]",@user1.f21 %></td></tr>
+			<tr><th>Date (mm/dd/yyyy) 	: 	</th><td><%= text_field_tag "userinformation1[f22]",@user1.f22 %></td></tr>
+			<% end %>
+            <tr><th>Fund Added By:</th><td><%= text_field_tag "i[added_by]", @fund_information.added_by, :readonly=>true %></td></tr>
+			<tr><th>Reporting Method 	: 	</th><td><%= select_tag "userinformation1[f23]",options_for_select([
+			["Select",""]] + SetOfSet.find_by_name("reporting_method_ui1_f23").elem_of_sets.map{|c| c.name},@user1.f23) %></td></tr>
+            <% if 1==2 %>
+            <tr><th>Reports Within 	: 	</th><td><%= text_field_tag "userinformation1[f24]",@user1.f24 %></td></tr>
+
+			<tr><th>Capitalization (equity investments) 	: 	</th><td><%= text_field_tag "userinformation1[f26]",@user1.f26 %></td></tr>
+			<tr><th>Specialty Sector 	: 	</th><td><%= text_field_tag "userinformation1[f27]",@user1.f27 %></td></tr>
+			<tr><th>Geographical Classification 	: 	</th><td><%= text_field_tag "userinformation1[f28]",@user1.f28 %></td></tr>
+			<% end %>
+			<tr><th>Inclusion in Commercial Product 	: 	</th><td><%= select_tag "userinformation1[f30]", options_for_select([["Select",""], ["Not Contacted","Not Contacted"], ["No","No"], ["Yes","Yes"]], @user1.f30 ) %></td></tr>
+      <tr><th>Inclusion Timestamp 	: 	</th><td><%= @user1.f30_ts %></td></tr>
+          <tr><th>Inclusion Updated By 	: 	</th><td><%= @user1.f30_by %></td></tr>
+
+          <tr><th>In Recapture 	: 	</th><td><%= select_tag "userinformation1[f31]", options_for_select([["No","No"],["Yes","Yes"]], @user1.f31.to_s) %></td></tr>
+          <tr><th>AUM Inclusion : 	</th><td>
+				<%= check_box_tag "userinformation1[aum_inc]","1",@user1.aum_inc=="1" %></td></tr>
+            
+      <tr><th>Liquidation Date 	: <% @date2 = @fund_information.liquidation_date || Time.now %>
+</th><td>
+<%= date_select "information", "liquidation_date", {:default=>{:year=>@date2.year, :month=>@date2.month}, :discard_day=>true, :start_year=>(Time.now-10.years).year, :end_year=>Time.now.year} %>
+
+</td></tr>
+          <tr><th>Greenwich 350  : 	</th><td>
+				<%= check_box_tag "userinformation1[greenwich350_index]","1",@user1.greenwich350_index== "1" %></td></tr>
+          <tr><th>UCITS Index : 	</th><td>
+				<%= check_box_tag "userinformation1[Ucits_index]","1",@user1.Ucits_index== "1" %></td></tr>
+			<% if 1==2 %>
+			<tr><th>Notes 	: 	</th><td><%= text_field_tag "userinformation1[f32]",@user1.f32 %></td></tr>
+			<tr><th>Domicile 	:</th><td><%= text_field_tag "userinformation1[f50]",@user1.f50 %></td></tr>
+			<% end %>
+		</table>
+</td><td>&nbsp;</td><td>
+		<table style="width:390px;">
+		    <% if false %>
+			<tr><th>Defunct Fund 	: 	</th><td><%= select_tag "userinformation4[f3]", options_for_select(["No", "Yes"],@user4.f3) %></td></tr>
+			<tr><th>Defunct Notes 	: 	</th><td><%= text_field_tag "information[defunct_notes]", @fund_information.defunct_notes %></td></tr>
+			<tr><th>WRI 	: 	</th><td><%= text_field_tag "userinformation4[f4]", @user4.f4 %></td></tr>
+			<tr><th>WRI Notes	: 	</th><td><%= text_field_tag "information[wri_notes]", @fund_information.wri_notes %></td></tr>
+			<% end %>
+          <tr><th>Firm Website 	: 	  	</th><td><%= text_field_tag "userinformation4[f19]", @user4.f19 %></td></tr>
+			
+			<tr><th>Web Login ID 	: 	</th><td><%= text_field_tag "userinformation4[f20]", @user4.f20 %></td></tr>
+			<tr><th>Web Password 	: 	</th><td><%= text_field_tag "userinformation4[f21]", @user4.f21 %></td></tr>
+			<% if false %>
+            <tr><th>Ceased Reporting 	: 	</th><td><%= check_box_tag "information[ceased_reporting]",1, @fund_information.ceased_reporting.to_i==1 %></td></tr>
+			<% end %>
+            <tr><th>Database Classification 	: 	</th><td><%= select_tag "information[f51]",options_for_select(["Master List", "Defunct", "WRI", "Ceased Reporting", "Benchmark", "DELETE"],@fund_information.f51) %></td></tr>
+          <tr><th nowrap>Classification Updated By 	: 	</th><td><%= @fund_information.f51_by %></td></tr>
+            <tr><th>Internal Notes : </th><td>
+              <%= text_area_tag "usermemo1[memo1]", @um1.memo1, :style=>"width:200px;height:100px;" %>
+            </td></tr>
+
+		</table>
+</td></tr></table>
+<% end %>
+<%= link_to_function image_tag('/images/btnMakeChanges.jpg'), "$('userinfo1').submit();" %>

@@ -1,0 +1,25 @@
+﻿<% if current_user.tip=="admin" %>
+
+<h2>Fund Name: <%=@information.f20%></h2>
+
+<% remote_form_for "srcc", :url=>{:action=>"search_firm"}, :update=>"firm" do |f| %>
+	Firm Name: <%= text_field_tag :name %>
+	<%= f.submit "Search" %>
+<% end %>
+<% end %>
+
+<% form_for "information", :url=>{:action=>"do_edit"} do |f| %>
+	<%= hidden_field_tag "id", @information.id %>
+		<table style="width:500px;">
+			
+			<% if current_user.tip=="admin" %>
+			<tr><th>Firm</th><td>
+				
+				<div id="firm">
+					<%= @information.firm.general_partner if !@information.firm.nil? %>
+				</div>
+			</td></tr>
+			<% end %>
+			<tr><th colspan="2"><%= f.submit "Save" %> | <input type="button" value="Go Back" onclick="document.location.href='/funds'"></th></tr>
+		</table>
+<% end %>

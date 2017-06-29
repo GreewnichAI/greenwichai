@@ -1,0 +1,17 @@
+ <tr id="<%= slider_div %>_tr" style="display:none;">
+   <td style="width:300px;"><strong><%= title %></strong></td>
+   <td style="white-space:nowrap;"><%= text_field_tag v1,"", :style=>"" %><%= " % " if (v1=~/sharpe/).nil? %></td>
+   <td><div id="<%= slider_div %>" style="margin-left:20px;width:280px;"></div></td>
+   <td style="padding-left:10px;padding-right:5px;white-space:nowrap;"><%= text_field_tag v2,"", :style=>"border:invert;" %><%= " % " if (v2=~/sharpe/).nil? %></td>
+   <td><a id='<%= slider_div %>_X'><%= image_tag('delete.gif') %></a>
+     <script type="text/javascript">
+         $('#<%= slider_div %>_X').click(function() {
+             $('#<%= slider_div %>_tr').hide()    ;
+             $('#<%= slider_div %>_hidden').val(0);
+         }); </script>
+   </td>
+   <td><input id="<%= slider_div %>_hidden" name="<%= slider_div %>_hidden" type="hidden" value="0" />
+      <%= render :partial => "slider", :locals=>{:v1=> v1.gsub("[","_").gsub("]",""), :v2=> v2.gsub("[","_").gsub("]",""), :slider_div=>slider_div , :start=>sprintf("%.2f",@minmax_stats[slider_div][0]), :fin=>sprintf("%.2f",@minmax_stats[slider_div][1])} %>
+
+   </td>
+ </tr>

@@ -1,0 +1,81 @@
+Fairfield Greenwich FFTW Diversified Alpha Fund Ltd. - WRI
+GREENWICH Absolute Return Fund, Ltd. 
+Greenwich Absolute Return Fund, Ltd. (Gross Returns)
+Greenwich Absolute Return Fund, Ltd. 2.5x Note
+Greenwich Developed Markets Americas Regional Index
+Greenwich Developed Markets Asia Regional Index
+Greenwich Developed Markets Composite Regional Index
+Greenwich Developed Markets Europe Regional Index
+Greenwich Developed Markets Global Regional Index
+Greenwich Emerging Markets Americas Regional Index
+Greenwich Emerging Markets Asia Regional Index
+Greenwich Emerging Markets Composite Regional Index
+Greenwich Emerging Markets Europe Regional Index
+Greenwich Emerging Markets Global Regional Index
+Greenwich Global Arbitrage Index
+Test Alpha
+Greenwich Global Convertible Arbitrage Index
+Greenwich Global Directional Trading Group Index
+Greenwich Global Distressed Securities Index
+Greenwich Global Diversified Event-Driven Index
+Greenwich Global Equity Market Neutral Index
+Greenwich Global Event-Driven Index
+Greenwich Global Fixed Income Arbitrage Index2
+One more Wrong Fund Name
+Greenwich Global Funds of Funds Index
+Greenwich Global Futures Discretionary Index
+Greenwich Global Futures Index
+Greenwich Global Futures Systematic Index
+Greenwich Global Growth Index
+Greenwich Global Hedge Fund ETF (Net 0.75%)
+Greenwich Global Hedge Fund ETF (Net 1%)
+Greenwich Global Hedge Fund ETF - Pro Forma 1/2006 
+Greenwich Global Hedge Fund Index
+Greenwich Global Long-Short Credit Index
+Greenwich Global Long-Short Equity Group Index
+Greenwich Global Macro Index
+Greenwich Global Market Neutral Group Index
+Greenwich Global Market Timing Index - DISCONTINUED 12/31/09
+Greenwich Global Merger Arbitrage Index
+Greenwich Global Multi-Strategy Index
+Greenwich Global Opportunistic Index
+Greenwich Global Other Arbitrage Index
+Greenwich Global Short-Biased Index
+Greenwich Global Specialty Strategies Group Index
+Greenwich Global Statistical Arbitrage Index - DISCONTINUED 12-31-2009
+Greenwich Global UCITS (GGHFI)
+Greenwich Global UCITS Index (BM)
+
+
+Greenwich Global Value Index
+Greenwich Hedge Fund ETF Index
+Greenwich International Arbitrage Index
+Greenwich International Convertible Arbitrage Index
+Greenwich International Directional Trading Group Index
+Greenwich International Distressed Securities Index
+Greenwich International Diversified Event-Driven Index
+Greenwich International Emerging Markets Index
+Greenwich International Equity Market Neutral Index
+Greenwich International Event-Driven Index
+Greenwich International Fixed Income Arbitrage Index
+Greenwich International Fixed Income Index
+Greenwich International Fund of Funds
+Greenwich International Futures Index
+Greenwich International Growth Index
+Greenwich International Hedge Fund Index
+Greenwich International Long-Short Equity Group Index
+Greenwich International Macro Index
+Greenwich International Market Neutral Group Index
+Greenwich International Market Neutral Index (80-20)
+Greenwich International Market Neutral Index (80-20)(Oct-02)
+Greenwich International Market Timing Index
+Greenwich International Merger Arbitrage Index
+Greenwich International Multi-Strategy Index
+Greenwich International Opportunistic Index
+Greenwich International Short Selling Index
+Greenwich International Specialty Strategies Group Index
+Greenwich International Statistical Arbitrage Index
+Greenwich International Value Index
+Greenwich Investable Arbitrage Index
+Greenwich Investable Directional Trading Group Index
+Greenwich Investable Equity Market Neutral Index

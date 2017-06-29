@@ -1,0 +1,110 @@
+<table style="width:700px;" id="tbl_crits">
+<tr>
+<td>
+  <div class="sel" style="width:182px; background:url(/images/sel2nd.jpg) no-repeat;">
+  <div class="tBox" style="width:180px" id="div_f_ytd_l"><a id="f_ytd_l">YTD</a></div>
+  </div>
+</td>
+<td>
+  <div class="sel" style="width:182px; background:url(/images/sel2nd.jpg) no-repeat;">
+  <div class="tBox" style="width:180px" id="div_lmr_l"><a id="lmr_l">Last Month Return</a></div>
+  </div>
+</td>
+<td>
+<div class="sel" style="width:182px; background:url(/images/sel2.jpg) no-repeat;">
+  <div class="tBox" style="width:180px">Annualized Return</div>
+  <div id='car_sub' class='list' style=''>
+    <a  id='car_12_l' >CAR 12</a><br/>
+    <a  id='car_24_l' >CAR 24</a><br/>
+    <a  id='car_36_l' >CAR 36</a><br/>
+    <a  id='car_48_l' >CAR 48</a><br/>
+    <a  id='car_inception_l'>CAR Inception</a>
+  </div>
+</div>
+</td>
+<td>
+<div class="sel" style="width:182px; background:url(/images/sel2.jpg) no-repeat;">
+  <div class="tBox" style="width:180px">Cumulative Return</div>
+  <div id='cr_sub' class='list' style=''>
+    <a  id='cr_12_l' >12 Mo Return</a><br/>
+    <a  id='cr_24_l' >24 Mo Return</a><br/>
+    <a  id='cr_36_l' >36 Mo Return</a><br/>
+    <a  id='cr_48_l' >48 Mo Return</a><br/>
+    <a  id='cr_inception_l'>Inception</a>
+  </div>
+</div>
+</td>
+</tr>
+<tr>
+  <td>
+<div class="sel" style="width:182px; background:url(/images/sel2.jpg) no-repeat;">
+  <div class="tBox" style="width:180px">Standard Deviation</div>
+  <div id='sd_sub' class='list' style=''>
+    <a  id='sd_12_l' >SD 12</a><br/>
+    <a  id='sd_24_l' >SD 24</a><br/>
+    <a  id='sd_36_l' >SD 36</a><br/>
+    <a  id='sd_48_l' >SD 48</a><br/>
+    <a  id='sd_inception_l'>SD Inception</a>
+  </div>
+</div>
+</td><td>
+<div class="sel" style="width:182px; background:url(/images/sel2.jpg) no-repeat;">
+  <div class="tBox" style="width:180px">Maximum Drawdown</div>
+  <div id='md_sub' class='list' style=''>
+        <a  id='md_12_l'>MD 12</a> <br/>
+        <a  id='md_24_l'>MD 24</a><br/>
+        <a  id='md_36_l'>MD 36</a> <br/>
+        <a  id='md_48_l'>MD 48</a>  <br/>
+        <a  id='md_inception_l'>MD Inception</a>
+  </div>
+</div>
+</td><td>
+<div class="sel" style="width:182px; background:url(/images/sel2.jpg) no-repeat;">
+  <div class="tBox" style="width:180px">Sharpe Ratio</div>
+  <div id='sharpe_sub' class='list' style=''>
+        <a  id='sharpe_12_l'>Sharpe 12</a> <br/>
+        <a  id='sharpe_24_l'>Sharpe 24</a>  <br/>
+        <a  id='sharpe_36_l'>Sharpe 36</a>  <br/>
+        <a  id='sharpe_48_l'>Sharpe 48</a>  <br/>
+        <a  id='sharpe_inception_l'>Sharpe Inception</a>
+  </div>
+</div>
+</td>
+</tr>
+</table>
+
+<style type="text/css">
+    .sel { width: 265px; height: 30px; background: url(/images/sel.png) no-repeat; position: relative; cursor:pointer; cursor:hand; }
+    .sel .tBox { float: left; width: 180px; height: 35px; line-height: 30px; padding: 0px 10px; color: #344184; text-shadow: 1px 1px 0px #FFF;}
+    .sel .bn { float: right; width: 33px; height: 35px; cursor: pointer; position: relative; background: #fff; filter:alpha(opacity=0); -moz-opacity:0; opacity:0; }
+    .sel .list { display: none; float: left; position: absolute; top: 28px; left: 2px; z-index:999; width: 258px; background: #fff; border: 1px solid #ccc; overflow: scroll; overflow-x: hidden; overflow-y: auto; }
+    .sel .list a { display: block; padding: 0px 10px; height: 24px; line-height: 24px; color: #000; text-decoration: none; }
+    .sel .list a:hover { background: #ccc; color: #666; }
+
+</style>
+
+<script type="text/javascript">
+
+        $(".sel .tBox").click(
+            function(){
+                if($(this).parent().children(".list").children("a").length>10){
+                    $(this).parent().children(".list").css("height","240px");
+                }
+                $(this).parent().children(".list").slideDown("fast");
+            }
+        );
+        $(".sel .list a").click(
+            function(){
+                //$(this).parent().parent().children(".tBox").html($(this).html());
+                $(this).parent().css("display","none");
+            }
+        );
+        $(".sel").hover(function(){},
+            function(){
+                $(this).children(".list").slideUp("fast");
+            }
+        );
+
+
+
+</script>

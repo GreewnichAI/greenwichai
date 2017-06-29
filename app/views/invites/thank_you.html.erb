@@ -1,0 +1,29 @@
+
+<div style="text-align:center;">
+Thank you for updating your information!<br/><br/>
+
+If you would like to view detailed profiles of funds associated with your firm, please log in to GreenwichOnline.<br/>
+</div>
+<br/>
+<div style="width:250px;margin-left:auto;margin-right:auto;">
+	<%@user_session = UserSession.new%>
+<% form_for @user_session, :url => user_session_path do |f| %>
+        <%= label_tag 'login',"Username", :style=>"display:inline-block;width:70px;" %>
+        <%= f.text_field 'login' %><br/>
+        <br/>
+        <%= label_tag 'password', "Password", :style=>"display:inline-block;width:70px;"  %>
+        <%= f.password_field 'password' %><br/>
+        <br/>
+        <div style="text-align:center;">
+        <%= submit_tag 'Log in' %>
+        </div>
+        <% end%>
+</div>
+<br/><br/>
+<div style='text-align:center;'><br/>
+Don't have an account with us yet?<br/> 
+Click the button below to register, or contact us at  +1.203.487.618 or info@greenwichai.com to learn more.<br/><br/>
+<br/>
+
+<input type="button" value="Register" onclick="document.location.href='/invites/register?k=<%= params[:k] %>';" />
+</div>

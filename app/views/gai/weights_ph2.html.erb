@@ -1,0 +1,10 @@
+<%= render :partial=>"admin/menu" %>
+
+<% form_for "wph", :url=>{:action=>"weights_ph2_save"} do |f| %>
+<table>
+<% HfIndiceReal.all(:conditions=>["internal_id = ?", "list1"],:order=>"position").each do |hfi| %>
+  <tr><td><%= hfi.fund_name %></th><td><%= text_field_tag "hfi["+hfi.id.to_s+"]", hfi.weight %></td></tr>
+<% end %>
+</table>
+<%= submit_tag "Save" %>
+<% end %>

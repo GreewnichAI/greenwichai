@@ -1,0 +1,174 @@
+<div id="fund-report">
+  <h1>
+    <%=@fund.f20%>
+    <% if @format=="html" %>
+      <%=link_to(content_tag(:span, 'Download PDF'), my_fund_path(:id =>@fund.id, :format => :pdf), :class=>'download')%>
+      <!-- <a href="/funds/<%= @fund.id %>" class="download"><span>Download PDF</span></a> -->
+    <% end %>
+  </h1>
+  <p class="last-reported-month">
+    <%= !@fund.last_reported_month.nil? ? @fund.last_reported_month.strftime("%B %d, %Y") : ''%>
+  </p>
+  <div class="section">
+    <h3><span>Strategy Description</span></h3>
+    <p class="description"><%=@fund.userdescription.blank? ? "N/A" : @fund.userdescription%></p>
+  </div>
+  <div class="section graph">
+    <div id="chart_div" style="width: 800px; height: 400px;"></div>
+  </div>
+  <div class="section">
+    <div class="pull-left">
+      <h3><span>Annual Returns</span></h3>
+      <%current_year = Date.today.year%>
+      <table class="table odd">
+        <tr>
+          <th class="small">Year</th>
+          <th class="small">Return</th>
+          <th>AUM (<%=@fund.systeminformation1.f28%>)</th>
+        </tr>
+        <%if @fund.ytd%>
+          <tr>
+            <td class="small"><%='YTD'%></td>
+            <td class="small"><%=field_or_null_with_percent @fund.ytd%></td>
+            <td><%=@fund.aum_value(current_year)%></td>
+          </tr>  
+        <%end%> 
+        <%if @fund.last_year_1%>     
+          <tr>
+            <td class="small"><%=current_year-1%></td>
+            <td class="small"><%=field_or_null_with_percent @fund.last_year_1%></td>
+            <td><%=@fund.aum_value(current_year-1)%></td>
+          </tr>
+        <%end%> 
+        <%if @fund.last_year_2%>
+          <tr>
+            <td class="small"><%=current_year-2%></td>
+            <td class="small"><%=field_or_null_with_percent @fund.last_year_2%></td>
+            <td><%=@fund.aum_value(current_year-2)%></td>
+          </tr>
+        <%end%> 
+        <%if @fund.last_year_3%>
+          <tr>
+            <td class="small"><%=current_year-3%></td>
+            <td class="small"><%=field_or_null_with_percent @fund.last_year_3%></td>
+            <td><%=@fund.aum_value(current_year-3)%></td>
+          </tr>
+        <%end%> 
+        <%if @fund.last_year_4%>          
+          <tr>
+            <td class="small"><%=current_year-4%></td>
+            <td class="small"><%=field_or_null_with_percent @fund.last_year_4%></td>
+            <td><%=@fund.aum_value(current_year-4)%></td>
+          </tr>
+        <%end%> 
+        <%if @fund.last_year_5%>          
+          <tr>
+            <td class="small"><%=current_year-5%></td>
+            <td class="small"><%=field_or_null_with_percent @fund.last_year_5%></td>
+            <td><%=@fund.aum_value(current_year-5)%></td>
+          </tr>
+        <%end%>                 
+      </table>
+    </div>
+    <div class="pull-left">
+      <h3><span>Return Statistics</span></h3>
+      <table class="table">
+        <tr>
+          <td>Cumulative Return</td>
+          <td><%=field_or_null_with_percent @fund.cr_inception%></td>
+        </tr>
+        <tr>
+          <td>Compound Annual Return</td>
+          <td><%=field_or_null_with_percent @fund.car_inception%></td>
+        </tr>
+        <tr>
+          <td>Average Return</td>
+          <td><%= field_or_null_with_percent (@fund.average_return.nil? ? 0 : @fund.average_return) * 100.0%></td>
+        </tr>
+        <tr>
+          <td>Standard Deviation(Ann)</td>
+          <td><%=field_or_null_with_percent @fund.sd_inception%></td>
+        </tr>
+        <tr>
+          <td>Maximum Drawdown</td>
+          <td><%=field_or_null_with_percent @fund.md_inception%></td>
+        </tr>
+        <tr>
+          <td>Sharpe Ratio</td>
+          <td><%=field_or_null @fund.sharpe_inception%></td>
+        </tr>
+        <tr>
+          <td>Best Month</td>
+          <td><%=field_or_null_with_percent (@fund.best_month_inception)%></td>
+        </tr>
+        <tr>
+          <td>Worst Month</td>
+          <td><%=field_or_null_with_percent (@fund.worst_month_inception)%></td>
+        </tr>
+      </table>
+    </div>
+    <div class="pull-left odd">
+      <h3><span>Fund Structure</span></h3>
+      <table class="table">
+        <tr>
+          <td>Inception Date</td>
+          <td><%=field_or_null @fund.f21%></td>
+        </tr>
+        <tr>
+          <td>Domicile</td>
+          <td><%=field_or_null @fund.f14%></td>
+        </tr>
+        <tr>
+          <td>Management Fee</td>
+          <td><%=field_or_null_with_percent (( !@fund.f22.blank? ? @fund.f22.to_f * 100 : @fund.f22), 2)%></td>
+        </tr>
+        <tr>
+          <td>Incentive Fee</td>
+          <td><%=field_or_null_with_percent (( !@fund.f24.blank? ? @fund.f24.to_f * 100.0 : @fund.f24), 0)%></td>
+        </tr>
+        <tr>
+          <td>Minimum Investment</td>
+          <td><%=!@fund.f23.blank? ? (number_to_currency @fund.f23, :unit => "#{@fund.systeminformation1.f49} ") : "N/A" %></td>
+        </tr>
+        <tr>
+          <td>Redemption Frequency</td>
+          <td><%=field_or_null @fund.f27%></td>
+        </tr>
+        <tr>
+          <td>Redemption Notice</td>
+          <td><%= @fund.f28 ? "#{field_or_null(@fund.f28.to_i, 0)}" + " days" : field_or_null(@fund.f28)%></td>
+        </tr>
+        <tr>
+          <td>Lockup</td>
+          <td><%=field_or_null @fund.f29%></td>
+        </tr>
+      </table>
+    </div>
+    <div class="pull-left">
+      <h3><span>Strategy Specialization</span></h3>
+      <table class="table">
+        <tr>
+          <td>Strategy Group</td>
+          <td><%=field_or_null @fund.f15%></td>
+        </tr>
+        <tr>
+          <td>Primary Strategy</td>
+          <td><%=field_or_null @fund.f37%></td>
+        </tr>
+        <tr>
+          <td>Secondary Strategy</td>
+          <td><%=field_or_null @fund.f39%></td>
+        </tr>
+        <tr>
+          <td>Regional Focus</td>
+          <td><%=field_or_null @fund.f40%></td>
+        </tr>
+        <tr>
+          <td>Country Focus</td>
+          <td><%=field_or_null @fund.f38%></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<%=render :partial=>'cumulative_return'%>

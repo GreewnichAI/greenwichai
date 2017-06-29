@@ -1,0 +1,13 @@
+﻿
+<% form_for @elem_of_set do |f| %>
+	<%= f.hidden_field "set_of_set_id" %>
+<table width=500>
+	<tr><th>Name</th><td><%= f.text_field :name %></td></tr>
+
+	<% if @elem_of_set.id.nil? and 1==0 %>
+		<tr><th>Has Subsets?</th><td>Yes <%= radio_button_tag :has_subsets, 1 %> No <%= radio_button_tag :has_subsets, 0,true %></td></tr>
+	<% end %>
+	
+	<tr><th colspan="2"><%= f.submit "Save"%></th></tr>
+</table>
+<% end %>

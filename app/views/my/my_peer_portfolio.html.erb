@@ -1,0 +1,59 @@
+<link rel="stylesheet" type="text/css" href="/stylesheets/portfolio.css"/>
+<% if current_user%>
+  <%= render "layouts/navbar" %>
+<% end %>
+<div id="results">
+  <h1 class="heading">My Peer Portfolio</h1>
+  <div id="peer_message">
+  </div>
+  <div class="section pull-left no-border">
+    Welcome to your Peer Portfolio. Here you will be able to track up to 10 funds and view a one page performance report for each fund.
+    <ul class="list">
+      <li>
+        To add a fund
+        <%= link_to 'search the database', '/search'%>
+       and then click the "Add" button to the right of the fund name. 
+      </li>
+      <li>
+        To view the one page performance report for a fund click the fund name in the table to the right.
+      </li>
+      <li>
+        To remove a fund click the "Remove" link next to the fund name in the table to the right or
+	<%= link_to 'search the database', '/search'%>
+	by fund name and then click the "Remove" button in the results.
+      </li>      
+    </ul>
+  </div>
+  <div id="portfolio_funds" class="section pull-right">
+    <h3>Portfolio Funds</h3>
+    <ul>
+      <%-if @portfolio_funds%>
+        <%-@portfolio_funds.each do |pfund|%>
+          <%- fund = pfund.fund%>
+          <li class="fund_holder_<%=fund.id%>">
+            <%= link_to_function "#{fund.f20}", "window.open('"+my_fund_path(fund)+"','mywindow','location=1,status=1,scrollbars=1, width=1090,height=800');", :class => 'fund pull-left'%>
+            <%#= link_to "#{fund.f20}", , :class=>"fund pull-left", 'data-id'=>fund.id %>
+            <%=link_to 'Remove', remove_fund_from_portfolio_path(:id => fund.id), :class=>'remove_fund_from_portfolio blue_button pull-right'%>
+            <div class="clearfix"></div>
+          </li>          
+        <%end%>
+      <%end%>
+    </ul>
+
+    <div class="pagination">
+      <div class="count">Fund Count: <span id="portfolio_count"><%=@portfolio_funds ? @portfolio_funds.count : 0%></span></div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<script type="text/javascript">
+  $(".remove_fund_from_portfolio").live('click', function(){
+    var url = $(this).attr('href');
+
+    $.ajax({
+      url: url
+    });
+
+    return false;
+  });    
+</script>

@@ -1,0 +1,2 @@
+<%= select_tag "information[f39]", options_for_select(@st_se, @fund_information.f39), :style=>"width:200px;" %>
+<%= text_field_tag("over_information[f39]", @st_se.index(@fund_information.f39).nil? ? @fund_information.f39 : "") %>

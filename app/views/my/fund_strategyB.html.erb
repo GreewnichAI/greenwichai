@@ -1,0 +1,147 @@
+﻿<%= render (:partial=>"menu") %>
+<style>
+.len200 { width:200px; }
+.lenauto { width:auto; }
+</style>
+<% if current_user.tip=="admin"  %>
+<input type="button" value="Index Inclusion" onclick="document.location.href='/my/fund_strategyC?id=<%= params[:id] %>'">
+<% end %>
+<br/><br/>
+<% form_for "fund_strategy", :url=>{:action=>"fund_strategyB_save"}, :html=>{:id=>"fund_strategy"} do |f| %>
+	<%= hidden_field_tag "id", params[:id] %>
+	
+	<div style="float:left;width:400px;">
+		<b>Fund Strategy</b><br/>	
+		<a href='http://www.greenwichai.com/index.php/hf-essentials/strategy-definitions' alt='' target="nnw">Greenwich Hedge Fund Strategy Guide</a>
+		<br/><br/>
+		Please select one:	<br/>
+		<%
+		arr = [	'Long/Short Equity - Growth',
+						'Long/Short Equity - Value',
+						'Long/Short Equity - Opportunistic',
+						'Short-Biased',
+						'Equity Market Neutral',
+						'Convertible Arbitrage',
+						'Merger Arbitrage',
+						'Fixed Income Arbitrage',
+						'Long-Short Credit',
+						'Arbitrage - Other',
+						'Multiple Arbitrage Strategies',
+						'Distressed Securities',
+						'Multiple Event-Driven Strategies',
+						'Macro',
+						'Futures - Systematic',
+						'Futures - Discretionary',
+						'Multi-Strategy',
+						'Fund of Funds' ]
+		%>
+		<% arr.each do |ar| %>
+				<%= radio_button_tag "information[f49]", ar, @fund_information.f49==ar %> <%= ar %><br/>
+		<% end %>
+		<br/>
+		<b>Strategy Description</b><br/>
+		<%= text_area_tag "information[userdescription]", @fund_information.userdescription, :style=>"width:300px;height:120px;" %>
+	</div>
+	
+	<div style="float:left;width:400px;">
+		<b>Geographical Focus</b><br/><br/>
+		Please select specialty region:<br/>
+		Complete only if asset concentration in region is 70% or greater<br/>
+		<br/>
+		<% so = SetOfSet.find(:first, :conditions=>["name = ?", "spec_region"]) %>
+		<% if  !@fund_information.f40.nil? && so.elem_of_sets.map{|c| c.name}.index(@fund_information.f40).nil? && !@fund_information.f40.upcase.include?("NONE") %>
+			<% select = "" %>
+		<% elsif !@fund_information.f40.nil? &&  !so.elem_of_sets.map{|c| c.name}.index(@fund_information.f40).nil? %>
+			<% select = @fund_information.f40.to_s.strip %>
+		<% else %>
+			<% select = "None" %>
+		<% end %>
+		<%= select_tag "information[f40]",
+                         options_for_select([["None", "None"]]+[["Other",""]]+(so.elem_of_sets.collect {|c| [c.name,c.name]}), select),
+                         :onchange=>remote_function(:update=>"sel_f38", :url=>"/my/fs_sel1b", :with=>"'id="+params[:id]+"&st_gr='+$('information_f40').value") %>
+
+        <%= text_field_tag("over_information[f40]", !@fund_information.f40.nil? &&  so.elem_of_sets.map{|c| c.name}.index(@fund_information.f40).nil? && !@fund_information.f40.upcase.include?("NONE") && !@fund_information.f40.upcase.include?("OTHER") ? @fund_information.f40 : "") %>
+		<div id="sel_f38">
+		</div>
+		
+		<hr/>
+		
+		
+		<b>Sector Focus</b><br/><br/>
+		Please Select Asset Class:<br/>
+		Complete only if asset concentration in asset class is 70% or greater<br/>
+		<br/>
+		<% so = SetOfSet.find(:first, :conditions=>["name = ?", "spec_class"]) %>
+		<% if !@fund_information.f48.nil? && so.elem_of_sets.map{|c| c.name}.index(@fund_information.f48).nil? && !@fund_information.f48.upcase.include?("NONE") %>
+			<% select = "" %>
+		<% elsif !@fund_information.f48.nil? && !so.elem_of_sets.map{|c| c.name}.index(@fund_information.f48).nil? %>
+			<% select = @fund_information.f48.to_s.strip %>
+		<% else %>
+			<% select = "None" %>
+		<% end %>
+		<%= select_tag "information[f48]", options_for_select([["None","None"]]+[["Other",""]]+(so.elem_of_sets.collect {|c| [c.name,c.name]}), select),
+				:onchange=>remote_function(:update=>"sel_f41", :url=>"/my/fs_sel2b", :with=>"'id="+params[:id]+"&st_gr='+$('information_f48').value") %>
+				
+		<%= text_field_tag("over_information[f48]", !@fund_information.f48.nil? && so.elem_of_sets.map{|c| c.name}.index(@fund_information.f48).nil? && !@fund_information.f48.upcase.include?("NONE") && !@fund_information.f48.upcase.include?("NONE") ? @fund_information.f48 : "")%>
+		<div id="sel_f41">
+		</div>
+		
+	</div>
+	<div style="clear:both;">
+	<br/><br/>
+	<img src="/images/btnConfirmInfo.jpg" onclick="validateInputs();" style="cursor:pointer;cursor:hand;" />
+<% end %>
+
+<script type="text/javascript">
+	<%= remote_function(:update=>"sel_f38", :url=>"/my/fs_sel1b", :with=>"'id="+params[:id]+"&st_gr='+$('information_f40').value") %>
+	<%= remote_function(:update=>"sel_f41", :url=>"/my/fs_sel2b", :with=>"'id="+params[:id]+"&st_gr='+$('information_f48').value") %>
+</script>
+
+<% if flash[:sv].to_i==1 %>
+<script type="text/javascript">
+	alert('Data has been saved')
+</script>
+<% end %>
+
+<script type="text/javascript"">
+
+	
+	
+
+  function changeClassf40(){
+      if(!jQuery('#over_information_f40').hasClass('required') && jQuery('#information_f40 option:selected').text() == 'Other'){
+          jQuery('#over_information_f40').attr('class', 'require validate-only-letters len50');
+      }
+      else{
+          jQuery('#over_information_f40').attr('class', 'len50');
+      }
+  }
+  function changeClassf38(){
+      if(!jQuery('#over_information_f38').hasClass('required') && jQuery('#information_f38 option:selected').text() == 'Other'){
+          jQuery('#over_information_f38').attr('class', 'require validate-only-letters len50');
+      }
+      else{
+          jQuery('#over_information_f38').attr('class', 'len50');
+      }
+  }
+  
+  
+	
+	jQuery(document).ready(function() {
+      changeClassf40();
+      changeClassf38();
+  	});
+	
+  	function validateInputs(){
+	      var valid = new Validation('fund_strategy');
+	      var result = valid.validate();
+	      if(result){
+	          $('fund_strategy').submit();
+	      }
+	      return false;
+	  }
+
+  Validation.add('validate-only-letters', 'Only letters allowed', {
+      pattern : new RegExp("^[a-zA-Z]+$") // only letter allowed
+});
+	</script>

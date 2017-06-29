@@ -1,0 +1,49 @@
+
+<div id="peerComparison"><span>Peer Comparison</span></div>
+<div class="details">
+  The Greenwich Peer Comparison Tool lets you see how your fund stacks up against other funds and benchmarks. Please select your parameters and then click "Create Report" to see your results.
+</div>
+<div class="form">
+  <%- form_tag initiate_reviews_path do %>
+    <div class="field">
+      <label>Fund Name *</label>
+      <%=select :review, :fund_name, @informations.collect {|i| [i.f20, i.id]} %>
+    </div>
+    <div class="field">
+      <label>Universe for Comparison</label>
+      <%=select(:review, :universe, @universes)%>
+    </div>
+    <div class="field">
+      <label>Primary Benchmark</label>
+      <%=select :review, :p_bm, primary_bm(@p_bms) %>
+    </div>
+    <div class="field">
+      <label>Secondary Benchmark</label>
+      <%=select :review, :s_bm, secondary_bm(@s_bms) %>
+    </div>
+    <div class="field">
+      <%=submit_tag "Create Report", :"data-creatable" => current_user.id %>
+    </div>
+  <%end%>
+  
+</div>
+<span style="font-family:Calibri; font-size:12px; font-style:italic">* Please note reports may be generated for all active funds which have been in the database at least 24 hours.</span>
+<script type="text/javascript">
+  $("#review_fund_name").change(function(){
+    var fund_id = $(this).val();
+    $.ajax({
+  		dataType: 'script',
+  		type: 'get',
+  		dataType: 'json',
+  		url: "get_universes/"+fund_id,
+      success: function(data) {
+        $("#review_universe").html('');
+        $.each(data.universes, function(id, option){
+          $("#review_universe").append($('<option></option>')
+                               .val(option)
+                               .html(option));
+        });
+      }
+  	});
+  });
+</script>

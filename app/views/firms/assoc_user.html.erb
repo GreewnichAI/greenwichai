@@ -1,0 +1,13 @@
+﻿
+	<%= hidden_field_tag "id",@manager_information.id %>
+		General Partner: <%= @manager_information.general_partner %><br/>
+		<% remote_form_for "user_search", :url=>{:action=>"search", :controller=>"users", :manager_id=>@manager_information.manager_id, :view_name=>"firms_assoc_user" }, :update=>"user_list" do |f| %>
+			Login <%= text_field_tag "user[login]" %>
+			<%= f.submit "Search" %>
+		<% end %>
+		
+		<div id="user_list">
+		</div>		
+		<br/><br/>
+		<input type="button" value="Back" onclick="document.location.href='/firms';" />
+

@@ -1,0 +1,9 @@
+﻿
+<% remote_form_for "firms", :url=>{:action=>"search_firm"}, :update=>"div_firms" do |f| %>
+	<%= hidden_field_tag "id", @user.id %>
+Name: <%= text_field_tag "name" %> <%= f.submit "Search" %>
+<% end %>
+
+<div id="div_firms">
+	
+</div>

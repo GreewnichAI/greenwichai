@@ -1,0 +1,22 @@
+﻿
+<h4>VIEW/EDIT/DELETE FUND INFORMATION</h4><br/>
+<div style="border:solid 1px #000000;width:480px;padding:10px;">
+<% form_for "funds", :action=>"index" do |f| %>
+	Fund Name: <%= text_field_tag "fund_name", params[:fund_name] %><br/>
+	<%= f.submit "Search" %>
+<% end %>
+</div>
+<br/>
+
+<% if params[:fund_name] %>
+<table class="blue_table" style="width:800px;">
+<tr><th>Fund Name</th><th>Fund Status</th><th style="text-align:right;">Last Updated</th></tr>
+<% @informations.each do |information| %>
+	<tr>
+			<td><%= link_to information.f20, {:action=>"perfs", :id=>information.id} %></td>
+      <td><%= information.f51 %></td>
+			<td style="text-align:right;width:200px;"><%= information.lastupdated ? information.lastupdated.strftime("%m/%d/%Y %I:%M %p") : "" %></td>
+	</tr>
+<% end %>
+</table>
+<% end %>

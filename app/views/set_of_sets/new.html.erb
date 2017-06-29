@@ -1,0 +1,11 @@
+﻿
+<% form_for @set_of_set do |f| %>
+<table>
+	<tr><th>Name</th><td><%= f.text_field :name %></td></tr>
+	<tr><th>Description</th><td><%= f.text_field :description %></td></tr>
+	
+	
+	
+	<tr><th colspan="2"><%= f.submit "Save"%></th></tr>
+</table>
+<% end %>

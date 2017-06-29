@@ -1,0 +1,131 @@
+<script type="text/javascript">
+  google.load("visualization", "1", {packages:["corechart"]});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable(<%=@chartData.to_json%>);
+
+    var options = {
+      
+      title:null,
+      width:900, height:350,
+      isStacked: true,
+      fontSize: 11,
+      series: [{type: "line", pointSize: 7, lineWidth: 0, color: "yellow"}, {type: "line", pointSize: 7, lineWidth: 0, color: "blue"}, {type: "line", pointSize: 7, lineWidth: 0, color: "red"}],
+      seriesType: "bars",
+      vAxis: {title: "Percent Return", maxValue: 50, minValue: -30},
+      colors: ["#fefb15", "#15aefe", "#da2626", "rgb(206, 224, 245)", "rgb(197, 175, 210)", "rgb(200, 225, 170)", "rgb(242, 195, 195)"]
+    };
+
+    var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }
+</script>
+<div id="peerComparison"><span>Peer Comparison</span></div>
+<div class="report">
+  <div class="peerGroupAnalyzer">
+    <h3>Greenwich Peer Group Analyzer</h3>
+    <div class="info">
+      <label class="label">Fund Name:</label>
+      <label class="value"><%=field_or_null(@information.f20.titleize)%></label>
+    </div>
+    <div class="info">
+      <label class="label">Performance as Of:</label>
+      <label class="value"><%=field_or_null(@performance.date_1.strftime("%b-%y"))%></label>
+    </div>
+    <div class="info">
+      <label class="label">Firm Name:</label>
+      <label class="value"><%=field_or_null(@information.f1.titleize)%></label>
+    </div>
+    <div class="info">
+      <label class="label">Universe:</label>
+      <label class="value"><%=field_or_null(@universe)%></label>
+    </div>
+    <div class="info">
+      <label class="label">Primary Strategy:</label>
+      <label class="value"><%=field_or_null(@information.f37)%></label>
+    </div>
+    <div class="info">
+      <label class="label">Benchmark 1:</label>
+      <label class="value"><%=field_or_null(@p_bm.f20.titleize)%></label>
+    </div>
+    <div class="info">
+      <label class="label">Secondary Strategy:</label>
+      <label class="value"><%=field_or_null(@information.f39)%></label>
+    </div>
+    <div class="info">
+      <label class="label">Benchmark 2:</label>
+      <label class="value"><%=field_or_null(@s_bm.f20.titleize)%></label>
+    </div>
+    <div class="info">
+      <label class="label">Regional Focus:</label>
+      <label class="value"><%=field_or_null(@information.f40)%></label>
+    </div>
+  </div>
+  
+  <div class="returnAnalysis">
+    <h3>Return Analysis</h3>
+    <div class="details">
+      <table>
+        <tr class="colored">
+          <th>&nbsp;</th>
+          <th>Last Month</th>
+          <th>YTD</th>
+          <th>1Y</th>
+          <th>CAR</th>
+          <th>StD</th>
+          <th>Sharpe</th>
+          <th>Max DD</th>
+        </tr>
+        <%[@information, @p_bm, @s_bm].each do |info|%>
+          <tr>
+            <td class="big"><%=field_or_null(info.f20)%></td>
+            <td><%=field_or_null(info.lmr)%></td>
+            <td><%=field_or_null(info.f_ytd)%></td>
+            <td><%=field_or_null(info.car_12)%></td>
+            <td><%=field_or_null(info.car_inception)%></td>
+            <td><%=field_or_null(info.sd_inception)%></td>
+            <td><%=field_or_null(info.sharpe_inception)%></td>
+            <td><%=field_or_null(info.md_inception)%></td>
+          </tr>
+        <%end%>
+      </table>
+    </div>
+    <h3>Performance vs. Universe</h3>
+    <div id="chart_div"></div>
+  </div>
+  <div style="clear:both;">&nbsp;</div>
+  <div class="returnAnalysis" style="margin-top:40px;">
+    <h3>Universal Quartile Level</h3>
+    <table>
+      <tr class="colored">
+        <th>&nbsp;</th>
+        <th>1 Mo</th>
+        <th>3 Mo</th>
+        <th>YTD</th>
+        <th>1 Yr</th>
+        <th>3 yr</th>
+        <th>5 yr</th>
+      </tr>
+      <%4.times do |i|%>
+        <tr>
+          <td class="big"><%=field_or_null(@chartData[0][7-i])%></td>
+          <td><%=field_or_null(@chartData[1][7-i])%></td>
+          <td><%=field_or_null(@chartData[2][7-i])%></td>
+          <td><%=field_or_null(@chartData[3][7-i])%></td>
+          <td><%=field_or_null(@chartData[4][7-i])%></td>
+          <td><%=field_or_null(@chartData[5][7-i])%></td>
+          <td><%=field_or_null(@chartData[6][7-i])%></td>
+        </tr>
+      <%end%>
+      <tr>
+        <td class="big">5th Percentile</td>
+        <td><%=field_or_null(@p5[0])%></td>
+        <td><%=field_or_null(@p5[1])%></td>
+        <td><%=field_or_null(@p5[2])%></td>
+        <td><%=field_or_null(@p5[3])%></td>
+        <td><%=field_or_null(@p5[4])%></td>
+        <td><%=field_or_null(@p5[5])%></td>
+      </tr>
+    </table>
+  </div>
+</div>

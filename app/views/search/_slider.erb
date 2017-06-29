@@ -1,0 +1,32 @@
+
+<script type="text/javascript">
+  var <%= slider_div %>_slider;
+  $(function() {
+    <%= slider_div %>_slider = $( "#<%= slider_div %>" ).slider({
+      range: true,
+      min:<%= start %>,
+      max:<%= fin %>,
+            step : 0.01,
+      values: [ <%= start %>, <%= fin %> ],
+      slide: function( event, ui ) {
+        $( "#<%= v1 %>" ).val(ui.values[0]);
+                $( "#<%= v2 %>").val(ui.values[1]);
+      }
+    });
+    $( "#<%= v1 %>" ).val($( "#<%= slider_div %>" ).slider( "values", 0 ));
+    $("#<%= v2 %>").val($( "#<%= slider_div %>" ).slider( "values", 1 ) );
+
+        $( "#<%= v1 %>" ).keyup(function(){
+            <%= slider_div %>_slider.slider("values", [$( "#<%= v1 %>" ).val(), $("#<%= v2 %>" ).val() ]);
+        });
+        $( "#<%= v2 %>" ).keyup(function(){
+            <%= slider_div %>_slider.slider("values", [$( "#<%= v1 %>" ).val(), $("#<%= v2 %>" ).val() ]);
+        });
+
+
+
+
+  });
+
+
+  </script>

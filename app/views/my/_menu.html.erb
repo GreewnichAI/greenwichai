@@ -1,0 +1,39 @@
+﻿<% @mbar = "background-color:#23BAFF;font-weight:bold;color:#FFFFFF;" %>
+<table class="top_menu">
+	<tr>
+		<td style="<%= @current_menu=="perfs" ? @mbar : '' %>"><a href='/my/perfs?id=<%= params[:id] %>'>Fund Performance &amp; Assets</a></td>
+		<td style="<%= @current_menu=="firm_info" ? @mbar : '' %>"><a href='/my/firm_info?id=<%= params[:id] %>'>Firm Information</a></td>
+		<td style="<%= @current_menu=="fund_info" ? @mbar : '' %>"><a href='/my/fund_info?id=<%= params[:id] %>'>Fund Information</a></td>
+		<td style="width:120px;<%= @current_menu=="fund_strategy" ? @mbar : '' %>"><a href='/my/fund_strategyB?id=<%= params[:id] %>'>Fund<br/>
+				 	- Strategy<br/>
+					- Geography<br/>
+					- Sector</a></td>
+					
+					
+		<% if current_user.tip=="admin" %>
+		
+		<% if 1==2 %>
+		<td style="width:130px;white-space:nowrap;"><a href='/my/profile1?id=<%= params[:id] %>'>	- Assets<br/>
+					- Net Exposures<br/>
+					- Subscription<br/>
+					- Service Firms</a></td>
+		
+		<td style="white-space:nowrap;"><a href='/my/profile2?id=<%= params[:id] %>'>- Investors<br/>
+					- Sectors<br/>
+					- Instruments</a></td>
+		<% end %>					
+		<td style="<%= @current_menu=="profile3" ? @mbar : '' %>"><a href='/my/profile3?id=<%= params[:id] %>'>Risk &amp; Valuation</a></td>
+		<td style="<%= @current_menu=="user" ? @mbar : '' %>"><a href='/my/userinfo1?id=<%= params[:id] %>'>User</a></td>	
+		<% end %>
+		
+		
+		<td style="background-color:#FFFFFF;">
+				<%= link_to image_tag("/images/backtofunds.jpg"),"/" %><br/>
+				
+		</td>
+	</tr>
+</table> 
+
+<hr/>
+		<span style="color:#004080;"><strong>Please remember to click the "Confirm Information" button in order to<br/>
+		have any changes on this page stored in the database.</strong></span><br/><br/>

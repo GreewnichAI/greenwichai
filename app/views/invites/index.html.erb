@@ -1,0 +1,21 @@
+<h4>LIST OF FUNDS</h4>
+(Click Funds to select for update)<br/>
+<br/>
+
+<% form_for :fund, :url=>{:action=>"step2"} do |f| %>
+<%= hidden_field_tag "k", params[:k] %>
+<table class="blue_table" style="width:800px;">
+<tr><th colspan="2">
+  <%= check_box_tag "all", 1,false, :onclick=>"$$('.infs').each(function(x) {x.checked=$('all').checked;});" %>
+  Fund Name</th><th style="text-align:right;">Last Updated</th></tr>
+<% @informations.each do |information| %>
+  <tr>
+      <td><%= check_box_tag "infos["+information.id.to_s+"]", 1, false, :class=>"infs" %></td>
+      <td><%= link_to_function information.f20, "$('infos_"+information.id.to_s+"').checked=!$('infos_"+information.id.to_s+"').checked;" %></td>
+      <td style="text-align:right;"><%= information.lastupdated.nil? ? "" : information.lastupdated.strftime("%m/%d/%Y %I:%M %p") %></td>
+  </tr>
+<% end %>
+
+</table>
+<input type="submit" value="Next Step" />
+<% end %>

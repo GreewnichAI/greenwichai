@@ -1,0 +1,68 @@
+<div style="border: 2px solid rgb(128, 128, 128); padding: 3px;width:630px;font-family:Arial;margin-left:30px;">
+<table style="width:628px;">
+  <tr>
+    <td style="border: 1px solid #ffffff; padding: 3px; text-align: left; font-weight: bold; background-color: #a0a0a0; color: #ffffff; width: 209px; height: 25px;">GAIN Replicator</td>
+    <td style="border: 1px solid #ffffff; text-align: center; background-color: #a0a0a0; color: #ffffff; width: 93px; height: 25px;" colspan="3"><span style="font-weight: bold;">Total Return</span></td>
+    <td style="border: 1px solid #ffffff; text-align: center; background-color: #a0a0a0; color: #ffffff; font-weight: bold; width: 74px; height: 25px;" colspan="2">Annualized from Inception</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #ffffff; background-color: #071c9c; color: #ffffff; font-weight: bold; width: 209px; height: 26px;">&nbsp;Data as at: &nbsp;<%= Time.now.strftime("%d/%m/%Y") %></td>
+    <td style="border: 1px solid #ffffff; background-color: #071c9c; color: #ffffff; font-weight: bold; text-align: center; width: 91px; height: 26px;">Month-to-Date</td>
+    <td style="border: 1px solid #ffffff; background-color: #071c9c; color: #ffffff; font-weight: bold; text-align: center; width: 93px; height: 26px;">Year-to-Date</td>
+    <td style="border: 1px solid #ffffff; background-color: #071c9c; color: #ffffff; font-weight: bold; text-align: center; width: 95px; height: 26px;">Inception-to-Date</td>
+    <td style="border: 1px solid #ffffff; background-color: #071c9c; color: #ffffff; text-align: center; font-weight: bold; width: 74px; height: 26px;">CAR</td>
+    <td style="border: 1px solid #ffffff; background-color: #071c9c; color: #ffffff; text-align: center; font-weight: bold; width: 76px; height: 26px;">STD</td>
+  </tr>
+
+<%
+fnd_arr = ["Greenwich Global Hedge Fund ETF", "Greenwich Long-Short Equity Hedge Fund ETF", "Greenwich Market Neutral Hedge Fund ETF"] 
+%>
+
+<% fnd_arr.each do |fnd_name|
+
+  fnd = fnd_name
+  i = Information.find_by_f20(fnd)
+  mtd = i.mtd
+  ytd = Information.cummulative(i.ytd_data+[mtd/100])
+  itd = Information.cummulative(i.all_data+[i.mtd/100])
+  car = Information.car(i.all_data+[i.mtd/100])
+  std = Information.std(i.all_data+[i.mtd/100])
+%>
+
+<tr style="background-color:#F5F5F5;">
+  <td><%= i.f20.to_s.gsub("Greenwich ","").gsub(" Hedge Fund ETF","") %></td>
+  <td style="text-align:center;"><%= sprintf("%3.2f",mtd) %>%</td>
+  <td style="text-align:center;"><%= sprintf("%3.2f",ytd) %>%</td>
+  <td style="text-align:center;"><%= sprintf("%3.2f",itd) %>%</td>
+  <td style="text-align:center;"><%= sprintf("%3.2f",car) %>%</td>
+  <td style="text-align:center;"><%= sprintf("%3.2f",std) %>%</td>
+</tr>
+<% end %>
+
+<tr><td colspan="6" style="background-color: #a0a0a0; color: #ffffff; font-weight:bold;"> Comparative Benchmarks</td></tr>
+
+<% fnd_arr = ["S&P 500 TR", "MSCI WEI","Nikkei 225"] %>
+
+<% fnd_arr.each do |fnd_name|
+
+  fnd = fnd_name
+  i = Information.find_by_f20(fnd)
+  mtd = i.mtd
+  ytd = Information.cummulative(i.ytd_data+[mtd/100])
+  itd = Information.cummulative(i.all_data+[i.mtd/100])
+  car = Information.car(i.all_data+[i.mtd/100])
+  std = Information.std(i.all_data+[i.mtd/100])
+%>
+
+<tr style="background-color:#F5F5F5;">
+  <td><%= i.f20.to_s.gsub("Greenwich ","").gsub(" Hedge Fund ETF","") %></td>
+  <td style="text-align:center;"><%= sprintf("%3.2f",mtd) %>%</td>
+  <td style="text-align:center;"><%= sprintf("%3.2f",ytd) %>%</td>
+  <td style="text-align:center;"><%= sprintf("%3.2f",itd) %>%</td>
+  <td style="text-align:center;"><%= sprintf("%3.2f",car) %>%</td>
+  <td style="text-align:center;"><%= sprintf("%3.2f",std) %>%</td>
+</tr>
+<% end %>
+
+</table>
+</div>

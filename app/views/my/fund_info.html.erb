@@ -1,0 +1,146 @@
+﻿<%= render (:partial=>"menu") %>
+<br/>
+
+<% form_for "fund_info", :url=>{:action=>"fund_info_save"}, :html=>{:id=>"fund_info"} do |f| %>
+	<%= hidden_field_tag "id", params[:id] %>
+
+
+
+<% if 1==2 %>
+<div style="width:400px;float:left;">
+
+<br/>
+
+<table style="width:350px;">
+	<tr><td>Management Firm</td><td style="width:160px;"><%= text_field_tag "no_manager_information[general_partner]", @manager_information.general_partner, :readonly=>true, :style=>"background-color:#DDDDDD;" %></td></tr>
+	<tr><td>Address 1</td><td><%= text_field_tag "no_information[f2]", @fund_information.f2, :readonly=>true, :style=>"background-color:#DDDDDD;" %></td></tr>
+	<tr><td>Address 2</td><td><%= text_field_tag "no_information[f3]", @fund_information.f3, :readonly=>true, :style=>"background-color:#DDDDDD;" %></td></tr>
+	<tr><td>City</td><td><%= text_field_tag "no_information[f4]", @fund_information.f4, :readonly=>true, :style=>"background-color:#DDDDDD;" %></td></tr>
+	<tr><td>State/Province</td><td><%= text_field_tag "no_information[f5]", @fund_information.f5, :readonly=>true, :style=>"background-color:#DDDDDD;" %></td></tr>
+	<tr><td>Zip Code</td><td><%= text_field_tag "no_information[f6]", @fund_information.f6, :readonly=>true, :style=>"background-color:#DDDDDD;" %></td></tr>
+	<tr><td>Country</td><td><%= text_field_tag "no_information[f7]", @fund_information.f7, :readonly=>true, :style=>"background-color:#DDDDDD;" %></td></tr>
+	<tr><td>Phone</td><td><%= text_field_tag "no_information[f9]", @fund_information.f9, :readonly=>true, :style=>"background-color:#DDDDDD;" %></td></tr>
+	<tr><td>Fax</td><td><%= text_field_tag "no_information[f10]", @fund_information.f10, :readonly=>true, :style=>"background-color:#DDDDDD;" %></td></tr>
+	<tr><td>Email</td><td><%= text_field_tag "no_information[f11]", @fund_information.f11, :readonly=>true, :style=>"background-color:#DDDDDD;" %></td></tr>
+	
+	<tr><td>Contact Person</td><td><%= text_field_tag "no_information[f12]", @fund_information.f12, :readonly=>true, :style=>"background-color:#DDDDDD;" %></td></tr>
+	<tr><td>Contact Title</td><td><%= text_field_tag "no_information[f13]", @fund_information.f13, :readonly=>true, :style=>"background-color:#DDDDDD;" %></td></tr>
+	<tr><td>Website</td><td><%= text_field_tag "no_information[f18]", @fund_information.f18, :readonly=>true, :style=>"background-color:#DDDDDD;" %></td></tr>
+	<tr><td>Firm Assets</td><td><%= text_field_tag "no_information[f34]", @fund_information.f34, :readonly=>true, :style=>"background-color:#DDDDDD;" %></td></tr>
+	
+</table>
+
+<br/><br/>
+<%= link_to_function image_tag('/images/btnMakeChanges.jpg'), "$('fund_info').submit();" %>
+<br/><br/>
+</div>
+<%  end %>
+
+<div style="width:390px;float:left;">
+<table style="width:390px;">
+	<tr><td colspan="2"><strong>Fund Information</strong></td></tr>
+	<% if current_user.tip!="admin" %>
+		<tr><td>Fund Name</td><td><%= text_field_tag "no_information[f20]", @fund_information.f20, :style=>"width:200px;", :readonly=>true, :style=>"background-color:#DDDDDD;" %></td></tr>
+	<% else %>
+		<tr><td>Fund Name</td><td><%= text_field_tag "information[f20]", @fund_information.f20, :style=>"width:200px;" %></td></tr>
+	<% end %>
+	<tr><td>Portfolio Manager</td><td><%= text_field_tag "information[f8]", @fund_information.f8 %></td></tr>
+	<tr><td>Inception Date (yyyy/mm/dd)</td><td><%= date_select "information","f21",:default=>@fund_information.f21, :start_year=>1980, :end_year=>Time.now.year %></td></tr>
+	<tr><td style="padding-top:15px;">Domicile</td><td style="padding-top:5px;"><%= select_tag2("information[f14]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","domicile"]).map{|c| c.name},@fund_information.f14,"") %></td></tr>
+	<tr><td>On/Offshore Counterpart</td><td style="padding-top:5px;"><%= text_field_tag "information[f19]", @fund_information.f19 %></td></tr>
+	<tr><td style="padding-top:10px;">Exchange Listing:</td><td><%= select_tag2("userinformation2[f9]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","exchange_listed"]).map{|c| c.name},@user2.f9,"") %></td></tr>
+	<tr><td>UCITs</td><td><%= select_tag "systemcheck5[c59]", options_for_select([["Yes",1], ["No",0]],@sc5.c59.to_i) %></td></tr>
+
+<tr><td>US Mutual Fund:</td><td><%= select_tag "information[us_mutual_fund]", options_for_select([["No","No"],["Yes","Yes"]], @fund_information.us_mutual_fund.to_s) %></td></tr>
+
+	<tr><td>Accepting New Subscriptions</td><td><%= select_tag "systeminformation1[f48]", options_for_select(["Yes", "No"], @system1.f48) %></td></tr>
+	<tr><td style="padding-top:5px;">Hot Issues 	: 		</td><td><%= select_tag "userinformation2[f13]", options_for_select([["[Select]", ""],"N/A","Yes", "No"], @user2.f13) %></td></tr>
+	
+	<tr><td>Accepts US Investors</td><td><%= select_tag2("information[f30]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","accepts_us_investors"]).map{|c| c.name},@fund_information.f30) %></td></tr>
+	<tr><td style="padding-top:5px;">Audited</td><td><%= select_tag2("information[f31]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","audited"]).map{|c| c.name},@fund_information.f31) %></td></tr>
+	
+	<tr><td>Fund Assets</td></td><td><%= text_field_tag "information[f33]", @fund_information.f33 %></td></tr>
+	<tr><td>Returns Currency</td><td><%= select_tag2("information[f35]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","currency"]).map{|c| c.name},@fund_information.f35) %></td></tr>
+	
+	
+	
+</table>
+</div>
+
+<div style="float:left;width:410px;">
+	<table style="width:400px;">
+			<tr><td>Management Fee (%)</td><td><%= select_tag2("information[f22]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","management_fee"]).map{|c| c.name},@fund_information.f22,"len50","percent") %></td></tr>
+			<tr><td>Incentive Fee (%)</td><td><%= select_tag2("information[f24]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","incentive_fee"]).map{|c| c.name},@fund_information.f24,"len50","percent") %></td></tr>
+			<tr><td>Minimum Investment</td><td><%= select_tag2("information[f23]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","minimum_investment"]).map{|c| c.name},@fund_information.f23,"len50","money",0) %></td></tr>
+			<tr><td>Investment Denomination</td><td><%= select_tag2("systeminformation1[f49]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","currency"]).map{|c| c.name}, @system1.f49) %></td></tr>
+			<tr><td>Subscription Frequency</td><td><%= select_tag2("information[f25]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","frequency"]).map{|c| c.name},@fund_information.f25) %></td></tr>
+			<tr><td>Redemption Frequency</td><td><%= select_tag2("information[f27]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","frequency"]).map{|c| c.name},@fund_information.f27) %></td></tr>
+			<tr><td>Redemption Notice</td><td><%= select_tag2("information[f28]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","redemption_notice"]).map{|c| c.name},@fund_information.f28) %> Days</td></tr>
+			<tr><td>Redemption Fees</td><td><%= text_field_tag "systeminformation1[f23]", @system1.f23 %></td></tr>
+			<tr><td>Redemption Terms</td><td><%= text_field_tag "systeminformation1[f22]", @system1.f22 %></td></tr>
+			<tr><td>Other Fees</td><td><%= text_field_tag "systeminformation1[f24]", @system1.f24 %></td></tr>
+			<tr><td>Lockup Period</td><td><%= select_tag2("information[f29]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","lockup_period"]).map{|c| c.name},@fund_information.f29) %></td></tr>
+			<tr><td>High Water Mark</td><td><%= select_tag2("information[f36]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","highwater_mark"]).map{|c| c.name},@fund_information.f36,"len50","bool1",0,1) %></td></tr>
+			<tr><td>Hurdle Rate</td><td><%= text_field_tag "information[f26]", @fund_information.f26 %></td></tr>
+			<tr><td>Typical Leverage</td><td><%= select_tag2("information[f32]",ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","typical_leverage"]).map{|c| c.name},@fund_information.f32,"len50","percent2") %></td></tr>
+            <tr><td>ISIN Code:</td><td><%= text_field_tag("information[ISIN]",@fund_information.ISIN ) %></td></tr>
+            <tr><td>Bloomberg Code:</td><td><%= text_field_tag("systeminformation1[f11]",@system1.f11 ) %></td></tr>
+	    <tr><td>SEC CIK #:</td><td><%= text_field_tag("information[CIK]",@fund_information.CIK, :maxlength => 10)%></td></tr>
+            <tr><td>Fund Visible To:</td><td><%= select_tag("user1[us_visible]",options_for_select(ElemOfSet.find(:all, :include=>"set_of_set", :conditions=>["set_of_sets.name=?","US_Visible"]).map{|c| c.name}, @user1.us_visible)) %></td></tr>
+</table>
+</div>
+
+<div style="clear:both;"></div>
+<br/><br/>
+<%= link_to_function image_tag('/images/btnMakeChanges.jpg'), "validateInputs();" %>
+<% end %>
+
+
+	
+<script type="text/javascript">
+
+jQuery('#information_CIK').keypress(function(e) {
+    var a = [];
+    var k = e.which;
+
+    for (i = 48; i < 58; i++)
+        a.push(i);
+
+    if (!(a.indexOf(k)>=0))
+        e.preventDefault();
+});	
+	
+
+  function changeClassf23(){
+      if(!jQuery('#over_information_f23').hasClass('required') && jQuery('#information_f23').val() == 'other'){
+          jQuery('#over_information_f23').attr('class', 'require validate-only-numbers len50');
+      }
+      else{
+          jQuery('#over_information_f23').attr('class', 'len50');
+      }
+  }
+  
+  
+	
+	jQuery(document).ready(function() {
+      changeClassf23();
+  	});
+	
+  	function validateInputs(){
+	      var valid = new Validation('fund_info');
+	      var result = valid.validate();
+	      if(result){
+	          $('fund_info').submit();
+	      }
+	      return false;
+	  }
+
+  Validation.add('validate-only-numbers', 'Only numbers allowed', {
+      pattern : new RegExp("^[0-9]+$") // only number allowed
+});
+	</script>
+<% if flash[:sv].to_i==1 %>
+<script type="text/javascript">
+	alert('Data has been saved');
+</script>
+<% end %>

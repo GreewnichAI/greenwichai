@@ -1,0 +1,25 @@
+<%-if @informations%>
+  <%unless @format == 'pdf'%>
+    <div><span style="color: #0000ee; font-size: 26px; font-style: italic; text-decoration: underline;">My Funds</span></div>
+    <div class="export_holder">
+      <p class="pull-left" style="font-size: 14px;">Below is a list of your funds and some quick metrics based on the information you have reported so far this year.  The Funds are organized by general strategy group.  Click on the column headings to sort.</p>
+      <div class="pull-right actions">
+        <%=link_to 'Export to PDF', '/my/my_funds?format=pdf', :class => 'btn'%>
+        <%=link_to 'Export to CSV', '/my/my_funds?format=csv', :class => 'btn'%>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  <%else%>
+    <h1 class="pdf_title">My Funds</h1>  
+  <%end%>
+<%end%>
+
+<%unless @format == 'pdf'%>
+  <div id="freezePanesWrap">
+    <%=render 'summary.html.erb'%>
+  </div>
+<%else%>
+  <div id="portfolio_summary">
+    <%=render 'summary.html.erb'%>
+  </div>  
+<%end%> 

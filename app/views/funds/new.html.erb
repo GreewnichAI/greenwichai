@@ -1,0 +1,39 @@
+﻿<h4>Add Fund</h4><br/>
+<p>To get started, please enter your fund's name and inception date. You may also upload performance data using the Excel template in the link below. If you choose not to upload the performance, you may enter it manually in the next step.</p>
+<br/>
+<% form_for "information", :url=>{ :action=>(@information.id.nil? ? "create" : "update") }, :html=>{:multipart => true, :id=>"form_information"}  do |f| %>
+	<%= hidden_field_tag "id", @information.id %>
+	<%= hidden_field_tag "firm_id", params[:firm_id] %>
+	<span style="color:red">*</span> Name: <%= text_field_tag "information[f20]", @information.f20, :class=>"required"  %><br/>
+	<span style="color:red">*</span> Inception Date: <%= date_select "information","f21", :include_blank =>true ,:default=> nil, :start_year=>1980, :end_year=>Time.now.year, :html=>{:class=>"required"} %><br/>
+	<% if @information.id.nil? %>
+	Upload Monthly Data: <%= file_field 'upload', 'datafile' %> <%= link_to "Template","/fund_upload.xls", :target=>"nw_tm"%> <small>Please upload as XLS</small><br/><br/>
+
+    Upload Daily Data (Optional): <%= file_field 'upload', 'datafile2' %> <%= link_to "Template","/fund_upload_daily.xls", :target=>"nw_tm"%> <small>Please upload as XLS</small><br/><br/>
+
+    <% end %>
+	<input type="button" value="Save" onclick="validateInputs();" style="cursor:pointer;cursor:hand;" />
+<% end %>
+<% if !@information.id.nil? %>
+	<input type="button" value="Advanced" onclick="document.location.href='/my/fund_info?id=<%= @information.id %>';" />
+<% end %>
+<br/>
+<input type="button" value="Back" onclick="document.location.href='/firms';" />
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+	    <% if !flash[:notice].nil? && !flash[:notice].blank?%>
+	    alert('<%= flash[:notice] %>');
+	    <% flash[:notice] = nil%>
+	    <% end %>
+	});
+        
+        
+    function validateInputs(){
+      var valid = new Validation('form_information');
+      var result = valid.validate();
+      if(result){
+          $('form_information').submit();
+      }
+      return false;
+  	}
+    </script>

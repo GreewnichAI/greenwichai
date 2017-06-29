@@ -1,0 +1,436 @@
+﻿<%= render (:partial=>"menu") %>
+<br/>
+<% form_for "funds", :url=>{:action=>"profile2_save"}, :html=>{:id=>"profile2"} do |f| %>
+	<%= hidden_field_tag "id", params[:id] %>
+<table><tr><td>
+<table>
+	
+	<tr><td valign="top" bgcolor="#f6f6f6">
+		<%= check_box_tag "systemcheck5[c32]","1", @sc5.c32=="1" %><%= label_tag "systemcheck5[c32]", "Closed Ended Investment Company" %>
+  </td></tr>
+  
+  <tr><td valign="top">
+		<%= check_box_tag "systemcheck5[c33]","1", @sc5.c33=="1" %><%= label_tag "systemcheck5[c33]", "Closed Ended Investment Trust" %>
+  </td></tr>
+  
+  <tr><td valign="top" bgcolor="#f6f6f6">
+  	<%= check_box_tag "systemcheck5[c34]","1", @sc5.c34=="1" %><%= label_tag "systemcheck5[c34]", "Closed Ended Unit Trust" %>
+	</td></tr>
+
+  <tr><td valign="top">
+		<%= check_box_tag "systemcheck5[c36]","1", @sc5.c36=="1" %><%= label_tag "systemcheck5[c36]", "ETF" %>
+  </td></tr>
+  
+  <tr><td valign="top" bgcolor="#f6f6f6">
+  	<%= check_box_tag "systemcheck5[c38]","1", @sc5.c38=="1" %><%= label_tag "systemcheck5[c38]", "Exempted Limited Partnership" %>
+	</td></tr>
+	
+	<tr><td valign="top">
+		<%= check_box_tag "systemcheck5[c40]","1", @sc5.c40=="1" %><%= label_tag "systemcheck5[c40]", "FCP" %>
+  </td></tr>
+  
+  <tr><td valign="top" bgcolor="#f6f6f6">
+  	<%= check_box_tag "systemcheck5[c44]","1", @sc5.c44=="1" %><%= label_tag "systemcheck5[c44]", "Limited Liability Company (LLC)" %>
+	</td></tr>
+	
+	<tr><td valign="top">
+		<%= check_box_tag "systemcheck5[c46]","1", @sc5.c46=="1" %><%= label_tag "systemcheck5[c46]", "Listed Investment Company" %>
+  </td></tr>
+  
+  <tr><td valign="top" bgcolor="#f6f6f6">
+  	<%= check_box_tag "systemcheck5[c47]","1", @sc5.c47=="1" %><%= label_tag "systemcheck5[c47]", "Managed Account" %>
+	</td></tr>
+	
+	<tr><td valign="top">
+		<%= check_box_tag "systemcheck5[c48]","1", @sc5.c48=="1" %><%= label_tag "systemcheck5[c48]", "Mutual Fund" %>
+  </td></tr>
+  
+  <tr><td valign="top" bgcolor="#f6f6f6">
+  	<%= check_box_tag "systemcheck5[c50]","1", @sc5.c50=="1" %><%= label_tag "systemcheck5[c50]", "Open Ended Investment Company" %>
+	</td></tr>
+	
+	<tr><td valign="top">
+		<%= check_box_tag "systemcheck5[c51]","1", @sc5.c51=="1" %><%= label_tag "systemcheck5[c51]", "Open Ended Investment Trust" %>
+  </td></tr>
+  
+  <tr><td valign="top" bgcolor="#f6f6f6">
+  	<%= check_box_tag "systemcheck5[c52]","1", @sc5.c52=="1" %><%= label_tag "systemcheck5[c52]", "Open Ended Unit Trust" %>
+	</td></tr>
+	
+	<tr><td valign="top">
+		<%= check_box_tag "systemcheck5[c54]","1", @sc5.c54=="1" %><%= label_tag "systemcheck5[c54]", "REIT" %>
+  </td></tr>
+  
+  <tr><td valign="top" bgcolor="#f6f6f6">
+  	<%= check_box_tag "systemcheck5[c55]","1", @sc5.c55=="1" %><%= label_tag "systemcheck5[c55]", "Segregated Portfolio Company" %>
+	</td></tr>
+	
+	<tr><td valign="top">
+		<%= check_box_tag "systemcheck5[c57]","1", @sc5.c57=="1" %><%= label_tag "systemcheck5[c57]", "SICAV" %>
+  </td></tr>
+  
+  <tr><td valign="top" bgcolor="#f6f6f6">
+  	<%= check_box_tag "systemcheck5[c59]","1", @sc5.c59=="1" %><%= label_tag "systemcheck5[c59]", "UCITs" %>
+	</td></tr>
+
+	<tr><td valign="top" height="20">
+    <hr color="#cccccc" noshade="noshade" size="1" />
+  </td></tr>
+       
+  <tr><td valign="top" height="20">
+     <b>Geography</b>
+  </td></tr>
+       
+  <tr><td valign="top" bgcolor="#f6f6f6">
+     <%= check_box_tag "systemcheck1[c32]","1", @sc1.c32=="1" %><%= label_tag "systemcheck1[c32]", "GLOBAL (3 or more regions)  " %>
+  </td></tr>
+       
+  <tr><td valign="top" height="20">
+     <hr color="#cccccc" noshade="noshade" size="1" />
+  </td></tr>
+       
+  <tr><td valign="top" bgcolor="#f6f6f6">
+  	<%= check_box_tag "systemcheck1[c34]","1", @sc1.c34=="1" %><%= label_tag "systemcheck1[c34]", "EMERGING MARKETS" %>
+  </td></tr>
+       
+  <tr><td valign="top" height="20">
+    <hr color="#cccccc" noshade="noshade" size="1" />
+  </td></tr>
+  
+  <tr><td valign="top" bgcolor="#f6f6f6">
+  	<%= check_box_tag "systemcheck1[c36]","1", @sc1.c36=="1" %><%= label_tag "systemcheck1[c36]", "Africa" %>
+  </td></tr>
+
+  <tr><td valign="top">
+  	<%= check_box_tag "systemcheck1[c38]","1", @sc1.c38=="1" %><%= label_tag "systemcheck1[c38]", "Asia Pacific" %>
+	</td></tr>
+       
+  <tr><td valign="top" bgcolor="#f6f6f6">
+		&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c39]","1", @sc1.c39=="1" %><%= label_tag "systemcheck1[c39]", "AP (Ex Australia)" %>
+	</td></tr>
+      
+  <tr><td valign="top">
+		&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c40]","1", @sc1.c40=="1" %><%= label_tag "systemcheck1[c40]", "AP (Ex Japan)" %>
+	</td></tr>
+                                    
+  <tr><td valign="top" bgcolor="#f6f6f6">
+    &nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c41]","1", @sc1.c41=="1" %><%= label_tag "systemcheck1[c41]", "Australia" %>
+  </td></tr>
+       
+  <tr><td valign="top">
+  	<%= check_box_tag "systemcheck1[c42]","1", @sc1.c42=="1" %><%= label_tag "systemcheck1[c42]", "Japan" %>
+  </td></tr>
+       
+  <tr><td valign="top" bgcolor="#f6f6f6">
+  	<%= check_box_tag "systemcheck1[c45]","1", @sc1.c45=="1" %><%= label_tag "systemcheck1[c45]", "Europe" %>
+  </td></tr>
+       
+  <tr><td valign="top">
+  	&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c46]","1", @sc1.c46=="1" %><%= label_tag "systemcheck1[c46]", "Central Europe" %>
+  </td></tr>
+       
+  <tr><td valign="top" bgcolor="#f6f6f6">
+  	&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c47]","1", @sc1.c47=="1" %><%= label_tag "systemcheck1[c47]", "Eastern Europe" %>
+  </td></tr>
+       
+  <tr><td valign="top">
+  	&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c48]","1", @sc1.c48=="1" %><%= label_tag "systemcheck1[c48]", "Western Europe" %>
+  </td></tr>
+  
+  <tr><td valign="top" bgcolor="#f6f6f6">
+  	<%= check_box_tag "systemcheck1[c50]","1", @sc1.c50=="1" %><%= label_tag "systemcheck1[c50]", "Latin America" %>
+  </td></tr>
+       
+  <tr><td valign="top">
+  	<%= check_box_tag "systemcheck1[c53]","1", @sc1.c53=="1" %><%= label_tag "systemcheck1[c53]", "Middle East" %>
+  </td></tr>
+  
+  <tr><td valign="top" bgcolor="#f6f6f6">
+  	<%= check_box_tag "systemcheck1[c56]","1", @sc1.c56=="1" %><%= label_tag "systemcheck1[c56]", "North America" %>
+  </td></tr>
+       
+  <tr><td valign="top">
+  	&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c57]","1", @sc1.c57=="1" %><%= label_tag "systemcheck1[c57]", "Canada" %>
+  </td></tr>
+  
+  
+  <tr><td valign="top" bgcolor="#f6f6f6">
+  	&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c58]","1", @sc1.c58=="1" %><%= label_tag "systemcheck1[c58]", "USA" %>
+  </td></tr>
+       
+  
+  
+	</table></td>        
+  
+  
+  <td class="borderRight">&nbsp;</td><td>&nbsp;</td>
+  <td valign="top">
+    <table class="content" border="0" cellpadding="1" cellspacing="0">                                    
+    <tr><td valign="top" height="20"><b>Available Currency Classes</b></td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+      <%= check_box_tag "systemcheck1[c2]","1", @sc1.c2=="1" %><%= label_tag "systemcheck1[c2]", "AUD" %>
+    </td></tr> 
+    <tr><td valign="top">
+			<%= check_box_tag "systemcheck1[c3]","1", @sc1.c3=="1" %><%= label_tag "systemcheck1[c3]", "CAD" %>
+    </td></tr> 
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c4]","1", @sc1.c4=="1" %><%= label_tag "systemcheck1[c4]", "CHF" %>
+    </td></tr> 
+    <tr><td valign="top">
+			<%= check_box_tag "systemcheck1[c5]","1", @sc1.c5=="1" %><%= label_tag "systemcheck1[c5]", "EURO" %>
+		</td></tr> 
+		<tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c6]","1", @sc1.c6=="1" %><%= label_tag "systemcheck1[c6]", "GBP" %>
+		</td></tr> 
+    <tr><td valign="top">
+			<%= check_box_tag "systemcheck1[c8]","1", @sc1.c8=="1" %><%= label_tag "systemcheck1[c8]", "JPY" %>
+		</td></tr>
+		<tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c11]","1", @sc1.c11=="1" %><%= label_tag "systemcheck1[c11]", "Other Currency" %>
+		</td></tr> 
+		<tr><td valign="top">
+			<%= check_box_tag "systemcheck1[c14]","1", @sc1.c14=="1" %><%= label_tag "systemcheck1[c14]", "USD" %>
+		</td></tr>                     
+		<tr><td valign="top" height="20"><hr color="#cccccc" noshade="noshade" size="1" /></td></tr>
+
+
+    <tr><td valign="top" height="20"><b>Sector</b></td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c92]","1", @sc1.c92=="1" %><%= label_tag "systemcheck1[c92]", "Diversified" %>
+    </td></tr> 
+    <tr><td valign="top" height="20"><hr color="#cccccc" noshade="noshade" size="1" /></td></tr>
+    
+    
+		<tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c94]","1", @sc1.c94=="1" %><%= label_tag "systemcheck1[c94]", "Technology" %>
+    </td></tr>
+		<tr><td valign="top">
+			<%= check_box_tag "systemcheck1[c95]","1", @sc1.c95=="1" %><%= label_tag "systemcheck1[c95]", "Software" %>                                        
+		</td></tr> 
+		<tr><td valign="top" bgcolor="#f6f6f6">
+      <%= check_box_tag "systemcheck1[c96]","1", @sc1.c96=="1" %><%= label_tag "systemcheck1[c96]", "Hardware" %>
+		</td></tr> 
+		<tr><td valign="top">
+			<%= check_box_tag "systemcheck1[c97]","1", @sc1.c97=="1" %><%= label_tag "systemcheck1[c97]", "Telecommunications" %>
+    </td></tr> 
+		<tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c98]","1", @sc1.c98=="1" %><%= label_tag "systemcheck1[c98]", "Media" %>
+		</td></tr>
+		<tr><td valign="top" height="20"><hr color="#cccccc" noshade="noshade" size="1" /></td></tr>
+    
+    
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c100]","1", @sc1.c100=="1" %><%= label_tag "systemcheck1[c100]", "HealthCare" %>
+		</td></tr>
+		<tr><td valign="top">
+			<%= check_box_tag "systemcheck1[c101]","1", @sc1.c101=="1" %><%= label_tag "systemcheck1[c101]", "Biotechnology" %>
+		</td></tr>
+    <tr><td valign="top" height="20"><hr color="#cccccc" noshade="noshade" size="1" /></td></tr>
+    
+    
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c103]","1", @sc1.c103=="1" %><%= label_tag "systemcheck1[c103]", "Financial Services" %>
+		</td></tr>
+		<tr><td valign="top">
+			<%= check_box_tag "systemcheck1[c104]","1", @sc1.c104=="1" %><%= label_tag "systemcheck1[c104]", "Business Services" %>
+		</td></tr>
+    <tr><td valign="top" height="20"><hr color="#cccccc" noshade="noshade" size="1" /></td></tr>
+    
+    
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c106]","1", @sc1.c106=="1" %><%= label_tag "systemcheck1[c106]", "Basic Materials" %>
+		</td></tr>
+		<tr><td valign="top">
+			<%= check_box_tag "systemcheck1[c107]","1", @sc1.c107=="1" %><%= label_tag "systemcheck1[c107]", "Industrial Materials" %>
+		</td></tr>
+    <tr><td valign="top" height="20"><hr color="#cccccc" noshade="noshade" size="1" /></td></tr>
+    
+    
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c109]","1", @sc1.c109=="1" %><%= label_tag "systemcheck1[c109]", "Energy" %>
+		</td></tr>
+		<tr><td valign="top">
+			<%= check_box_tag "systemcheck1[c110]","1", @sc1.c110=="1" %><%= label_tag "systemcheck1[c110]", "Utilites" %>
+		</td></tr>
+    <tr><td valign="top" height="20"><hr color="#cccccc" noshade="noshade" size="1" /></td></tr>
+                                    
+    
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c112]","1", @sc1.c112=="1" %><%= label_tag "systemcheck1[c112]", "Consumer Goods" %>
+		</td></tr>
+		<tr><td valign="top">
+			<%= check_box_tag "systemcheck1[c113]","1", @sc1.c113=="1" %><%= label_tag "systemcheck1[c113]", "Consumer Services" %>
+		</td></tr>
+		<tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c114]","1", @sc1.c114=="1" %><%= label_tag "systemcheck1[c114]", "Real Estate" %>
+		</td></tr>
+    <tr><td valign="top" height="20"><hr color="#cccccc" noshade="noshade" size="1" /></td></tr>
+    
+                                    
+		<tr><td valign="top" height="20"><b>Additional Information</b></td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c25]","1", @sc1.c25=="1" %><%= label_tag "systemcheck1[c25]", "Master Feeder Structure" %>
+    </td></tr>
+    <tr><td valign="top">
+			<%= check_box_tag "systemcheck1[c24]","1", @sc1.c24=="1" %><%= label_tag "systemcheck1[c24]", "Liquidated" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c26]","1", @sc1.c26=="1" %><%= label_tag "systemcheck1[c26]", "3(c)7 Investors Only" %>
+    </td></tr>
+    <tr><td valign="top">
+			<%= check_box_tag "systemcheck1[c27]","1", @sc1.c27=="1" %><%= label_tag "systemcheck1[c27]", "High Water Mark" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c28]","1", @sc1.c28=="1" %><%= label_tag "systemcheck1[c28]", "Hurdle Rate" %>
+    </td></tr>
+    <tr><td valign="top">
+			<%= check_box_tag "systemcheck1[c29]","1", @sc1.c29=="1" %><%= label_tag "systemcheck1[c29]", " Open For Investment  " %>
+    </td></tr>
+		</table></td> 
+		
+		<td class="borderRight">&nbsp;</td>
+    <td>&nbsp;</td>
+    
+    
+    <td valign="top">
+    <table class="content" border="0" cellpadding="1" cellspacing="0">
+    <tbody>
+    <tr><td valign="top" height="20"><b>Exchange Listing(s)</b></td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck5[c2]","1", @sc5.c2=="1" %><%= label_tag "systemcheck5[c2]", "Amsterdam SE" %>
+    </td></tr>
+    <tr><td valign="top">
+			<%= check_box_tag "systemcheck5[c4]","1", @sc5.c4=="1" %><%= label_tag "systemcheck5[c4]", "Australia SE" %>
+    </td></tr>
+		<tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck5[c6]","1", @sc5.c6=="1" %><%= label_tag "systemcheck5[c6]", "Bermuda SE" %>
+    </td></tr>
+    <tr><td valign="top">
+			<%= check_box_tag "systemcheck5[c8]","1", @sc5.c8=="1" %><%= label_tag "systemcheck5[c8]", "Cayman SE" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck5[c10]","1", @sc5.c10=="1" %><%= label_tag "systemcheck5[c10]", "Dubai SE" %>
+    </td></tr>
+    <tr><td valign="top">
+			<%= check_box_tag "systemcheck5[c12]","1", @sc5.c12=="1" %><%= label_tag "systemcheck5[c12]", "Frankfurt SE" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck5[c14]","1", @sc5.c14=="1" %><%= label_tag "systemcheck5[c14]", "Ireland SE" %>
+    </td></tr>
+    <tr><td valign="top">
+			<%= check_box_tag "systemcheck5[c16]","1", @sc5.c16=="1" %><%= label_tag "systemcheck5[c16]", "London SE" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck5[c18]","1", @sc5.c18=="1" %><%= label_tag "systemcheck5[c18]", "Luxembourg SE" %>
+    </td></tr>
+    <tr><td valign="top">
+			<%= check_box_tag "systemcheck5[c20]","1", @sc5.c20=="1" %><%= label_tag "systemcheck5[c20]", "Montreal SE" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck5[c24]","1", @sc5.c24=="1" %><%= label_tag "systemcheck5[c24]", "Singapore SE" %>
+    </td></tr>
+    <tr><td valign="top">
+			<%= check_box_tag "systemcheck5[c26]","1", @sc5.c26=="1" %><%= label_tag "systemcheck5[c26]", "Switzerland SE" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck5[c28]","1", @sc5.c28=="1" %><%= label_tag "systemcheck5[c28]", "Vienna SE" %>
+    </td></tr>
+    <tr><td valign="top" height="20"><hr color="#cccccc" noshade="noshade" size="1" /></td></tr>
+    
+    
+    
+    
+    <tr><td valign="top" height="20"><b>Instruments Invested</b></td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c62]","1", @sc1.c62=="1" %><%= label_tag "systemcheck1[c62]", "Equities" %>
+    </td></tr>
+    <tr><td valign="top">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c63]","1", @sc1.c63=="1" %><%= label_tag "systemcheck1[c63]", "Micro Capitalization" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c64]","1", @sc1.c64=="1" %><%= label_tag "systemcheck1[c64]", "Small Capitalization" %>
+    </td></tr>
+    <tr><td valign="top">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c65]","1", @sc1.c65=="1" %><%= label_tag "systemcheck1[c65]", "Middle Capitalization" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c66]","1", @sc1.c66=="1" %><%= label_tag "systemcheck1[c66]", "Large Capitalization" %>
+    </td></tr>
+    <tr><td valign="top">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c67]","1", @sc1.c67=="1" %><%= label_tag "systemcheck1[c67]", "All Capitalization" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c68]","1", @sc1.c68=="1" %><%= label_tag "systemcheck1[c68]", "Fixed Income" %>
+    </td></tr>
+    <tr><td valign="top">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c69]","1", @sc1.c69=="1" %><%= label_tag "systemcheck1[c69]", "Asset-Backed Securities" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c70]","1", @sc1.c70=="1" %><%= label_tag "systemcheck1[c70]", "CDOs" %>
+    </td></tr>
+    <tr><td valign="top">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c71]","1", @sc1.c71=="1" %><%= label_tag "systemcheck1[c71]", "Convertible Securities" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c72]","1", @sc1.c72=="1" %><%= label_tag "systemcheck1[c72]", "Corporate Debt" %>
+    </td></tr>
+    <tr><td valign="top">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c73]","1", @sc1.c73=="1" %><%= label_tag "systemcheck1[c73]", "Eurobonds" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c74]","1", @sc1.c74=="1" %><%= label_tag "systemcheck1[c74]", "Government Debt" %>
+    </td></tr>
+    <tr><td valign="top">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c75]","1", @sc1.c75=="1" %><%= label_tag "systemcheck1[c75]", "Mortgage-Backed Securities" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			<%= check_box_tag "systemcheck1[c76]","1", @sc1.c76=="1" %><%= label_tag "systemcheck1[c76]", "Additional Investments" %>
+    </td></tr>
+    <tr><td valign="top">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c77]","1", @sc1.c77=="1" %><%= label_tag "systemcheck1[c77]", "Commodities" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c78]","1", @sc1.c78=="1" %><%= label_tag "systemcheck1[c78]", "Currencies" %>
+    </td></tr>
+    <tr><td valign="top">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c79]","1", @sc1.c79=="1" %><%= label_tag "systemcheck1[c79]", "Futures" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c80]","1", @sc1.c80=="1" %><%= label_tag "systemcheck1[c80]", "High Yield Securities" %>
+    </td></tr>
+    <tr><td valign="top">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c81]","1", @sc1.c81=="1" %><%= label_tag "systemcheck1[c81]", "Distressed Securities" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c82]","1", @sc1.c82=="1" %><%= label_tag "systemcheck1[c82]", "Special Situations" %>
+    </td></tr>
+    <tr><td valign="top">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c83]","1", @sc1.c83=="1" %><%= label_tag "systemcheck1[c83]", "IPOs" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c84]","1", @sc1.c84=="1" %><%= label_tag "systemcheck1[c84]", "Options" %>
+    </td></tr>
+    <tr><td valign="top">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c85]","1", @sc1.c85=="1" %><%= label_tag "systemcheck1[c85]", "OTC Securities" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c86]","1", @sc1.c86=="1" %><%= label_tag "systemcheck1[c86]", "Real Estate" %>
+    </td></tr>
+    <tr><td valign="top">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c87]","1", @sc1.c87=="1" %><%= label_tag "systemcheck1[c87]", "SWAPS" %>
+    </td></tr>
+    <tr><td valign="top" bgcolor="#f6f6f6">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c88]","1", @sc1.c88=="1" %><%= label_tag "systemcheck1[c88]", "Credit Default Swaps" %>
+    </td></tr>
+    <tr><td valign="top">
+			&nbsp;&nbsp;&nbsp;&nbsp;<%= check_box_tag "systemcheck1[c89]","1", @sc1.c89=="1" %><%= label_tag "systemcheck1[c89]", "OTHER" %>
+    </td></tr>
+    
+    
+    
+    
+    
+    </tbody></table>
+    </td></tr></table>
+    <img src="/images/btnConfirmInfo.jpg" onclick="$('profile2').submit();" style="cursor:pointer;cursor:hand;" />
+<% end %>

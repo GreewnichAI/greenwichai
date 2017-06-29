@@ -1,0 +1,29 @@
+﻿<% form_for "manager_information", :url=>{ :action=>(@manager_information.id.nil? ? "create" : "update") } do |f| %>
+	<%= hidden_field_tag "id",@manager_information.id %>
+		General Partner: <%= text_field_tag "manager_information[general_partner]", @manager_information.general_partner %><br/>
+		<%= f.submit "Save" %>
+		<%
+			fund_id = @manager_information.first_fund_id
+			if !fund_id.nil?
+		%>
+		
+		<% end %>
+		<% if !@manager_information.first_fund_id.zero? %>
+		<input type="button" value="Advanced" onclick="document.location.href='/my/firm_info?id=<%= @manager_information.first_fund_id %>';" />
+		<% end %>
+		<% if !@manager_information.id.nil? %>
+		<input type="button" value="Add Fund" onclick="document.location.href='/funds/new?firm_id=<%= @manager_information.id %>';" />
+		<input type="button" value="Associate User" onclick="document.location.href='/firms/assoc_user?id=<%= @manager_information.id %>';" />
+		<% end %>
+		<input type="button" value="Back" onclick="document.location.href='/firms';" />
+<% end %>
+<% if !@manager_information.id.nil? %>
+<hr/>
+Associated Users:<br/>
+<br/>
+<% ManagerToProfiles.find(:all, :conditions=>["manager_id = ?", @manager_information.manager_id]).each do |mtp| %>
+	<% user = User.find(:first, :conditions=>["owner_id = ?", mtp.donor_id]) %>
+	<%= link_to(user.login, {:controller=>"users", :action=>"edit", :id=>user.id}) if !user.nil? %><br/>
+	
+<% end %>
+<% end %>

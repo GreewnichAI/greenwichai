@@ -1,0 +1,39 @@
+﻿<%= render (:partial=>"menu") %>
+<%= render (:partial=>"usermenu") %>
+
+<br/>
+Fund Name: <strong><%= @fund_information.f20 %></strong><br/>
+
+<% form_for "userinfo2", :url=>{:action=>"userinfo2_save"}, :html=>{:id=>"userinfo2"} do |f| %>
+	<%= hidden_field_tag "id", params[:id] %>
+	<%= hidden_field_tag "user_id", params[:user_id] %>
+
+
+<table><tr><td>
+
+		<table style="width:350px;">
+			<tr><th>Regulatory Authority  	:</th><td><%= text_field_tag "userinformation2[f1]",@user2.f1 %></td></tr>
+			<tr><th>RIA 	:</th><td><%= text_field_tag "userinformation2[f2]",@user2.f2 %></td></tr>
+			<tr><th>CPO 	:</th><td><%= text_field_tag "userinformation2[f3]",@user2.f3 %></td></tr>
+			<tr><th>CTA 	:</th><td><%= text_field_tag "userinformation2[f4]",@user2.f4 %></td></tr>
+			<tr><th>Affiliated Broker/Dealer 	:</th><td><%= text_field_tag "userinformation2[f6]",@user2.f6 %></td></tr>
+			<tr><th>Domicile 	:</th><td><%= text_field_tag "userinformation2[f8]",@user2.f8%></td></tr>
+			<% if 1==2 %>
+			<tr><th>Exchange(s) Listed On 	:</th><td><%= text_field_tag "userinformation2[f9]",@user2.f9 %></td></tr>
+			<% end %>
+		</table>
+
+</td><td>
+		<table style="width:350px;">
+			<tr><th>High Water Mark  	:</th><td><%= text_field_tag "userinformation2[f12]",@user2.f12 %></td></tr>
+			
+			<tr><th>Derivatives 	: 	</th><td><%= text_field_tag "userinformation2[f17]",@user2.f17 %></td></tr>
+			<tr><th>Separately Managed Accounts 	: 	</th><td><%= text_field_tag "userinformation2[f18]",@user2.f18 %></td></tr>
+			<tr><th>Closed to Investors as of (mm/dd/yyyy) 	: 	</th><td><%= text_field_tag "userinformation2[f21]",@user2.f21 %></td></tr>
+			<tr><th>Closed Status 	: 	</th><td><%= text_field_tag "userinformation2[f22]",@user2.f22 %></td></tr>
+			<tr><th>Leverage :</th><td><%= text_field_tag "information[f32]",@fund_information.f32 %></td></tr>
+		</table>
+</td></tr></table>
+
+<% end %>
+<%= link_to_function image_tag('/images/btnMakeChanges.jpg'), "$('userinfo2').submit();" %>

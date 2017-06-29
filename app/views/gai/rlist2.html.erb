@@ -1,0 +1,82 @@
+
+
+<style type="text/css">
+  
+  
+  .btr0 td { background-color:#353980; color:#FFFFFF; text-align:center; }
+  .btr0 th { background-color:#353980; color:#FFFFFF; font-weight:normal; padding-left: 10px; }
+ 
+ 
+  .btr1 td { background-color:#808080; color:#FFFFFF; text-align:center; }
+  .btr1 th { background-color:#808080; color:#FFFFFF; font-weight:normal; padding-left: 20px; }
+  
+  .btr2 td { background-color:#DCDCDC; color:#484E8C; text-align:center; }
+  .btr2 th { background-color:#DCDCDC; color:#484E8C; font-weight:normal; padding-left: 30px; }
+  
+  .btr3 td { background-color:#DCDCDC; color:#000000; text-align:center; }
+  .btr3 th { background-color:#DCDCDC; color:#000000; font-weight:normal; padding-left: 40px; }
+
+  .btr5 td { background-color:#DCDCDC; color:#484E8C; text-align:center; }
+  .btr5 th { background-color:#DCDCDC; color:#484E8C; font-weight:normal; padding-left: 30px; }
+  
+  .btr6 td { background-color:#808080; color:#FFFFFF; text-align:center; }
+  .btr6 th { background-color:#808080; color:#FFFFFF; font-weight:normal; padding-left: 20px; }
+
+  .btr7 td { background-color:#404040; color:#FFFFFF; text-align:center; }
+  .btr7 th { background-color:#404040; color:#FFFFFF; font-weight:normal; padding-left: 10px; }
+  
+  .btr8 td { background-color:#353980; color:#FFFFFF; text-align:center; }
+  .btr8 th { background-color:#353980; color:#FFFFFF; font-weight:normal; padding-left: 0px; }
+  
+  .tbl_gai { width:700px; margin-top:10px; font-family:Arial;font-size:8pt; line-height:14pt; }
+  .tbl_gai th { text-align:left; }
+
+  .tr_thA { background-color:#353980; color:#FFFFFF; }
+  .tr_thA td { background-color:#353980; color:#FFFFFF; text-align:center; }
+  .tr_thB { background-color:#808080; color:#FFFFFF; }
+  .tr_thB td { background-color:#808080; color:#FFFFFF; text-align:center; }
+  .tr_thB th { background-color:#808080; color:#FFFFFF; text-align:center; }
+  
+  .l_border { border-left: solid 1px #FFFFFF; }
+  .r_border { border-right: solid 1px #FFFFFF; }
+  .tr_b_border td { border-bottom:solid 1px #FFFFFF; }
+</style>
+
+<% dt = (HfIndiceReal.first(:conditions=>["internal_id = ?","list2"], :order=>"yr desc,mn desc").yr.to_s+"-"+HfIndiceReal.first(:conditions=>["internal_id = ?","list2"], :order=>"yr desc,mn desc").mn.to_s+"-01").to_time %>
+<table style="width:695px;margin-left:22px;" class="tbl_gai" cellspacing="0">
+<tr class="tr_thA">
+    <td style="text-align:left;" class="r_border">&nbsp;</td>
+    
+    <td colspan="3" class="r_border">Total Return</td>
+    <td colspan="2" class="r_border">Annualized Since Inception</td>
+    <td >Inception Date</td>
+  </tr>
+  <tr class="tr_thB">
+    <td style="text-align:left;width:250px;" class="r_border">&nbsp;</td>
+    
+    <td class=""><%= dt.strftime("%b%y") %></td>
+    <td><%= (dt-1.month).strftime("%b%y") %></td>
+    <td class="r_border">YTD</td>
+    <td>CAR</td>
+    <td class="r_border">STD</td>
+    <td>&nbsp;</td>
+  </tr>
+
+
+  <% HfIndiceReal.all(:conditions=>["internal_id = ?", "list2"], :order=>:position).each do |hi| %>
+  <% hi.inception_date = "Statistics Start Date" if hi.fund_name == "Comparative Benchmarks" %>
+  <%
+    fund_name = hi.fund_name.gsub("Aggregate Bond", "Aggregate Bond Index").gsub("Liquidity)","Liquidity) Index")
+    fund_name = fund_name.gsub("Greenwich Investable ","") if hi.level.to_i==5
+  %>
+  <tr class="btr<%= hi.level %>">
+    <th class="r_border"><%= fund_name.gsub("Greenwich Investable (Monthly Liquidity) Index","Greenwich Investable Index (Monthly Liquidity)").gsub("Greenwich Investable (Quarterly Liquidity) Index","Greenwich Investable Index (Quarterly Liquidity)") %></th>
+    <td style="width:70px;" class=""><%= sprintf("%.2f",hi.total_return.round(2)).to_s+"%" if !hi.total_return.nil? %></td>
+    <td style="width:70px;"><%= sprintf("%.2f",hi.prev_return.round(2)).to_s+"%" if !hi.prev_return.nil? %></td>
+    <td style="width:70px;" class="r_border">&nbsp;<%= sprintf("%.2f",hi.ytd.round(2)).to_s+"%" if !hi.ytd.nil? %></td>
+    <td style="width:70px;"><%= sprintf("%.2f",hi.ann_yr1_car.round(2)).to_s+"%" if !hi.ann_yr1_car.nil? %></td>
+    <td style="width:70px;" class="r_border"><%= sprintf("%.2f",hi.ann_yr1_std.round(2)).to_s+"%" if !hi.ann_yr1_std.nil? %></td>
+    <td style="width:70px;"><%= hi.inception_date %></td>
+  </tr>
+  <% end %>
+  </table>

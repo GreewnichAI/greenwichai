@@ -1,0 +1,25 @@
+﻿
+<table class="top_menu">
+	<tr>
+		<td><a href='/main/tab1?id=<%= params[:id] %>'>Fund Performance &amp; Assets</a></td>
+		<td><a href='/main/tab2?id=<%= params[:id] %>'>Firm Information</a></td>
+		<td>Fund Information</td>
+		<td>Fund<br/>
+				 	- Strategy<br/>
+					- Geography<br/>
+					- Sector</td>
+		<td style="width:130px;">	- Assets<br/>
+					- Net Exposures<br/>
+					- Subscription<br/>
+					- Service Firms</td>
+		<td>	- Investors<br/>
+					- Sectors<br/>
+					- Instruments</td>
+		<td>Risk &amp; Valuation</td>
+		<td>User</td>	
+		<td style="background-color:#FFFFFF;">
+				<%= link_to image_tag("/images/backtofunds.jpg"),"/main/search" %><br/>
+				<%= button_to "Admin", "/main/admin" %>
+		</td>
+	</tr>
+</table> 

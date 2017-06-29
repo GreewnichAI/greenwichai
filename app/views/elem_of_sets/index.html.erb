@@ -1,0 +1,14 @@
+﻿<table style="width:500px;border:solid 1px;">
+<% @elem_of_sets.each do |elem| %>
+	<tr>
+		<th><%= elem.name %></th>
+		<td>
+			<%= link_to "Elements", { :action=>:index, :subelem_id=>elem.id } if SetOfSet.find(elem.set_of_set_id).has_subsets==1 %> 
+			<%= link_to "Edit", { :action=>:edit, :id=>elem.id } %> 
+			<%= link_to "Delete", { :action=>:destroy, :id=>elem.id}, :method=>:delete  %>
+		</td>
+	</tr>
+<% end %>
+</table>
+<%= link_to "Add", "/elem_of_sets/new?set_of_set_id="+@set_of_set.id.to_s %> | 
+<%= link_to "Back to Sets", "/admin" %>

@@ -1,0 +1,27 @@
+﻿<% messages = Message.find(:all, :conditions=>["user_id = ? and archived_at is null", current_user.id]) %>
+<table style="width:800px;">
+<tr><th>From</th><th  style="padding-left:10px;">Message</th><th>&nbsp;</th></tr>
+<% messages.each do |message| %>
+		<tr>
+			<td><%= message.from %></td>
+			<td  style="padding-left:10px;"><%= message.msg %></td>
+			<td><%= link_to "Archive", :action=>"archive", :id=>message.id %></td>
+		</td>
+<% end %>
+
+
+</table>
+<hr/>
+<br/><br/>
+<% messages = Message.find(:all, :conditions=>["user_id = ? and archived_at is not null", current_user.id]) %>
+<input type="button" value="Archive" style="font-weight:bold;font-size:15px;" onclick="$('tbl_arch').toggle()" />
+<table style="width:800px;display:none;" id="tbl_arch">
+<tr><th>From</th><th  style="padding-left:10px;">Message</th><th>&nbsp;</th></tr>
+<% messages.each do |message| %>
+		<tr>
+			<td><%= message.from %></td>
+			<td  style="padding-left:10px;"><%= message.msg %></td>
+			<td><%= link_to "UnArchive", :action=>"unarchive", :id=>message.id %></td>
+		</td>
+<% end %>
+</table>

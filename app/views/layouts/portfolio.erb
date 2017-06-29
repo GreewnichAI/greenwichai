@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>GreenwichOnline - Hedge Fund Manager Reporting</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="true" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/reset-min.css" /> 
+  <link rel="stylesheet" type="text/css" href="/stylesheets/reset-fonts-grids.css" /> 
+  <link rel="stylesheet" type="text/css" href="/ext/resources/css/ext-all.css" />
+  <link rel="stylesheet" type="text/css" href="/ext/examples/shared/icons/silk.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/jquery-ui.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/navbar.css"/>
+  <%= wicked_pdf_stylesheet_link_tag 'portfolio' %>
+
+  <%if @format == "pdf"%>
+    <%= javascript_include_tag RAILS_ROOT+'/public/javascripts/jquery-1.4.4.js'   %>
+    <%= javascript_include_tag RAILS_ROOT+'/public/javascripts/jquery.ui.core.js' %>
+    <%= javascript_include_tag RAILS_ROOT+'/public/javascripts/jquery.ui.widget.js' %>
+    <%= javascript_include_tag RAILS_ROOT+'/public/javascripts/jquery.ui.mouse.js' %>
+    <%= javascript_include_tag RAILS_ROOT+'/public/javascripts/jquery.ui.slider.js' %>
+    <%= javascript_include_tag RAILS_ROOT+'/public/javascripts/jquery.blockUI.js' %>
+  <%else%>
+   <%= javascript_include_tag 'jquery-1.4.4.js'   %> 
+   <%= javascript_include_tag 'jquery.freezePanes.js' %>
+  <%end%>
+
+ <%= render 'layouts/googleUanalytics' %>
+
+</head>
+<body style="" class="<%='pdf' if @format == 'pdf'%>">
+  <div style="width:960px;margin-left:auto; margin-right:auto;text-align:left;">
+    <%unless @format == "pdf"%>
+      <% if current_user %>
+      <div style="float:right;text-align:right;">
+          Logged in as <%= current_user.login %><br/>
+          
+          <% if current_user.tip=="admin" %>
+            <% msg_count = Message.count(:conditions=>["user_id = ? and archived_at is null", current_user.id]) %>
+            <a href='/messages'  style="color:<%= msg_count.zero? ? "#BBBBBB" : "#FF0000"  %>;">(<%= msg_count %>) new messages</a>
+            <a href="/activity">Activites</a>
+            
+            <img src="/images/admin.jpg" alt='' onclick="document.location.href='/admin';" style="cursor:pointer;cursor:hand;" />
+            <img src="/images/site.jpg" alt='' onclick="document.location.href='/';" style="cursor:pointer;cursor:hand;" />
+          <% end %>
+          <% if current_user.owner_id.to_i>0 %>
+            <img src="/images/my_profile.png" alt='' onclick="document.location.href='/my/profile';" style="cursor:pointer;cursor:hand;" />
+          <% end %>
+          <img src="/images/logout.jpg" alt='' onclick="document.location.href='/logout';" style="cursor:pointer;cursor:hand;" />
+      </div>
+      
+      <% else %>
+      
+          <% if controller.controller_name=="invites" and !params[:k].nil? and controller.action_name!="thank_you" %>
+          
+          <% if 1==2 and User.find_by_email(Invite.find_by_act_key(params[:k]).email).nil? %>
+          <div style="float:right;">
+            <br/>
+            <input type="button" value="Register" onclick="document.location.href='/invites/register?k=<%= params[:k] %>';" />
+          </div>
+          <% end %>
+          
+          <div style="float:right;margin-top:10px;">
+          
+          <% form_tag session_path do -%>
+          <%= label_tag 'login' %>
+          <%= text_field_tag 'login', @login %>
+          
+          <%= label_tag 'password' %>
+          <%= password_field_tag 'password', nil %>
+          
+          <%= submit_tag 'Log in' %>
+          <% end -%>
+          </div>
+          
+          <% end %>
+      
+      <% end %>
+      <a href="http://www.greenwichai.com"><img src="/images/Greenwich.jpg" alt='' /></a><br/>
+      <hr />
+
+      <!-- navbar for signed in users -->
+      
+      <% if current_user%>
+        <%= render "layouts/navbar" %>
+      <% end %>
+    <%end%>
+
+    <%= yield %>
+    <div class="clearfix">&nbsp;</div>
+    <%unless @format == "pdf"%>
+      <div style="text-align:center;">If you need any assistance, please contact us at +1.203.487.6180 or <a href='mailto:support@greenwichai.com'>support@greenwichai.com</a>.  <br/>All information herein is subject to GreenwichOnline <a href="http://www.greenwichai.com/index.php/database/managers-2/terms-of-use">Terms of Use</a>.</div>
+    <%end%>
+  </div>
+  
+  <% k = flash[:alert] %>
+<% if !k.nil? %>
+<script type="text/javascript">
+alert('<%= k %>');
+</script>
+<% end %>
+
+</body>
+</html>

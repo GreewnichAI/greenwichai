@@ -1,0 +1,44 @@
+<%= render :partial=>"admin/menu" %>
+<br/><br/>
+
+
+<%
+wf = []
+rf = []
+params[:funds].split("\n").each do |fund_name|
+  if fund_name.strip!=''
+    if Information.find_by_f20(fund_name.strip).nil?
+      wf << fund_name
+    else
+      rf << fund_name.strip
+    end
+  end
+end
+
+%>
+
+
+<strong>Wrong fund names:</strong>
+<textarea style="width:790px;height:100px;border:solid 2px #770000;background-color:#FFADC3;">
+  <%= wf.join("\n") %>
+</textarea>
+
+<br/><br/>
+
+<strong>Will generate queue for these funds:</strong>
+<% form_for :invites, :url=>{:action=>"generate_queue"} do |f| %>
+<textarea name="funds" style="width:790px;height:200px;border:solid 2px #007700;background-color:#ADFFC3;">
+  <%= rf.join("\n") %>
+</textarea>
+<br/>
+<br/>
+and will send this message:<br/>
+Subject: <input type="text" name="subject" /><br/>
+Link Name: <input type="text" name="link_name" /><br/>
+<textarea name="msg" style="width:790px;height:200px;border:solid 2px #555555;background-color:#DDDDDD;">
+  <%= File.read("invite_template.txt") %>
+</textarea>
+
+<%= f.submit "Generate" %>
+<% end %>
+

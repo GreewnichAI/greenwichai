@@ -1,0 +1,7 @@
+<%= render :partial=>"admin/menu" %>
+<br/><br/>
+
+<h4>Sets:</h4><br/>
+<% SetOfSet.all(:conditions=>["elem_of_set_id is null"]).each do |st| %>
+	<%= link_to (st.name, "/elem_of_sets?set_of_set_id="+st.id.to_s) %><br/>
+<% end %>

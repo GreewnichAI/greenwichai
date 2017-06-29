@@ -1,0 +1,14 @@
+﻿<%
+require 'pp'
+fund = Information.find(:first, :conditions=>["id_1 = ?",params[:id_1]])
+%>
+<%= "No such fund" if fund.nil? %>
+
+
+<% if !fund.nil? %>
+<table border=1 width=800>
+<tr><td><%= link_to_function(fund.f20, "alert('"+(fund.attributes.to_json.gsub(",", "\\t\\t"))+"')") %></td>
+<td><%= button_to "Delete !", {:action=>"t1_do", :id_1=>fund.id_1}, :confirm=>"Are you sure?"%></td>
+</tr>
+</table>
+<% end %>

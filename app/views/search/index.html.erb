@@ -1,0 +1,143 @@
+<% if current_user and current_user.tip=="admin" %>
+  <%= render "layouts/navbar" %>
+<% end %>
+
+<style type="text/css">
+  h1 { font-size: 16px; color:#963634; font-weight:bold; font-style:italic; font-family:Helvetica; }
+  hr { color: #366092; }
+</style>
+<h1>GREENWICH FIND AND FILTER</h1>
+<br/>
+<div style="width:750px;font-size:14px;">Welcome to the GAI Find and Filter tool!  Here you may search by fund  or firm name, fund strategy, performance statistics, or any combination  of these criteria. Simply enter your search terms and/or statistical filters, then click "Find Funds".  To re-set your search terms, click on "Clear Search."</div>
+<br/>
+<% form_for "funds", :url=>{:action=>:src}, :html=>{:id=>"frm_funds"} do |f| %>
+<%= hidden_field_tag "order",params[:order] %>
+<%= hidden_field_tag "direction",params[:direction] %>
+    <table style="width:700px;">
+      <tr>
+        <td><%= f.submit "Find Funds", :style=>"margin-top:5px;" %></td>
+        <td style="text-align:right;"><input type="button" value="Clear Search" onclick="document.location.href='/'" /></td>
+      </tr>
+    </table>
+<div style="clear:both;"></div>
+<div style="width:400px;margin-top:10px;">
+        <h1>Search by Fund or Firm name</h1>
+        <hr/>
+        <%= text_field_tag(:name,"", :style=>"width:400px;border: solid 1px;") %>
+
+</div>
+<div style="clear:both;"></div>
+
+<div style="width:400px;margin-top:20px;">
+    <h1>Search by Fund Strategy:</h1>
+    <hr/>
+    <%= select_tag('strategy',options_for_select( @strategies), :style=>"width:400px;border: solid 1px;") %>
+</div>
+
+<div style="width:400px;margin-top:20px;">
+    <h1>Search by Regional Specialization:</h1>
+    <hr/>
+    <%= select_tag('region',options_for_select( @regions), :style=>"width:400px;border: solid 1px;") %>
+</div>
+
+<div style="margin-top:10px;">
+    <%= check_box_tag "is_active", "1", true %> Only search funds that have reported performance in the last month
+</div>
+
+<div style="width:600px;margin-top:20px;">
+    <h1>Screen for Performance Criteria</h1>
+    <hr/>
+</div>
+    <div style="width:750px;font-size:14px;">
+    Click the button for each statistic that you would like filtered. This will bring up a value slider. You may then alter the minimum and maximum data points by manipulating the handles on the ends of the sliders, or entering specific numbers in the min and max boxes at either side of the slider.
+    To filter by fewer criteria, click the "x" at the right of each slider.
+    </div>
+    <%= params[:strategy] %>
+
+<div style="clear:both"></div>
+
+
+
+
+<div style="margin-right:10px;min-height:30px;">
+    <br/>
+    <span style="color:#344184;font-weight:bold;">Please select criteria to filter and display</span>
+
+
+    <style type="text/css">
+      #crit_head th { border-bottom:solid 1px; }
+    </style>
+
+    <%= render :partial=>"divs_criteria_submenu" %>
+    <div id="div_criterias">
+        <table>
+            <tr id="crit_head" style="display:none;">
+              <th style="font-weight:bold;">Criteria</th>
+              <th style="text-align:center;font-weight:bold;">Min</th>
+              <th>&nbsp;</th>
+              <th style="text-align:center;font-weight:bold;">Max</th>
+              <th>&nbsp;</th>
+            </tr>
+            <% krit_no = 0 %>
+            <% CRITERIAS.each do |criteria_key, criteria_title| %>
+                <% krit_no = krit_no + 1 %>
+                <%= render :partial => "tr", :locals => {:krit_no => krit_no, :title =>criteria_title, :v1 => "src_min[#{criteria_key}]", :v2 => "src_max[#{criteria_key}]", :slider_div => "#{criteria_key}"}    %>
+            <% end %>
+        </table>
+
+    </div>
+
+</div>
+
+<div style="clear:both;"></div>
+<div style="border:solid 0px;min-height:380px;" id="fund_container">
+          <table>
+            <tr><td>
+                  <div  id="div_results">
+
+                  </div>
+            </td></tr>
+          </table>
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+  $("#frm_funds").submit(function(){
+    $('#div_results').block();
+    $('#div_results').load($(this).attr('action'), $(this).serialize() , $('#div_results').unblock()); 
+    return false;
+  });
+  
+  
+  $.each($('#tbl_crits a'), function(k,i) {$('#'+i.id).click(function() {
+          $('#crit_head').show();
+           el_tr = $("#"+$(this).attr('id').replace("_l","_tr"));
+           el_tr.show();
+           $('#'+$(this).attr('id').replace("_l","")+'_hidden').val(1);
+  }); });
+  
+  $.each($('#tbl_crits a:visible').parent(), function(k,i) {
+    $('#'+i.id).click(function() {
+      //$('#'+$(this).attr('id').replace("div_","")).click()
+           $('#crit_head').show();
+           el_tr = $("#"+$(this).attr('id').replace("div_","").replace("_l","_tr"));
+           el_tr.show();
+           $('#'+$(this).attr('id').replace("div_","").replace("_l","")+'_hidden').val(1);
+    });
+  });
+
+   $('#div_criterias input[type=hidden]').val(0);
+</script>
+    <table style="width:700px;">
+      <tr>
+        <td><%= f.submit "Find Funds", :style=>"margin-top:5px;" %></td>
+        <td style="text-align:right;"><input type="button" value="Clear Search" onclick="document.location.href='/search'" /></td>
+      </tr>
+    </table>
+<br/>
+<% end %>
+

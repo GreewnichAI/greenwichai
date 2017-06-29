@@ -1,0 +1,17 @@
+<br/>
+Please Select Sector:<br/>
+Complete only if asset concentration in sector is 70% or greater<br/>
+<br/>
+<% if @st_se.index(@fund_information.f41).nil? && !@fund_information.f41.nil? && !@fund_information.f41.upcase.include?("NONE") %>
+	<%if !@fund_information.f41.blank?%>
+		<% select = "other" %>
+	<%else%>
+		<% select = "None" %>
+	<%end%>
+<% elsif !@fund_information.f41.nil? && !@st_se.index(@fund_information.f41).nil? %>
+	<% select = @fund_information.f41.to_s.strip %>
+<% else %>
+	<% select = "None" %>
+<% end %>
+<%= select_tag "information[f41]", options_for_select(@st_se, select), :style=>"width:200px;" %>
+<%= text_field_tag("over_information[f41]", @st_se.index(@fund_information.f41).nil? && !@fund_information.f41.nil? && !@fund_information.f41.upcase.include?('NONE') && !@fund_information.f41.upcase.include?('OTHER') ? @fund_information.f41 : "") %>

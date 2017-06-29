@@ -1,0 +1,3 @@
+﻿<%= select_tag "information[f37]", options_for_select(@st_pr, @fund_information.f37), :onchange=>remote_function(:update=>"sel_f39", :url=>"/my/fs_sel2", :with=>"'id="+params[:id]+"&st_pr='+$('information_f37').value"), :style=>"width:200px;" %>
+<%= text_field_tag("over_information[f37]", @st_pr.index(@fund_information.f37).nil? ? @fund_information.f37 : "") %>
+<script type="text/javascript"><%= remote_function(:update=>"sel_f39", :url=>"/my/fs_sel2", :with=>"'id="+params[:id]+"&st_pr='+$('information_f37').value") %></script>

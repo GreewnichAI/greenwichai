@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>Greenwichai - Self Reporting Interface</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="/stylesheets/reset-min.css" /> 
+	<link rel="stylesheet" type="text/css" href="/stylesheets/reset-fonts-grids.css" /> 
+</head>
+<body style="text-align:left;">
+
+<div style="width:800px;margin-left:auto; margin-right:auto;text-align:left;">
+		<a href="http://www.greenwichai.com"><img src="/images/Greenwich.jpg" alt='' /></a><br/>
+		<hr />
+    <span style="color:#FF0000;"><%= flash[:notice] if flash[:notice] %></span>
+
+<% form_for @user_session, :url => user_session_path do |f| %>
+
+		<p><%= label_tag 'login', 'Username' %><br />
+		<%= f.text_field 'login' %></p>
+		
+		<p><%= label_tag 'password' %><br/>
+		<%= f.password_field 'password' %></p>
+		
+		<p><%= submit_tag 'Log in' %></p>
+		<% end -%>
+        <br/>
+        <%= link_to 'Forgot your password?', '/sessions/forgot_password' %>
+		<br/>
+		<br/>
+		Greenwich Alternative Investments is pleased to offer GreenwichOnline (<a href="#" onclick="window.open('/docs/LearnMore','mywindow','menubar=1,resizable=1,width=1050,height=450');">Learn More</a>), a web-based solution for performance reporting. Participating fund managers will benefit from:<br/>
+		<br/>
+		    * Streamlined Reporting<br/>
+		    * Exclusive Exposure to Greenwich’s Clients (Institutional Investors)<br/>
+		    * Additional Exposure to Qualified Investors Worldwide<br/>
+		<br/>
+            <input type="button" value="Register" onclick="document.location.href='/register'">
+        <br/><br/>
+
+		
+		For more information please visit our website <a href="http://www.greenwichai.com">www.greenwichai.com</a>, or contact us by emailing <a href="mailto:info@greenwichai.com">info@greenwichai.com</a> or calling 1.203.487.6180<br/>
+</div>
+
+        <% k = flash[:alert] %>
+<% if !k.nil? %>
+<script type="text/javascript">
+alert('<%= k %>');
+</script>
+<% end %>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+<%= render :partial=>"admin/menu" %>
+<%
+q = "select i.f15,i.f37,i.f39,p.return,i.f20,i.id_1 from greenwich.performance p join greenwich.information i on p.id_1=i.id_1 where p.date_1 between '"+params[:yr]+"-"+params[:mn]+"-01 00:00:00' and '"+params[:yr]+"-"+params[:mn]+"-31 23:59:59' and in_calc=1 and f51 like '%Master List%' and p.return!='' and p.return is not null and p.return between -0.25 and 0.25"
+rez = ActiveRecord::Base.connection.execute(q)
+
+arr1 = {}
+arr2 = {}
+arr3 = {}
+arr4 = {}
+
+cnt1 = {}
+cnt2 = {}
+cnt3 = {}
+cnt4 = {}
+
+while row = rez.fetch_hash
+  arr1[row["f15"]] = arr1[row["f15"]].to_f + row["return"].to_f
+  cnt1[row["f15"]] = cnt1[row["f15"]].to_i + 1
+  
+  arr2[row["f15"]] = {} if arr2[row["f15"]].nil?
+  cnt2[row["f15"]] = {} if cnt2[row["f15"]].nil?
+  arr2[row["f15"]][row["f37"]] = arr2[row["f15"]][row["f37"]].to_f + row["return"].to_f
+  cnt2[row["f15"]][row["f37"]] = cnt2[row["f15"]][row["f37"]].to_i + 1
+  
+  arr3[row["f15"]] = {} if arr3[row["f15"]].nil?
+  cnt3[row["f15"]] = {} if cnt3[row["f15"]].nil?
+  arr3[row["f15"]][row["f37"]] = {} if arr3[row["f15"]][row["f37"]].nil?
+  cnt3[row["f15"]][row["f37"]] = {} if cnt3[row["f15"]][row["f37"]].nil?
+  arr3[row["f15"]][row["f37"]][row["f39"]] = arr3[row["f15"]][row["f37"]][row["f39"]].to_f + row["return"].to_f
+  cnt3[row["f15"]][row["f37"]][row["f39"]] = cnt3[row["f15"]][row["f37"]][row["f39"]].to_i+ 1
+
+
+  arr4[row["f15"]] = {} if arr4[row["f15"]].nil?
+  arr4[row["f15"]][row["f37"]] = {} if arr4[row["f15"]][row["f37"]].nil?
+  arr4[row["f15"]][row["f37"]][row["f39"]] = [] if arr4[row["f15"]][row["f37"]][row["f39"]].nil?  
+  arr4[row["f15"]][row["f37"]][row["f39"]] << {:fund_name=>row["f20"], :return=>row["return"], :id_1=>row['id_1']}
+
+end
+
+sum = 0
+cnt = 0
+res1 = {}
+arr1.each do |fn,rt|
+  res1[fn.to_s.strip]=arr1[fn] / cnt1[fn]
+  sum = sum + arr1[fn] if fn!="Fund of Funds Group"
+  cnt = cnt + cnt1[fn] if fn!="Fund of Funds Group"
+end
+
+res2 = {}
+arr2.each do |f15,aa1|
+  aa1.each do |f37,rt|
+    res2[f37.to_s.strip] = arr2[f15][f37] / cnt2[f15][f37]
+    sum = sum + arr2[f15][f37] if f15!="Fund of Funds Group"
+    cnt = cnt + cnt2[f15][f37] if f15!="Fund of Funds Group"
+  end
+end
+
+res3 = {}
+arr3.each do |f15,aa1|
+  aa1.each do |f37,aa2|
+    aa2.each do |f39,rt|
+      res3[f39.to_s.strip] = arr3[f15][f37][f39] / cnt3[f15][f37][f39]
+      sum = sum + arr3[f15][f37][f39] if f15!="Fund of Funds Group"
+      cnt = cnt + cnt3[f15][f37][f39] if f15!="Fund of Funds Group"
+    end
+  end
+end
+
+res1["Hedge Fund"] = (sum.to_f/cnt.to_f)
+
+f=File.open("hist_data/historical_"+params[:yr]+params[:mn]+"_"+Time.now.strftime("%Y%m%d")+".xls", 'w')
+xls_txt = "<table>\n"
+f.write(xls_txt)
+arr4.each do |f15,aa1|
+  aa1.each do |f37,aa2|
+    aa2.each do |f39,aa3|
+      aa3.each do |aa4|
+        xls_txt = "<tr><td>"+aa4[:id_1].to_s+"</td><td>"+f15.to_s+"</td><td>"+f37.to_s+"</td><td>"+f39.to_s+"</td><td>"+aa4[:fund_name].to_s+"</td><td>"+aa4[:return].to_s+"</td></tr>\n"
+        f.write(xls_txt)
+      end
+    end
+  end
+end
+
+
+a1 = {}
+res1.each do |fn,rt|
+  i = Information.first(:conditions=>["f20 like ?", "Greenwich Global "+fn+" Index%"])  
+  a1[i.f20] = rt if !i.nil?
+end
+
+a2 = {}
+res2.each do |fn,rt|
+  i = Information.first(:conditions=>["f20 like ?", "Greenwich Global "+fn+" Index%"])  
+  a2[i.f20] = rt if !i.nil?
+end
+a3 = {}
+res3.each do |fn,rt|
+  i = Information.first(:conditions=>["f20 like ?", "Greenwich Global "+fn+" Index%"])  
+  a3[i.f20] = rt if !i.nil?
+end
+
+
+tm = (params[:yr]+"-"+params[:mn]+"-01").to_time.end_of_month
+
+a5 = {}
+
+q = "select * from greenwich_www_prod.jos_hf_lists2 where cs!=''"
+rez = ActiveRecord::Base.connection.execute(q)
+while row = rez.fetch_hash
+    
+  if !row.nil?
+    a = []
+    row['cs'].split(" ").each do |cs|
+      a<<"uc7.c"+cs+"=1" if !cs.strip.blank?
+    end
+    
+    q = "select i.id_1 from information i join usercheck7 uc7 on i.id_1=uc7.id_1 where f49!='Fund of Funds' and in_calc=1 and ("+a.join(" or ")+")"
+    rez2= ActiveRecord::Base.connection.execute(q)
+    @aa = []
+    while row2=rez2.fetch_hash
+      @aa << row2["id_1"].to_i if row2['f15']!="Fund of Funds Group" and row2['f49']!='Fund of Funds'
+    end
+    @aa = @aa.uniq
+    
+    v1 = 0
+    v2 = 0
+    
+    Performance.all(:conditions=>["id_1 in (?) and date_1 = ? and `return` is not null and `return`!='' and `return` between -0.25 and 0.25 ", @aa, tm.strftime("%Y-%m-%d")]).each  do |p|
+      v1 = v1 + p.return.to_f
+      v2 = v2 + 1
+      xls_txt = "<tr><td>"+p.id_1.to_s+"</td><td>"+row['name']+"</td><td> </td><td> </td><td>"+Information.find(:first, :conditions=>["id_1 = ?", p.id_1]).f20+"</td><td>"+p.return.to_s+"</td></tr>\n"
+      f.write(xls_txt)
+    end
+    rtt2 = 0
+    rtt2 = (v1/v2) if v2>0
+    
+    a5[row['name']] = rtt2
+  end
+  
+end
+
+
+
+
+xls_txt = "</table>"
+f.write(xls_txt)
+f.close
+
+tbl_txt = ""
+a1.each do |fn,rt|
+  tbl_txt = tbl_txt + fn+","+sprintf("%.2f",(rt*100).round(2))+"\n"
+  #tbl_txt = tbl_txt + fn+","+rt.to_s+"\n"
+end
+a2.each do |fn,rt|
+  tbl_txt = tbl_txt + fn+","+sprintf("%.2f",(rt*100).round(2))+"\n"
+end
+a3.each do |fn,rt|
+  tbl_txt = tbl_txt + fn+","+sprintf("%.2f",(rt*100).round(2))+"\n"
+end
+
+a5.each do |fn,rt|
+  tbl_txt = tbl_txt + fn+","+sprintf("%.2f",(rt.to_f*100).round(2))+"\n"
+end
+
+f = File.open("hist_data/results_"+params[:yr]+params[:mn]+"_"+Time.now.strftime("%Y%m%d")+".csv", 'w')
+f.write(tbl_txt)
+f.close
+%>
+<table style="width:800px;">
+<%= "<tr><td>"+tbl_txt.gsub(",", "</td><td style='text-align:right;'>").gsub("\n","</td></tr><tr><td>")+"</td></tr>" %>
+</table>
+
+<table style="width:500px;"><tr><td>
+<%= button_to "Publish", :action=>"publish_ph1", :dt=>params[:yr]+params[:mn]+"_"+Time.now.strftime("%Y%m%d") %>
+</td><td>
+<%= button_to "Get Historical Data XLS", :action=>"hist_ph1", :dt=>params[:yr]+params[:mn]+"_"+Time.now.strftime("%Y%m%d") %>
+</td><td>
+<%= button_to "Get Results CSV", :action=>"results_ph1", :dt=>params[:yr]+params[:mn]+"_"+Time.now.strftime("%Y%m%d") %>
+</td></tr></table>

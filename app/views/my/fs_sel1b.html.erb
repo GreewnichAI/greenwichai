@@ -1,0 +1,17 @@
+<br/>
+Please select specialty country if applicable:<br/>
+Complete only if asset concentration in country is 70% or greater<br/>
+<br/>
+<% if @st_se.index(@fund_information.f38).nil? && !@fund_information.f38.nil? && !@fund_information.f38.upcase.include?("NONE")%>
+	<%if !@fund_information.f38.blank?%>
+		<% select = "other" %>
+	<%else%>
+		<% select = "None" %>
+	<%end%>
+<% elsif !@st_se.index(@fund_information.f38).nil? && !@fund_information.f38.nil? %>
+	<% select = @fund_information.f38.to_s.strip %>
+<% else %>
+	<% select = "None" %>
+<% end %>
+<%= select_tag "information[f38]", options_for_select(@st_se, select), :style=>"width:200px;" %>
+<%= text_field_tag("over_information[f38]", !@fund_information.f38.nil? && @st_se.index(@fund_information.f38).nil? && !@fund_information.f38.upcase.include?("NONE") && !@fund_information.f38.upcase.include?("OTHER") ? @fund_information.f38 : "") %>

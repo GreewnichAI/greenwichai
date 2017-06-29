@@ -1,0 +1,47 @@
+﻿<% if current_user.tip=="admin" %>
+<% remote_form_for "srcc", :url=>{:action=>"search_firm"}, :update=>"firm" do |f| %>
+	Firm Name: <%= text_field_tag :name %>
+	<%= f.submit "Search" %>
+<% end %>
+<% end %>
+
+<% form_for "information", :url=>{:action=>"do_add"},  :html => {:multipart => true, :id=>"form_information"} do |f| %>
+<br/>
+<p>To get started, please enter your fund's name and inception date. You may also upload performance data using the Excel template in the link below. If you choose not to upload the performance, you may enter it manually in the next step.</p>
+<br/>
+		<table >
+			<tr><th><span style="color:red">*</span> Fund Name</th><td><%= f.text_field :f20, :class=>"required" %></td></tr>
+			<tr><th><span style="color:red">*</span> Inception Date</th><td><%= f.date_select :f21, :start_year=>1992 ,:include_blank =>true ,:default=> nil    %></td></tr>
+      <tr><th style="width:250px;height:30px;">Upload historical performance:</th><td><%= f.file_field :att1 %><%= link_to "Template", "/fund_upload.xls" %>  (<small>Please upload as XLS</small>)</td></tr>
+      <tr><th style="width:250px;height:30px;">Upload offering documentation:</th><td><%= f.file_field :att2 %></td></tr>
+			<% if current_user.tip=="admin" %>
+			<tr><th>Firm</th><td>
+				
+				<div id="firm">
+					<select>
+					</select>
+				</div>
+			</td></tr>
+			<% end %>
+			<tr><th colspan="2">
+				<input type="button" value="Save" onclick="validateInputs();" style="cursor:pointer;cursor:hand;" />
+			</th></tr>
+		</table>
+<% end %>
+<script type="text/javascript">
+        jQuery(document).ready(function(){
+            <% if !flash[:notice].nil? && !flash[:notice].blank?%>
+            alert('<%= flash[:notice] %>');
+            <% flash[:notice] = nil%>
+            <% end %>
+        });
+        
+        function validateInputs(){
+	      var valid = new Validation('form_information');
+	      var result = valid.validate();
+	      if(result){
+	          $('form_information').submit();
+	      }
+	      return false;
+	  	}
+    </script>

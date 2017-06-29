@@ -1,0 +1,13 @@
+﻿<%= render :partial=>"admin/menu" %>
+<%= render :partial=>"menu" %>
+<br/><br/>
+<strong>Inception Date in Fund Name</strong>
+<hr/>
+<br/>
+
+<% rez = ActiveRecord::Base.connection.execute("SELECT id,id_1,f20 FROM information WHERE F20 LIKE '%1/%' OR F20 LIKE '%2/%' OR F20 LIKE '%3/%' OR F20 LIKE '%4/%' OR F20 LIKE '%5/%' OR F20 LIKE '%6/%' OR F20 LIKE '%7/%' OR F20 LIKE '%8/%' OR F20 LIKE '%9/%' OR f20 LIKE '%0/%'") %>
+<table>
+<% while row = rez.fetch_hash do %>
+		<tr><td><%= link_to (row['f20'],"/my/fund_info?id="+row['id'], :target=>"nww") %></td></tr>
+<% end %>
+</table>

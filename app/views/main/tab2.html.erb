@@ -1,0 +1,26 @@
+﻿<%= render :partial=>"main/menu" %>
+<br/>
+<div style="">
+Fund Name: <%= @fund_information['F20'] %><br/>
+<br/>
+<table style="width:350px;">
+	<tr><th>Management Firm</th><td><%= "Test" %></td></tr>
+	<tr><th>Address 1</th><td><%= text_field_tag "d_values[F2]", @fund_information['F2'] %></td></tr>
+	<tr><th>Address 2</th><td><%= text_field_tag "d_values[F3]", @fund_information['F3'] %></td></tr>
+	<tr><th>City</th><td><%= text_field_tag "d_values[F4]", @fund_information['F4'] %></td></tr>
+	<tr><th>State/Province</th><td><%= text_field_tag "d_values[F5]", @fund_information['F5'] %></td></tr>
+	<tr><th>Zip Code</th><td><%= text_field_tag "d_values[F6]", @fund_information['F6'] %></td></tr>
+	<tr><th>Country</th><td><%= text_field_tag "d_values[F7]", @fund_information['F7'] %></td></tr>
+	<tr><th>Phone</th><td><%= text_field_tag "d_values[F9]", @fund_information['F9'] %></td></tr>
+	<tr><th>Fax</th><td><%= text_field_tag "d_values[F10]", @fund_information['F10'] %></td></tr>
+	<tr><th>Email</th><td><%= text_field_tag "d_values[F11]", @fund_information['F11'] %></td></tr>
+	
+	<tr><th>Contact Person</th><td><%= text_field_tag "d_values[F11]", @fund_information['F12'] %></td></tr>
+	<tr><th>Contact Title</th><td><%= text_field_tag "d_values[F11]", @fund_information['F13'] %></td></tr>
+	<tr><th>Website</th><td><%= text_field_tag "d_values[F11]", @fund_information['F18'] %></td></tr>
+	<tr><th>Firm Assets</th><td><%= text_field_tag "d_values[F11]", @fund_information['F34'] %></td></tr>
+	<tr><th>Currency of Firm Assets</th><td><%= text_field_tag "d_values[F11]", @fund_information['F35'] %></td></tr>
+	
+</table>
+</div>
+<% debug @fund_information %>

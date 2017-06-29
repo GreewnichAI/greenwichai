@@ -1,0 +1,32 @@
+﻿<%= render (:partial=>"menu") %>
+<%= render (:partial=>"usermenu") %>
+
+
+<br/>
+Fund Name: <strong><%= @fund_information.f20 %></strong><br/>
+
+<% form_for "userinfo6", :url=>{:action=>"userinfo6_save"}, :html=>{:id=>"userinfo6"} do |f| %>
+	<%= hidden_field_tag "id", params[:id] %>
+	<%= hidden_field_tag "user_id", params[:user_id] %>
+
+<table><tr><td>
+<br/>
+		<table style="width:800px;">
+			<tr>
+				<td>
+Internal Notes  	:  	<br/>
+<%= text_area_tag "usermemo1[memo1]", @um1.memo1, :style=>"width:400px;height:200px;" %><br/><br/>
+<% if 1==2 %>
+Note 1: Outstanding interactions with fund mgrs 	:<br/> 	
+<%= text_area_tag "usermemo1[memo2]", @um1.memo2, :style=>"width:400px;height:200px;" %><br/><br/>
+Note 2: Outstanding interactions with fund mgrs 	:<br/>
+<%= text_area_tag "usermemo1[memo3]", @um1.memo3, :style=>"width:400px;height:200px;" %><br/><br/>
+Note 3: Outstanding interactions with fund mgrs 	:<br/>
+<%= text_area_tag "usermemo1[memo4]", @um1.memo4, :style=>"width:400px;height:200px;" %><br/><br/>
+<% end %>
+</td></tr>
+				
+		</table>
+</td></tr></table>
+<% end %>
+<%= link_to_function image_tag('/images/btnMakeChanges.jpg'), "$('userinfo6').submit();" %>

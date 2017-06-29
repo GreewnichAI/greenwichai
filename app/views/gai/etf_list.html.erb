@@ -1,0 +1,6 @@
+<%= render :partial=>"admin/menu" %>
+
+<% form_for "set", :action=>"etf_list" do |f| %>
+<%= text_area_tag "set[etf_list]", @set, :style=>"height:400px;width:700px;" %>
+<%= f.submit "Save" %>
+<% end %>
