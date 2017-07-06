@@ -15,7 +15,7 @@ class RegisterController < ApplicationController
       @i = @informations_full.first
 
 
-      if 1==2
+      # if 1==2
           mtf = nil
           mtf = ManagerToFund.first(:conditions=>["fund_id = ?", @i.id_1]) if !@i.nil?
           if !mtf.nil?
@@ -33,7 +33,7 @@ class RegisterController < ApplicationController
             mtp.donor_id = @user.owner_id
             mtp.save
           end
-      end
+      # end
     
       Message.to_admins("<a target='nwwin' href='/users/"+@user.id.to_s+"/edit'>"+@user.login.to_s+"</a> registered and is inactive.",1)
       flash[:alert] = "Your user profile has been created. A member of our team will contact you to confirm information and activate registration within 24 hours."

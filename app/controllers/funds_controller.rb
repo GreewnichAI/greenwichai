@@ -106,7 +106,6 @@ class FundsController < ApplicationController
         error = {:status => true, :type => :user_manager_information ,:message => 'Your User account does not appear to be associated with a Firm ID number in our database. This system error has been sent to our Data Team and one of us will get back you shortly with a fix. Thank you for your patience.'} if params[:firm_id].blank?
       end
     end
-    app_logger error
     if error[:status]
       if error[:type] == :user_no_firm_associated || error[:type] == :user_no_firm_associated
         email_error_message = "The following user encountered the NoMethodError message related to the “Donor ID” field:
