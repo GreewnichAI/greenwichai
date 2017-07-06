@@ -1,0 +1,484 @@
+body {
+  padding: 15px 0;
+}
+
+h1.pdf_title {
+  font-size: 20px;
+  margin-left: 20px;
+}
+
+.wrapper {
+  min-height: 700px;
+}
+
+.flash {
+  margin-left: 20px;
+  border-radius: 2px;
+  font-size: 12px;
+  margin-bottom: 10px;
+  padding: 10px;  
+}
+
+.flash.notice {
+  color: white;
+  background-color: #66FF33;
+  background-color: #66CC33;
+  border: 1px solid #339933;  
+}
+
+.pdf {
+  background-color: #ffffff !important;
+}
+
+h1.pdf_title {
+  font-size: 20px;
+  margin-left: 20px;
+}
+
+.pdf .wrapper {
+  width: 1290px;
+  border-radius: 0px;
+}
+
+.pdf #portfolio_summary {
+  overflow: visible;
+}
+
+.wrapper {
+  width:940px;
+  margin-left:auto;
+  margin-right:auto;
+  background-color: #ffffff;
+  padding: 10px; 
+  border-radius: 20px;
+}
+
+#portfolio {
+  font-size: 12px;
+  padding: 0 20px 0 0;
+  font-family: "Arial";
+}
+
+#portfolio #frm_funds {
+  width: 55%;
+  margin: 20px 0;
+}
+
+#portfolio form {
+  margin: 20px 0;
+}
+
+#portfolio #frm_funds .field {
+  margin-bottom: 10px;
+}
+
+.save-portfolio {
+}
+
+#portfolio #frm_funds input[type='text'] {
+  border: 1px solid #CCCCCC;
+  font-size: 14px;
+  padding: 10px;
+  width: 300px;
+  border-radius: 5px;
+}
+
+#portfolio .btn {
+  color: #ffffff;
+  text-decoration: none;  
+  cursor: pointer;
+  background-color: #21AABD;
+  background-image: none;
+  border-radius: 25px;
+  font-size: 18px;
+  height: auto;
+  padding: 8px 24px;
+  width: auto;
+}
+
+#portfolio #frm_funds .field .btn {
+  margin-left: 140px;
+}
+
+#portfolio .btn-big-blue {
+  font-size: 28px;
+  padding: 12px 48px;
+  border-radius: 4px;
+  background-color: #105c9a;
+}
+
+.find-fund {
+  margin-top: 10px;
+}
+
+p {
+  font-size: 14px;
+  margin: 15px 0 0;
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.clearfix {
+  clear: both;
+}
+
+#results {
+
+}
+
+#results .section {
+  width: 46%;
+  padding: 10px;
+  /*min-height: 200px;*/
+  border: 1px dashed #CCCCCC;
+}
+
+#results .no-border {
+  border: none;
+  padding: 10px 0;
+}
+
+#results ul.list li {
+  list-style: disc inside;
+  text-indent: -1em;
+  margin-left: 1em;
+}
+
+#results .heading {
+  color: #0000ee;
+  font-size: 24px;
+  font-style: italic;
+  text-decoration: underline;  
+}
+
+#results .section h3 {
+  line-height: 28px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #555555;
+}
+
+#results .section h3 a {
+  color: #555555;
+  font-size: 14px;
+  line-height: 28px;
+  text-decoration: none;
+}
+
+#results ul .selected {
+  background-color: yellow;
+}
+
+#results #search_results ul li, #results #portfolio_funds ul li {
+  font-size: 13px;
+}
+
+#results #search_results ul li a, #results #portfolio_funds ul li a {
+  color: #333333;
+  display: block;
+  font-size: 11px;
+  padding: 2px 0;
+  text-decoration: none;
+}
+
+#results #search_results ul li a:hover, #results #portfolio_funds ul li a:hover {
+  color: #21AABD;
+}
+
+#results #portfolio_funds {
+  margin-left: 5px;
+}
+
+.pagination {
+  margin-top: 10px;
+  background-color: #21AABD;
+}
+
+.actions {
+  margin-top: 20px;
+}
+
+.actions .btn {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #105C9A !important;
+  border-radius: 4px !important;
+  font-size: 13px !important;
+  padding: 5px 15px !important;
+}
+
+#portfolio_summary {
+  /*width: 94.5%;*/
+  width: 880px;
+  overflow: auto;
+  margin: 0 20px;
+  font-family: "Arial";
+}
+
+#listVScroller {
+  height: 200px;
+  overflow: auto;
+}
+
+.export_holder {
+  margin: 0 30px 20px 20px;
+  font-family: "Arial";
+}
+
+#portfolio_summary table.summary_table {
+  width: 1015px; 
+  margin: 20px 0; 
+  font-size: 11px;   
+}
+
+#portfolio_summary table.summary_table th {
+  font-weight: bold;
+  padding: 3px 4px;
+  text-align: center;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #CCCCCC;
+  border-bottom: 1px solid #CCCCCC;  
+}
+
+#portfolio_summary table.summary_table td {
+  text-align: center;
+}
+
+#portfolio_summary table.summary_table td.fullspan {
+  padding-bottom: 0;
+  padding-top: 0;  
+  border: medium none !important;
+}
+
+#portfolio_summary table.summary_table .headers .fullspan {
+
+}
+
+#portfolio_summary table.summary_table .values .fullspan {
+  
+}
+
+#portfolio_summary table.summary_table table.nested_table th, #portfolio_summary table.summary_table table.nested_table td {
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  border-left: none;
+  text-align: center;
+}
+
+#portfolio_summary table.summary_table .wide {
+  width: 47px;
+}
+
+#portfolio_summary table.summary_table table.nested_table th.wider, #portfolio_summary table.summary_table table.nested_table td.wider {
+  width: 65px;  
+}
+
+#portfolio_summary table.summary_table table.nested_table th.widest, #portfolio_summary table.summary_table table.nested_table td.widest {
+  width: 70px;  
+}
+
+#portfolio_summary table .sortable a {
+  color: #000;
+  text-decoration: none;
+}
+
+#portfolio_summary table .sortable .sorted {
+/*  border: 1px dashed red !important;*/
+}
+
+#portfolio_summary table .sortable .desc {
+  padding-right: 15px;
+  background: url(../images/white-arrow-down.png) no-repeat right center;
+}
+
+#portfolio_summary table .sortable .asc {
+  padding-right: 15px;
+  background: url(../images/white-arrow-up.png) no-repeat right center;
+}
+
+#portfolio_summary table.summary_table td {
+  padding: 3px 4px;
+  border-right: 1px solid #CCCCCC;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+#portfolio_summary table.summary_table .strategy {
+  width: 60px;
+}
+
+#portfolio_summary table.summary_table .fund_name {
+  width: 200px;
+  text-align: left;
+}
+
+#portfolio_summary table.summary_table td.fund_name a {
+  color: #000;
+  text-decoration: none;
+}
+
+#portfolio_summary table.summary_table td.fund_name a:hover {
+  color: #21AABD;
+}
+
+#portfolio_summary table.summary_table td:first-child, #portfolio_summary table.summary_table th:first-child {
+  border-left: 1px solid #CCCCCC;
+}
+
+#portfolio_summary table td.grouped {
+  color: white;
+  background-color: #21AABD;
+}
+
+table td.highlight {
+  background-color: yellow;
+}
+
+.count {
+  text-align:right;
+  font-size:10px;
+  padding: 6px;
+  color: #ffffff;
+}
+
+#portfolio_nav {
+  margin-left: 20px;
+  overflow: hidden;
+  font-family: "Arial";
+}
+
+#portfolio_nav li {
+  float: left;
+  margin-right: 1px;
+  overflow: hidden;
+  border: 1px solid #CCCCCC;
+}
+
+#portfolio_nav li a {
+  float: left;
+  color: #555555;
+  padding: 10px;
+  font-size: 14px;
+  text-align: center;
+  text-decoration: none;
+}
+
+#portfolio_nav li:hover, #portfolio_nav li.active {
+  background-color: #21AABD;
+}
+
+#portfolio_nav li:hover a, #portfolio_nav li.active a {
+  color: #ffffff;
+}
+
+#portfolio_summary table td.grouped {
+  text-align: left;
+}
+
+/*table {
+  font-size: 11px;
+}
+
+table a {
+  color: #555555;
+  text-decoration: none;
+}
+
+table a:hover {
+  color: #21AABD;
+  text-decoration: none;
+}
+
+table td {
+  text-align: center;
+}*/
+
+.fixedHead td, .fixedFoot td {
+  padding: 0;
+  min-width: 75px;
+  border: 1px solid #eaeaea;
+}
+
+.fixedTable td {
+  padding: 0;
+  border: 1px solid #eaeaea;
+}
+
+.fixedColumn .fixedTable td {
+  text-align: left;
+}
+
+.fixedColumn .fixedTable td a {
+  margin: 5px;
+  float: left;
+}
+
+.fixedHead .primaryHeader th {
+
+}
+
+table {
+  border-collapse: separate;
+}
+
+table .sortable a {
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+table .sortable .desc {
+  padding-right: 15px;
+  background: url(../images/white-arrow-down.png) no-repeat right center;
+}
+
+table .sortable .asc {
+  padding-right: 15px;
+  background: url(../images/white-arrow-up.png) no-repeat right center;
+}
+
+.freezePane tbody td {
+  min-width: 75px;
+}
+
+.nested_table td {
+  border: 0;
+}
+
+.nested_table td.heading {
+  font-weight: bold;
+  padding: 5px 0;
+}
+
+#risk_dashboard_table tr.group .grouped, #yrisk_dashboard_table tr.group .grouped {
+  height: 27px !important;
+  color: white;
+  background-color: #21AABD;   
+}
+
+td.grouped {
+  border: 0 none;
+  color: white;
+  background-color: #21AABD;  
+}
+
+th.grouped {
+  height: 27px;
+}
+
+td.grouped span {
+  margin-left: 5px;
+}
+
+body.pdf .blankGroup {
+  display: none;
+}
+
+.fixedTable .grouped, tr.blankGroup {
+  height: 27px !important;
+}

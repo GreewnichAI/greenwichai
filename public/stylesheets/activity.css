@@ -1,0 +1,45 @@
+.metrics {
+  display: block;
+  float: left;
+  margin: 20px;
+  margin-left: 0px;
+}
+.metrics h3 {
+  display: block;
+  height: 15px;
+}
+.metrics h4 {
+  display: block;
+  margin-bottom: 10px;
+}
+.cols4 {
+  width: 30%;
+}
+.cols3 {
+  width: 20%;
+}
+.cols2 {
+  width: 20%;
+}
+.metrics p {
+  font-size: 20px;
+  left: 20px;
+}
+
+.metrics .space {
+  height: 20px;
+}
+#metTable td {
+  border: 1px solid black;
+  padding: 2px;
+}
+
+.clear:before,
+.clear:after {
+    content: " ";
+    display: table;
+}
+
+.clear:after {
+    clear: both;
+}

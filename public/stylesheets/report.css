@@ -1,0 +1,248 @@
+#fund-report {
+  font-size: 11px;
+  overflow: hidden;
+}
+
+#fund-report h1 {
+  font-size: 20px;
+  font-weight: bold;
+  position:relative;
+}
+
+#fund-report .description {
+  font-size: 13px;
+}
+
+#fund-report h1 .download {
+  top: 25px;
+  right: 20px;
+  color: #000;
+  height: 32px;
+  position: absolute;
+  overflow: hidden;
+  text-decoration: none;
+  background: url(../images/pdf_icon.gif) top left no-repeat;
+}
+
+.download-icon {
+  height: 32px;
+  padding-left: 30px;
+  display: block;  
+  text-decoration: none;
+  background: url(../images/pdf_icon.gif) top left no-repeat;  
+}
+
+.download-icon label {
+  margin-top: 9px;
+  display: block;
+  cursor: pointer; 
+}
+
+#fund-report h1 .download span {
+  float: left;
+  margin-left: 40px;
+  margin-top: 3px;
+  width: 55px;
+  font-size: 11px;
+  font-weight: normal;
+}
+
+#fund-report h1+p {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#fund-report .section {
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+#fund-report .section.returnAnalysis {
+  padding-bottom: 25px;
+}
+
+#fund-report .graph {
+  overflow: visible;
+  padding: 20px 20px 50px 30px;
+  /*border: 1px solid #ccc;*/
+}
+
+#fund-report .section .pull-left {
+  float: left;
+  width: 400px;
+  margin: 5px;
+}
+
+#fund-report .section h3 {
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 25px;
+  margin-bottom: 5px;
+}
+
+#fund-report .section h3 span {
+  border-bottom: 2px solid red;
+}
+
+#fund-report table {
+  
+}
+
+#fund-report .table th {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#fund-report .table td, #fund-report .table th {
+  width: 150px;
+}
+
+#fund-report .table .small, #fund-report .table .small {
+  width: 75px;
+}
+
+.flotr-legend-color-box {
+  width: 30px;
+  padding-right: 2px;
+  /*padding-left: 8px;*/
+  text-align: right;
+}
+
+.flotr-legend {
+  left: 220px;
+  font-size: 14px;
+  bottom: -50px !important;
+}
+
+.flotr-legend-label {
+  max-width: 70px;
+}
+
+#fund-report .section.graph {
+  padding: 20px 15px 40px;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.clearfix {
+  clear: both;
+}
+
+.no_left_margin {
+  margin-left: 0 !important;
+}
+
+.detailed_report .blueBkg {
+  color: #fff;
+  padding: 5px;
+  font-size: 24px;
+  line-height: 30px;
+  background-color: #344184;
+}
+
+.detailed_report .section h3.blueBkg {
+  font-size: 22px !important;
+  text-transform: uppercase;
+}
+
+.detailed_report .title {
+  width: 535px;
+  text-align: left !important;
+}
+
+#fund-report .section .time_window_analysis {
+  width: 525px;
+}
+
+#fund-report .section .annual_and_correlations {
+  width: 275px;
+}
+
+#fund-report .time_window_analysis table, #fund-report .annual_and_correlations table {
+  width: 100%;
+}
+
+#fund-report.detailed_report table td {
+  padding: 2px 0;
+}
+
+#fund-report .time_window_analysis table td.small {
+  width: 75px;
+}
+
+.detailed_report .header .blueBkg {
+  height: 52px;
+  padding: 10px;
+  font-size: 32px;
+  margin-left: 20px;
+  text-align: center;
+}
+
+.detailed_report .header .blueBkg.sml {
+  width: 100px;
+  line-height: 38px;
+}
+
+.detailed_report .header .blueBkg.sml label {
+  display: block;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+#fund-report table#monthly_returns, #fund-report table#return_analysis {
+  width: 100%;
+}
+
+#fund_performance {
+  margin-bottom: 50px;
+}
+
+#peer_analysis {
+  margin-bottom: 50px;
+}
+
+#return_distribution {
+  margin-bottom: 50px;
+}
+
+.detailed_fund_report_pdf #fund_performance {
+  height: 1200px;
+  margin-bottom: 50px;
+}
+
+.detailed_fund_report_pdf #peer_analysis, .detailed_fund_report_pdf #return_distribution{
+  height: 1000px;
+  margin-bottom: 10px;
+}
+
+.rightAligned td.small, .rightAligned th.small {
+  text-align: right;
+}
+
+.centerAligned td.small, .centerAligned th.small {
+  text-align: center;
+  width: 145px !important;
+}
+
+.yearCol {
+  text-align: left !important;
+}
+
+#fund-report table.annuals td, #fund-report table.annuals th {
+  width: 50px;
+}
+
+#frequency_chart {
+  width: 750px;
+  margin-left: 10px;
+}
+
+#fund-report.detailed_report {
+  font-size: 12px;
+}

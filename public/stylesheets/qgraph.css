@@ -1,0 +1,218 @@
+    #demo-frame > div.demo { padding: 10px !important; };
+    html, body { background-color: #344184!important; color: #333; font-family: "Lucida Grande","Lucida Sans Unicode",Arial,sans-serif; font-size: 14px; }
+
+
+    .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { background-color:#344184; }
+
+    #login_div { background-image:url(/images/window-rep.png); width:960px;  }
+    #login_div table { width:400px; }
+    #login_sub_div { padding-left:100px; padding-right:20px; }
+    #login_top { width:960px; height:20px; background-image:url(/images/window-up.png); }
+    #login_bottom { width:960px; height:21px; background-image:url(/images/window-down.png); }
+    #login_container { width:960px; margin-left:auto; margin-right:auto; }
+    #div_results a { color:#000000; text-decoration:none; font-size: 11px; }
+
+    input[type=submit] { background: none; border:solid 0px; background-image:url(/images/btn-login-bg.png); width:185px; height:42px; color:#FFFFFF; font-size:18px;  }
+    input[type=button], .button { background: none; border:solid 0px; background-image:url(/images/btn-login-bg.png); width:185px; height:42px; color:#FFFFFF; font-size:18px; text-decoration: none; }
+
+    .button {
+      padding: 10px 29px;
+    }
+
+    .criteria_item { font-size:11px; color: #000000; text-decoration:none; }
+    .div_crits a { font-size:11px; color: #ffffff; text-decoration:none; cursor:pointer; cursor:hand; }
+    #div_criterias input { width:50px; font-size:12px;text-align:center; }
+    #div_criterias table { width:750px; }
+    #div_criterias table tr td { font-size:11px; border-bottom:solid 1px; }
+    strong { font-weight: bold; }
+
+    .krit1 { background-color:#BBBBBB; }
+    #fund_container table { width:750px;  }
+    #fund_container table th { background-color: #344184; color:#FFFFFF; font-weight:bold; }
+    #fund_container td { text-align:center; }
+    #fund_container .tr0 td { background-color:#eeeeff; }
+    #div_results table tr th a { color:#FFFFFF; font-size:10px; line-height:10px; }
+
+
+
+#q-graph {position: relative; width: 600px; min-height: 420px;
+  margin: 1.1em 10em 3.5em 5em;; padding: 0;
+  border-left: 1px solid gray; list-style: none;
+  font: 10px Helvetica, Geneva, sans-serif;}
+#q-graph ul {margin: 0; padding: 0; list-style: none;}
+#q-graph li {position: absolute; bottom: 0; width: 150px; z-index: 2;
+  margin: 0; padding: 0;
+  text-align: center; list-style: none;}
+#q-graph li.qtr {height: 298px; padding-top: 2px; color: #AAA;}
+#q-graph li.bar {width: 40px; border: 1px 0px solid; border-bottom: none; color: #000;}
+#q-graph li.bar p {margin: 5px 0 0; padding: 0;}
+#q-graph li.sent {left: 13px; background: #DCA url(fade-dark.png) repeat-x;
+  border-color: #EDC #BA9 #000 #EDC;}
+#q-graph li.paid {left: 77px; background: #9D9 url(fade-dark.png) repeat-x;
+  border-color: #CDC #9B9 #000 #BFB;}
+#q-graph li.green {background: #C8E1AA repeat-x;}
+#q-graph li.blue {background: #CEE0F5 repeat-x;}
+#q-graph li.purple {background: #C5AFD2 repeat-x;}
+#q-graph li.pink {background: #F2C3C3 repeat-x;}
+#q-graph .x-items {position:absolute;bottom:-50px;font-size: 11px;}
+#q-graph #q0 {left: 0;}
+#q-graph #q1 {left: 100px;}
+#q-graph #q2 {left: 200px;}
+#q-graph #q3 {left: 300px;}
+#q-graph #q4 {left: 400px;}
+#q-graph #q5 {left: 500px;}
+
+#q-graph #item0 {left: 30px;}
+#q-graph #item1 {left: 130px;}
+#q-graph #item2 {left: 230px;}
+#q-graph #item3 {left: 330px;}
+#q-graph #item4 {left: 430px;}
+#q-graph #item5 {left: 530px;}
+
+#q-graph .qtr span {
+  bottom: -25px;
+  right: 100px;
+  position: absolute;
+}
+
+#q-graph .product, #q-graph .s_bm, #q-graph .p_bm {
+  z-index: 3;
+  height: 10px;
+  width: 10px;
+  position: absolute;
+}
+
+#q-graph .product {
+  background: url(/images/green-square.png) no-repeat;
+}
+
+#q-graph .s_bm {
+  background: url(/images/red-triangle.png) no-repeat;
+}
+
+#q-graph .p_bm {
+  background: url(/images/blue-circle.png) no-repeat;
+}
+
+#q-graph #legend {
+  top: 100px;
+  right: -220px;
+}
+
+#q-graph li.bar span.tip {
+  z-index: 4;
+  color: #000000;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 8px;
+  position: absolute;
+  right: -65px;
+  text-align: center;
+  bottom: 2px;
+  display: none;
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#q-graph span span.tip {
+  z-index: 4;
+  color: #000000;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 8px;
+  position: absolute;
+  right: -72px;
+  text-align: center;
+  bottom: 2px;
+  display: none;
+  width: 55px;
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#q-graph li.bar span.tip {
+  right: -50px;
+}
+
+#q-graph span:hover .tip {
+  display: block;
+}
+
+#q-graph #legend .legend {
+  margin: 7px 0;
+  font-size: 11px;
+  display: block;
+  text-align: left;
+  position: relative;
+}
+
+#q-graph #legend .legend span {
+  top: 0px;
+  left: -15px;
+  height: 10px;
+  width: 10px;
+  display: block;
+  position: absolute;
+  background: yellow;
+}
+
+#q-graph #legend .legend95 span {
+  background: #C8E1AA;
+}
+
+#q-graph #legend .legend75 span {
+  background: #CEE0F5;
+}
+
+#q-graph #legend .legend50 span {
+  background: #C5AFD2;
+}
+
+#q-graph #legend .legend25 span {
+  background: #F2C3C3;
+}
+
+#q-graph #legend .legendP {
+  margin-top: 20px;
+}
+
+#q-graph #legend .legendP span {
+  top: 1px;
+  width: 10px;
+  height: 10px;
+  background: url(/images/green-square.png) no-repeat;
+}
+
+#q-graph #legend .legendPm span {
+  top: 1px;
+  width: 10px;
+  height: 10px;
+  background: url(/images/blue-circle.png) no-repeat;
+}
+
+#q-graph #legend .legendSm span {
+  top: 1px;
+  width: 10px;
+  height: 10px;
+  background: url(/images/red-triangle.png) no-repeat;
+}
+
+#q-graph #legend .break {
+  margin-left: -15px;
+  border-bottom: 1px dashed #000;
+}
+
+#q-graph .returnLabel img {
+  height: 100px;
+  left: -50px;
+  position: absolute;
+  top: -250px;
+}
+
+#q-graph #ticks {width: 600px; min-height: 420px; z-index: 1;}
+#q-graph #ticks .tick {position: relative; border-bottom: 1px dashed #bbb; width: 600px;height:41px !important;}
+#q-graph #ticks .tick p {font-size: 11px;position: absolute; left: -2em; top: 3.7em; margin: 0 0 0 0.5em;}
+#q-graph #ticks .tick.center {border-bottom: 1px solid #aaa;}
+#q-graph #ticks .tick.negative p {left: -2.4em;};
