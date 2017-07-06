@@ -20,6 +20,12 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user
   filter_parameter_logging :password, :password_confirmation
 
+  def app_logger msg
+    log = Logger.new('log/logfile.log')
+    log.level = Logger::WARN
+    log.warn(msg)
+  end
+
   private
     def current_user_session
       return @current_user_session if defined?(@current_user_session)

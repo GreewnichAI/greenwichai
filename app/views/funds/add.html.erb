@@ -16,7 +16,7 @@
       <tr><th style="width:250px;height:30px;">Upload offering documentation:</th><td><%= f.file_field :att2 %></td></tr>
 			<% if current_user.tip=="admin" %>
 			<tr><th>Firm</th><td>
-				
+
 				<div id="firm">
 					<select>
 					</select>
@@ -35,7 +35,7 @@
             <% flash[:notice] = nil%>
             <% end %>
         });
-        
+
         function validateInputs(){
 	      var valid = new Validation('form_information');
 	      var result = valid.validate();

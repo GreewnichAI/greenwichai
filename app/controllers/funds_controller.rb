@@ -58,6 +58,7 @@ class FundsController < ApplicationController
   end
   
   def do_add
+    error = {:status=> false, :message => nil, :type => nil}
     #render :text=>params[:firm_id]
     @li_di = Information.find(:first, :order=>"datavendorid+1 desc")
     if params[:firm_id]
@@ -96,121 +97,146 @@ class FundsController < ApplicationController
     @system5 = @information.systeminformation5
     
     if current_user.tip !="admin"
-      # m_id = ManagerToProfiles.find(:first, :conditions=>["donor_id = ?",current_user.owner_id]).manager_id
-      manager_to_profile = ManagerToProfiles.find(:first, :conditions=>["donor_id = ?",current_user.owner_id])
-      params[:firm_id] = ManagerInformation.find(:first, :conditions=>["manager_id = ?", manager_to_profile.manager_id]).id if  manager_to_profile
-      params[:firm_id] = nil
+      unless current_user.owner_id > 0
+        error = {:status => true, :type => :user_no_firm_associated ,:message => 'Your User account does not appear to be associated with a Firm ID number in our database. This system error has been sent to our Data Team and one of us will get back you shortly with a fix. Thank you for your patience.'}
+      else
+        manager_to_profile = ManagerToProfiles.find(:first, :conditions=>["donor_id = ?",current_user.owner_id])
+        params[:firm_id] = ManagerInformation.find(:first, :conditions=>["manager_id = ?", manager_to_profile.manager_id]).id if  manager_to_profile
+
+        error = {:status => true, :type => :user_manager_information ,:message => 'Your User account does not appear to be associated with a Firm ID number in our database. This system error has been sent to our Data Team and one of us will get back you shortly with a fix. Thank you for your patience.'} if params[:firm_id].blank?
+      end
     end
-    mtf = ManagerToFund.new
-    mtf.manager_id = ManagerInformation.find(params[:firm_id]).manager_id
-    begin
-      if !@information.att1.path.nil?
-        if(@information.att1.path.include?(".xls") && !@information.att1.path.include?(".xlsx"))
-          require 'parseexcel'
-          
-          @information.save
-          @information.make_init
-          
-          @workbookA = Spreadsheet::ParseExcel.parse(@information.att1.path)
-          
-          #Validation of Spreadsheet
-          if !@workbookA.nil?
-            @worksheetA = @workbookA.worksheet(0)
-            dates = []
-            @worksheetA.each { |row|
-            if !row.nil? and !row[0].nil? and !row[0].date.blank? and row[0].date.to_time.day == row[0].date.to_time.end_of_month.day and !row[1].nil?
-              
-              validation = true
-              p = Performance.new
-              p.date_1 = row[0].date.to_time.end_of_month.strftime("%Y-%m-%d") if !row[0].nil? and !row[0].date.blank?
-              p.return = row[1].to_s("latin1") if !row[1].nil?
-              begin
-                Float(row[1].to_s("latin1")) if !row[1].nil? and !row[1].value.blank?
-                Float(row[2].to_s("latin1")) if !row[2].nil? and !row[2].value.blank?
-                Float(row[3].to_s("latin1")) if !row[3].nil? and !row[3].value.blank?
-                Float(row[4].to_s("latin1")) if !row[4].nil? and !row[4].value.blank?
-                Float(row[5].to_s("latin1")) if !row[5].nil? and !row[5].value.blank?
-                Float(row[6].to_s("latin1")) if !row[6].nil? and !row[6].value.blank?
-              rescue Exception => exc
-                validation = false
-                flash[:notice] = "There are problems with your data. There are text values in the spreadsheet. Please include only numbers or symbols. Text may only be present in the headings. Please check your spreadsheet values and try again. If you need assistance, please contact ​data@greenwichai.com or call +1.203.487.6180."
-              end
-              
-              if !p.date_1.nil? && p.date_1 < Date.new(1970,1,1)
-                validation = false 
-                flash[:notice] = "There are problems with your data. The dates cannot be before 1970. Please check your spreadsheet values and try again. If you need assistance, please contact ​data@greenwichai.com or call +1.203.487.6180."
-              elsif !p.return.nil? && (p.return > 2 || p.return < -2)
-                validation = false
-                flash[:notice] = "There are problems with your data. The return cannot be lower than -200% or higher than 200%. Please check your spreadsheet values and try again. If you need assistance, please contact ​data@greenwichai.com or call +1.203.487.6180."
-              elsif !p.date_1.nil? && p.date_1 > Time.now.months_ago(1).end_of_month
-                validation = false 
-                flash[:notice] = "There are problems with your data. The date cannot be higher than one month ago. Please check your spreadsheet values and try again. If you need assistance, please contact ​data@greenwichai.com or call +1.203.487.6180."
-              elsif !p.date_1.nil? && dates.include?(p.date_1)
-                validation = false 
-                flash[:notice] = "There are problems with your data. At least one date appears more than once. Please check your spreadsheet values and try again. If you need assistance, please contact ​data@greenwichai.com or call +1.203.487.6180."
-              end
-              
-              dates<<p.date_1
-              
-              if !validation 
-                break
-              end
-                
+    app_logger error
+    if error[:status]
+      if error[:type] == :user_no_firm_associated || error[:type] == :user_no_firm_associated
+        email_error_message = "The following user encountered the NoMethodError message related to the “Donor ID” field:
+                                id: #{current_user.id}
+                                login: #{current_user.login}
+                                name: #{current_user.name}
+                                first name: #{current_user.first_name}
+                                last name: #{current_user.last_name}
+                                email: #{current_user.email}
+                                phone number: #{current_user.phone_number}
+                                created at: #{current_user.created_at}
+                                owner id: #{current_user.owner_id}
+                                active: #{current_user.active}"
+        Emailer.deliver_message('wiktor.bobowski@polcode.net', "Greenwich Database Account Error",email_error_message)
+        Emailer.deliver_message('data@greenwichai.com', "Greenwich Database Account Error",email_error_message)
+      end
+      flash[:alert] = error[:message]
+      redirect_to root_path
+    else
+      mtf = ManagerToFund.new
+      mtf.manager_id = ManagerInformation.find(params[:firm_id]).manager_id
+      begin
+        if !@information.att1.path.nil?
+          if(@information.att1.path.include?(".xls") && !@information.att1.path.include?(".xlsx"))
+            require 'parseexcel'
+
+            @information.save
+            @information.make_init
+
+            @workbookA = Spreadsheet::ParseExcel.parse(@information.att1.path)
+
+            #Validation of Spreadsheet
+            if !@workbookA.nil?
+              @worksheetA = @workbookA.worksheet(0)
+              dates = []
+              @worksheetA.each { |row|
+                if !row.nil? and !row[0].nil? and !row[0].date.blank? and row[0].date.to_time.day == row[0].date.to_time.end_of_month.day and !row[1].nil?
+
+                  validation = true
+                  p = Performance.new
+                  p.date_1 = row[0].date.to_time.end_of_month.strftime("%Y-%m-%d") if !row[0].nil? and !row[0].date.blank?
+                  p.return = row[1].to_s("latin1") if !row[1].nil?
+                  begin
+                    Float(row[1].to_s("latin1")) if !row[1].nil? and !row[1].value.blank?
+                    Float(row[2].to_s("latin1")) if !row[2].nil? and !row[2].value.blank?
+                    Float(row[3].to_s("latin1")) if !row[3].nil? and !row[3].value.blank?
+                    Float(row[4].to_s("latin1")) if !row[4].nil? and !row[4].value.blank?
+                    Float(row[5].to_s("latin1")) if !row[5].nil? and !row[5].value.blank?
+                    Float(row[6].to_s("latin1")) if !row[6].nil? and !row[6].value.blank?
+                  rescue Exception => exc
+                    validation = false
+                    flash[:notice] = "There are problems with your data. There are text values in the spreadsheet. Please include only numbers or symbols. Text may only be present in the headings. Please check your spreadsheet values and try again. If you need assistance, please contact ​data@greenwichai.com or call +1.203.487.6180."
+                  end
+
+                  if !p.date_1.nil? && p.date_1 < Date.new(1970,1,1)
+                    validation = false
+                    flash[:notice] = "There are problems with your data. The dates cannot be before 1970. Please check your spreadsheet values and try again. If you need assistance, please contact ​data@greenwichai.com or call +1.203.487.6180."
+                  elsif !p.return.nil? && (p.return > 2 || p.return < -2)
+                    validation = false
+                    flash[:notice] = "There are problems with your data. The return cannot be lower than -200% or higher than 200%. Please check your spreadsheet values and try again. If you need assistance, please contact ​data@greenwichai.com or call +1.203.487.6180."
+                  elsif !p.date_1.nil? && p.date_1 > Time.now.months_ago(1).end_of_month
+                    validation = false
+                    flash[:notice] = "There are problems with your data. The date cannot be higher than one month ago. Please check your spreadsheet values and try again. If you need assistance, please contact ​data@greenwichai.com or call +1.203.487.6180."
+                  elsif !p.date_1.nil? && dates.include?(p.date_1)
+                    validation = false
+                    flash[:notice] = "There are problems with your data. At least one date appears more than once. Please check your spreadsheet values and try again. If you need assistance, please contact ​data@greenwichai.com or call +1.203.487.6180."
+                  end
+
+                  dates<<p.date_1
+
+                  if !validation
+                    break
+                  end
+
+                end
+              }
             end
-            }
-          end
-          
-          
-          
-          if !@workbookA.nil?
-            @worksheetA = @workbookA.worksheet(0)
-            @worksheetA.each { |row|
-            if !row.nil? and !row[0].nil? and !row[0].date.blank? and row[0].date.to_time.day == row[0].date.to_time.end_of_month.day and !row[1].nil?
-              p = Performance.new
-              p.id_1 = @information.id_1
-              p.date_1 = row[0].date.to_time.end_of_month.strftime("%Y-%m-%d") if !row[0].nil? and !row[0].date.blank?
-              p.return = row[1].to_s("latin1") if !row[1].nil?
-              p.fundsmanaged = row[2].to_s("latin1") if !row[2].nil?
-              p.firm_aum = row[3].to_s("latin1") if !row[3].nil?
-              p.gross_exposure = (!row[4].nil? and !row[4].to_s("latin1").empty?) ? row[4].to_s("latin1").to_f*100 : nil
-              p.nav = row[5].to_s("latin1") if !row[5].nil?
-              p.estimate = row[6].to_s("latin1").strip if !row[6].nil?
-              p.lastupdated = Time.now
 
 
 
-              #pf = Performance.find(:first, :conditions=>["id_1 in (?) and date_1 = ?", @of.map{|c| c.id_1},p.date_1])
-              #f_firm_aum = ""
-              #f_firm_aum = pf.firm_aum if !pf.nil?
-              #p.firm_aum = !pcrp[5].to_s.strip.blank? ? pcrp[5] : f_firm_aum
-  
-              p.save if !p.date_1.nil?
-  
+            if !@workbookA.nil?
+              @worksheetA = @workbookA.worksheet(0)
+              @worksheetA.each { |row|
+                if !row.nil? and !row[0].nil? and !row[0].date.blank? and row[0].date.to_time.day == row[0].date.to_time.end_of_month.day and !row[1].nil?
+                  p = Performance.new
+                  p.id_1 = @information.id_1
+                  p.date_1 = row[0].date.to_time.end_of_month.strftime("%Y-%m-%d") if !row[0].nil? and !row[0].date.blank?
+                  p.return = row[1].to_s("latin1") if !row[1].nil?
+                  p.fundsmanaged = row[2].to_s("latin1") if !row[2].nil?
+                  p.firm_aum = row[3].to_s("latin1") if !row[3].nil?
+                  p.gross_exposure = (!row[4].nil? and !row[4].to_s("latin1").empty?) ? row[4].to_s("latin1").to_f*100 : nil
+                  p.nav = row[5].to_s("latin1") if !row[5].nil?
+                  p.estimate = row[6].to_s("latin1").strip if !row[6].nil?
+                  p.lastupdated = Time.now
+
+
+
+                  #pf = Performance.find(:first, :conditions=>["id_1 in (?) and date_1 = ?", @of.map{|c| c.id_1},p.date_1])
+                  #f_firm_aum = ""
+                  #f_firm_aum = pf.firm_aum if !pf.nil?
+                  #p.firm_aum = !pcrp[5].to_s.strip.blank? ? pcrp[5] : f_firm_aum
+
+                  p.save if !p.date_1.nil?
+
+                end
+              }
             end
-            }
+          else
+            flash[:notice] = "Monthly Data File format incorrect. Please upload performance in XLS format (Excel 97-2003)"
           end
         else
-          flash[:notice] = "Monthly Data File format incorrect. Please upload performance in XLS format (Excel 97-2003)"
+          @information.save
+          @information.make_init
         end
-      else
-        @information.save
-        @information.make_init
+      rescue Exception => exc
+        flash[:notice] = "Errors reading the file"
       end
-    rescue Exception => exc
-      flash[:notice] = "Errors reading the file"
-    end
-    if !flash[:notice].nil? && !flash[:notice].blank? && !flash[:notice] != "error"
-      render "add"
-    else
-      mtf.fund_id = @information.id_1
-    
-      mtf.save
-      
-      if current_user.tip!="admin"
-        Message.to_admins("<a target='nwwin' href='/users/"+current_user.id.to_s+"/edit'>"+current_user.login.to_s+"</a> added a new fund '"+@information.f20.to_s+"' ["+ManagerInformation.find(params[:firm_id]).general_partner.to_s+"]  on "+Time.now.strftime("%Y-%m-%d")+".",1)
-        redirect_to :controller=>"wizards", :action=>"new", :id=>@information.id, :step=> "0"
+      if !flash[:notice].nil? && !flash[:notice].blank? && !flash[:notice] != "error"
+        render "add"
       else
-        redirect_to :controller=>"my", :action=>"perfs", :id=>@information.id
+        mtf.fund_id = @information.id_1
+
+        mtf.save
+
+        if current_user.tip!="admin"
+          Message.to_admins("<a target='nwwin' href='/users/"+current_user.id.to_s+"/edit'>"+current_user.login.to_s+"</a> added a new fund '"+@information.f20.to_s+"' ["+ManagerInformation.find(params[:firm_id]).general_partner.to_s+"]  on "+Time.now.strftime("%Y-%m-%d")+".",1)
+          redirect_to :controller=>"wizards", :action=>"new", :id=>@information.id, :step=> "0"
+        else
+          redirect_to :controller=>"my", :action=>"perfs", :id=>@information.id
+        end
       end
     end
   end
